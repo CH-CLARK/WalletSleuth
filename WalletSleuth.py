@@ -5,11 +5,16 @@ import csv
 
 #Tkinter Imports
 from tkinter import DISABLED, LEFT, W, IntVar, W, Y,  Frame, StringVar, ttk, messagebox, RIGHT, TOP, HORIZONTAL, VERTICAL, NO, BOTTOM, X
+from tkinter.filedialog import askdirectory
 
 #Wallet Imports
 
 
-
+#-----------------------------------------------------------#
+#---------------------PRIMARY FUNCTIONS---------------------#
+#-----------------------------------------------------------#
+def address_finder_run():
+    print("TEST FUNC")
 
 
 #-----------------------------------------------------------#
@@ -52,6 +57,101 @@ ws_notebook.add(address_identifier, text='Address Identifier')
 ws_notebook.add(address_identifier_output, text='Output')
 ws_notebook.add(log_win, text = 'Process Log')
 ws_notebook.add(help_win, text='Help')
+
+
+#===========================================================#
+#------------------ADDRESS IDENTIFIER PAGE------------------#
+#===========================================================#
+#Wallet Selection Frame
+button_labelframe= ttk.LabelFrame(address_identifier)
+
+button_canvas = tk.Canvas(button_labelframe, width = 300, height = 400, bg="#F0F0F0")
+button_canvas.pack(side=LEFT)
+
+button_canvas_yscrollbar = ttk.Scrollbar(button_labelframe, orient="vertical", command=button_canvas.yview)
+button_canvas_yscrollbar.pack(side=LEFT, fill=Y)
+button_canvas.configure(yscrollcommand=button_canvas_yscrollbar.set)
+button_canvas.bind('<Configure>', lambda e: button_canvas.configure(scrollregion = button_canvas.bbox('all')))
+
+button_frame = ttk.Frame(button_canvas)
+button_canvas.create_window((0,0), window=button_frame, anchor = "nw")
+
+button_labelframe.pack(fill="both", expand = "yes", padx = 10, pady =10)
+
+
+#WSF - Checkbox Selection Varibles
+atomic_wallet_var = tk.IntVar()
+
+metamask_var = tk.IntVar()
+metamask_dropdown = tk.StringVar()
+
+brave_browser_var = tk.IntVar()
+
+bitkeep_var = tk.IntVar()
+bitkeep_dropdown = tk.StringVar()
+
+nami_var = tk.IntVar()
+nami_dropdown = tk.StringVar()
+
+
+#WSF - Checkbox Wallet Selection
+atomic_wallet_check = ttk.Checkbutton(button_frame, text = "Atomic Wallet", variable=atomic_wallet_var, onvalue=1, offvalue=0)
+atomic_wallet_check.grid(row=[1], column=[0])
+
+metamask_check = ttk.Checkbutton(button_frame, text = "MetaMask", variable=metamask_var, onvalue=1, offvalue =0).grid(row=[2], column=[0], sticky=W)
+metamask_dropdown.set("Select Browser ")
+metamask_drop = tk.OptionMenu(button_frame, metamask_dropdown, "-Brave", "Chrome", "-Edge", "-Firefox", "-Opera")
+metamask_drop.grid(row = 2, column=1)
+
+brave_wallet_check = ttk.Checkbutton(button_frame, text = "Brave Browser", variable = brave_browser_var, onvalue=1, offvalue=0).grid(row=[3], column=[0])
+
+bitkeep_check = ttk.Checkbutton(button_frame, text = "Bitkeep", variable=bitkeep_var, onvalue=1, offvalue =0).grid(row=[4], column=[0], sticky=W)
+bitkeep_dropdown.set("Select Browser ")
+bitkeep_drop = tk.OptionMenu(button_frame, bitkeep_dropdown, "-Brave", "Chrome", "-Firefox", "-Opera")
+bitkeep_drop.grid(row = 4, column=1)
+
+nami_check = ttk.Checkbutton(button_frame, text = "Nami", variable=nami_var, onvalue=1, offvalue =0).grid(row=[5], column=[0], sticky=W)
+nami_dropdown.set("Select Browser ")
+nami_drop = tk.OptionMenu(button_frame, nami_dropdown, "Brave", "Chrome", "-Firefox", "-Opera")
+nami_drop.grid(row = 5, column=1)
+
+
+#Address
+run_button = ttk.Button(button_labelframe, text = "Run", command=address_finder_run)
+run_button.place(x=325, y=390, height=25, width=120)
+
+
+def select_output():
+    output_dir = askdirectory(title='Select Output Folder') # shows dialog box and returns the path
+    entry= ttk.Label(button_labelframe, text= output_dir).place(x=450, y=360)
+    global P
+    P = output_dir
+
+
+select_output_button = ttk.Button(button_labelframe, text = "Output Directory", command= select_output)
+select_output_button.place(x=325, y=360, height=25, width=120)
+
+
+def open_appdata():
+    ask_dir = askdirectory(title='Select Appdata Folder') # shows dialog box and returns the path
+    entry= ttk.Label(button_labelframe, text= ask_dir).place(x=450, y=330)
+    global X
+    X = ask_dir
+
+open_appdata_button = ttk.Button(button_labelframe, text = "Appdata Directory", command= open_appdata)
+open_appdata_button.place(x=325, y=330, height=25, width=120)
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 ws_window.mainloop()
