@@ -1,9 +1,9 @@
 #Generic Imports
 import os
-import tkinter as tk
 import csv
 
 #Tkinter Imports
+import tkinter as tk
 from tkinter import DISABLED, LEFT, W, IntVar, W, Y,  Frame, StringVar, ttk, messagebox, RIGHT, TOP, HORIZONTAL, VERTICAL, NO, BOTTOM, X
 from tkinter.filedialog import askdirectory
 
@@ -164,14 +164,12 @@ tree.column('#4', stretch=NO, minwidth=0, width=800)
 tree.pack()
 
 
-
-
-
-
-
-
-
-
+#===========================================================#
+#------------------------LOGGING PAGE-----------------------#
+#===========================================================#
+#Logging Text Window
+logging_text_win = tk.Text(log_win, height=500, width = 500)
+logging_text_win.pack()
 
 
 ws_window.mainloop()
