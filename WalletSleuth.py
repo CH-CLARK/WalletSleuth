@@ -116,10 +116,9 @@ nami_drop = tk.OptionMenu(button_frame, nami_dropdown, "Brave", "Chrome", "-Fire
 nami_drop.grid(row = 5, column=1)
 
 
-#Address
+#Address Identifier Buttons
 run_button = ttk.Button(button_labelframe, text = "Run", command=address_finder_run)
 run_button.place(x=325, y=390, height=25, width=120)
-
 
 def select_output():
     output_dir = askdirectory(title='Select Output Folder') # shows dialog box and returns the path
@@ -127,10 +126,8 @@ def select_output():
     global P
     P = output_dir
 
-
 select_output_button = ttk.Button(button_labelframe, text = "Output Directory", command= select_output)
 select_output_button.place(x=325, y=360, height=25, width=120)
-
 
 def open_appdata():
     ask_dir = askdirectory(title='Select Appdata Folder') # shows dialog box and returns the path
@@ -142,6 +139,29 @@ open_appdata_button = ttk.Button(button_labelframe, text = "Appdata Directory", 
 open_appdata_button.place(x=325, y=330, height=25, width=120)
 
 
+#===========================================================#
+#------------------------OUTPUT PAGE------------------------#
+#===========================================================#
+#Address Output Table
+TableMargin = tk.Frame(address_identifier_output, width=500)
+TableMargin.pack(side=TOP)
+scrollbarx = tk.Scrollbar(TableMargin, orient=HORIZONTAL)
+scrollbary = tk.Scrollbar(TableMargin, orient=VERTICAL)
+tree = ttk.Treeview(TableMargin, columns=("Currency", "Address", "Wallet", "Path"), height=400, selectmode="extended", yscrollcommand=scrollbary.set, xscrollcommand=scrollbarx.set)
+scrollbary.config(command=tree.yview)
+scrollbary.pack(side=RIGHT, fill=Y)
+scrollbarx.config(command=tree.xview)
+scrollbarx.pack(side=BOTTOM, fill=X)
+tree.heading('Currency', text="Currency", anchor=W)
+tree.heading('Address', text="Address", anchor=W)
+tree.heading('Wallet', text="Wallet", anchor=W)
+tree.heading('Path', text='Path', anchor=W)
+tree.column('#0', stretch=NO, minwidth=0, width=0)
+tree.column('#1', stretch=NO, minwidth=0, width=200)
+tree.column('#2', stretch=NO, minwidth=0, width=200)
+tree.column('#3', stretch=NO, minwidth=0, width=200)
+tree.column('#4', stretch=NO, minwidth=0, width=800)
+tree.pack()
 
 
 
