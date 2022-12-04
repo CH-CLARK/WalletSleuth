@@ -8,13 +8,74 @@ from tkinter import DISABLED, LEFT, W, IntVar, W, Y,  Frame, StringVar, ttk, mes
 from tkinter.filedialog import askdirectory
 
 #Wallet Imports
+from wallet_scripts.WS_atomic_wallet import atomic_wallet_dump
 
+
+selection = []
 
 #-----------------------------------------------------------#
 #---------------------PRIMARY FUNCTIONS---------------------#
 #-----------------------------------------------------------#
+'''
+'address_finder_run' function puts the program all together. Doing the following:
+    - Logging page setup (1)
+    - Tree Management (2)
+    - Wallet selection management(3)
+
+'''
 def address_finder_run():
-    print("TEST FUNC")
+    #(1) - Logging page setup
+    with open(P + '/' + 'WalletSleuth_log.txt', 'w') as log_file:
+        log_file.write('+-----------------------------------------------------------------------------------------+\n')
+        log_file.write('|----------------------------------- WALLET SLEUTH LOG -----------------------------------|\n')
+        log_file.write('+-----------------------------------------------------------------------------------------+\n')
+
+    #(2) - Resets the table when 'Run' is selected
+    for i in tree.get_children():
+        tree.delete(i)
+        address_identifier_output.update
+
+    #(3) - Wallet selction management
+    #-------------------------------------# 
+    #-----------WALLET SELCTION-----------#
+    #-------------------------------------# 
+    #Atomic Wallet
+    if atomic_wallet_var.get() == 1:
+        try:
+            atomic_wallet_dump(X, P)
+            selection.append(P + '/' + 'atomic_wallet_addresses.csv')
+        except:
+            with open(P + '/' + 'WalletSleuth_log.txt', 'a') as log_file:
+                log_file.write("ERROR: (ATOMIC WALLET) - Wallet not found!\n")
+    
+    #-------------------------------------# 
+    #-------------------------------------# 
+
+    with open(P + '/' + 'output.csv','w', newline='') as f:
+        writer = csv.writer(f)
+        writer.writerow(['Currency', 'Address', 'Wallet', 'Path'])
+        for file in selection:
+            with open(file,'r', newline='') as f1:
+                reader = csv.reader(f1)
+                new_data = [row for row in reader]
+                writer.writerows(new_data)
+    
+    with open(P + '/' + 'output.csv') as f:
+        reader = csv.DictReader(f, delimiter=',')
+        for row in reader:
+            currency = row['Currency']
+            address = row['Address']
+            wallet = row['Wallet']
+            path = row['Path']
+            tree.insert("", 0, values=(currency, address, wallet, path))
+
+    selection.clear()
+
+    with open(P + '/' + 'WalletSleuth_log.txt', 'r') as log_file:
+        read_log = log_file.read()
+
+    logging_text_win.insert(tk.END, read_log)
+    logging_text_win.config(state=DISABLED)
 
 
 #-----------------------------------------------------------#

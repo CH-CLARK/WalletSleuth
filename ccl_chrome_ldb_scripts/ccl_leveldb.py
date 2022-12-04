@@ -31,7 +31,7 @@ import enum
 from collections import namedtuple
 from types import MappingProxyType
 
-import ccl_simplesnappy
+import ccl_chrome_ldb_scripts.ccl_simplesnappy
 
 __version__ = "0.4"
 __description__ = "A module for reading LevelDB databases"
@@ -240,7 +240,7 @@ class LdbFile:
         is_compressed = trailer[0] != 0
         if is_compressed:
             with io.BytesIO(raw_block) as buff:
-                raw_block = ccl_simplesnappy.decompress(buff)
+                raw_block = ccl_chrome_ldb_scripts.ccl_simplesnappy.decompress(buff)
 
         return Block(raw_block, is_compressed, self, handle.offset)
 
