@@ -21,7 +21,6 @@ selection = []
     - Logging page setup (1)
     - Tree Management (2)
     - Wallet selection management(3)
-
 '''
 def address_finder_run():
     #(1) - Logging page setup
@@ -154,8 +153,11 @@ bitkeep_dropdown = tk.StringVar()
 nami_var = tk.IntVar()
 nami_dropdown = tk.StringVar()
 
+phantom_var = tk.IntVar()
+phantom_drop = tk.StringVar()
 
-#WSF - Checkbox Wallet Selection
+
+#WS - Checkbox Wallet Selection
 atomic_wallet_check = ttk.Checkbutton(button_frame, text = "Atomic Wallet", variable=atomic_wallet_var, onvalue=1, offvalue=0)
 atomic_wallet_check.grid(row=[1], column=[0])
 
@@ -173,9 +175,13 @@ bitkeep_drop.grid(row = 4, column=1)
 
 nami_check = ttk.Checkbutton(button_frame, text = "Nami", variable=nami_var, onvalue=1, offvalue =0).grid(row=[5], column=[0], sticky=W)
 nami_dropdown.set("Select Browser ")
-nami_drop = tk.OptionMenu(button_frame, nami_dropdown, "Brave", "Chrome", "-Firefox", "-Opera")
+nami_drop = tk.OptionMenu(button_frame, nami_dropdown, "-Brave", "Chrome", "-Firefox", "-Opera")
 nami_drop.grid(row = 5, column=1)
 
+phantom_check = ttk.Checkbutton(button_frame, text = "Phantom", variable=phantom_var, onvalue=1, offvalue=0).grid(row=[6], column=[0], sticky=W)
+phantom_drop.set("Select Browser ")
+phantom_drop = tk.OptionMenu(button_frame, phantom_drop, "-Brave", "Chrome", "-Firefox", "-Opera")
+phantom_drop.grid(row = 6, column=1)
 
 #Address Identifier Buttons
 run_button = ttk.Button(button_labelframe, text = "Run", command=address_finder_run)
