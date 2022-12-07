@@ -1,8 +1,11 @@
+#Generic Imports
 import sys
 import os
 import json
 import csv
 import pathlib
+
+#CCL Imports
 import ccl_chrome_ldb_scripts.ccl_leveldb
 
 
