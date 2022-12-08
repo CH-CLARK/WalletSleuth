@@ -59,7 +59,7 @@ def address_finder_run():
     if metamask_var.get() == 1 and metamask_dropdown.get() == "Edge":
         try:
             metamask_edge_dump(X, P)
-            selection.append(P + '/' + 'MM_chrome_addresses.csv')
+            selection.append(P + '/' + 'MM_edge_addresses.csv')
         except:
             with open(P + '/' + 'WalletSleuth_log.txt', 'a') as log_file:
                 log_file.write("ERROR: (METAMASK - EDGE) - Wallet not found!\n")
