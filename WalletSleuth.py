@@ -9,7 +9,7 @@ from tkinter.filedialog import askdirectory
 
 #Wallet Imports
 from wallet_scripts.WS_atomic_wallet import atomic_wallet_dump
-from wallet_scripts.WS_metamask import metamask_chrome_dump, metamask_edge_dump
+from wallet_scripts.WS_metamask import metamask_chrome_dump, metamask_edge_dump, metamask_brave_dump
 
 selection = []
 
@@ -60,6 +60,14 @@ def address_finder_run():
         try:
             metamask_edge_dump(X, P)
             selection.append(P + '/' + 'MM_edge_addresses.csv')
+        except:
+            with open(P + '/' + 'WalletSleuth_log.txt', 'a') as log_file:
+                log_file.write("ERROR: (METAMASK - EDGE) - Wallet not found!\n")
+
+    if metamask_var.get() == 1 and metamask_dropdown.get() == "Brave":
+        try:
+            metamask_brave_dump(X, P)
+            selection.append(P + '/' + 'MM_brave_addresses.csv')
         except:
             with open(P + '/' + 'WalletSleuth_log.txt', 'a') as log_file:
                 log_file.write("ERROR: (METAMASK - EDGE) - Wallet not found!\n")
@@ -179,7 +187,7 @@ atomic_wallet_check.grid(row=[1], column=[0])
 
 metamask_check = ttk.Checkbutton(button_frame, text = "MetaMask", variable=metamask_var, onvalue=1, offvalue =0).grid(row=[2], column=[0], sticky=W)
 metamask_dropdown.set("Select Browser ")
-metamask_drop = tk.OptionMenu(button_frame, metamask_dropdown, "-Brave", "Chrome", "Edge", "-Firefox", "-Opera")
+metamask_drop = tk.OptionMenu(button_frame, metamask_dropdown, "Brave", "Chrome", "Edge", "-Firefox", "-Opera")
 metamask_drop.grid(row = 2, column=1)
 
 brave_wallet_check = ttk.Checkbutton(button_frame, text = "Brave Browser", variable = brave_browser_var, onvalue=1, offvalue=0).grid(row=[3], column=[0])
