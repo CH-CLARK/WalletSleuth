@@ -10,6 +10,7 @@ from tkinter.filedialog import askdirectory
 #Wallet Imports
 from wallet_scripts.WS_atomic_wallet import atomic_wallet_dump
 from wallet_scripts.WS_metamask import metamask_chrome_dump, metamask_edge_dump, metamask_brave_dump
+from wallet_scripts.WS_bravebrowser import bravebrowser_dump
 
 selection = []
 
@@ -71,6 +72,17 @@ def address_finder_run():
         except:
             with open(P + '/' + 'WalletSleuth_log.txt', 'a') as log_file:
                 log_file.write("ERROR: (METAMASK - EDGE) - Wallet not found!\n")
+
+    #Brave Browser Wallet
+    if brave_browser_var.get() == 1:
+        try:
+            bravebrowser_dump(X, P)
+            selection.append(P + '/' + 'bravebrowser_addresses.csv')
+        except:
+            with open(P + '/' + 'WalletSleuth_log.txt', 'a') as log_file:
+                log_file.write("ERROR: (BRAVE BROWSER) - Wallet not found!\n")
+
+
     #-------------------------------------# 
     #-------------------------------------# 
 
