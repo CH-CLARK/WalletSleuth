@@ -66,3 +66,4 @@ def atomic_wallet_dump(ask_dir, output_dir):
         log_file.write('ACTION: (ATOMIC WALLET) - Addresses identified.\n')
 
     os.remove(output_path)
+    

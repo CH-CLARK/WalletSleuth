@@ -109,3 +109,4 @@ def bitkeep_chrome_dump(ask_dir, output_dir):
         write.writerows(bitkeep_chrome_output)
 
     os.remove(output_path)
+    
