@@ -103,4 +103,9 @@ def bitkeep_chrome_dump(ask_dir, output_dir):
 
     if default_list:
         print("DO DEFAULT LOCATION")
-    
+
+    with open(output_dir + '/' + 'BK_chrome_addresses.csv', 'w', newline='') as file:
+        write = csv.writer(file) 
+        write.writerows(bitkeep_chrome_output)
+
+    os.remove(output_path)
