@@ -35,7 +35,7 @@ def phantom_chrome_dump(ask_dir, output_dir):
     default_check = "Default"
     default_list = [idx for idx in folders_list if idx.lower().startswith(default_check.lower())]
 
-    output_path = ask_dir + r"\BK_phantom_LDB.csv"
+    output_path = ask_dir + r"\phantom_chrome_LDB.csv"
 
     phantom_chrome_output = []
 
