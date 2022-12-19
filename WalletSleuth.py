@@ -12,6 +12,7 @@ from wallet_scripts.WS_atomic_wallet import atomic_wallet_dump
 from wallet_scripts.WS_metamask import metamask_chrome_dump, metamask_edge_dump, metamask_brave_dump
 from wallet_scripts.WS_bravebrowser import bravebrowser_dump
 from wallet_scripts.WS_bitkeep import bitkeep_chrome_dump, bitkeep_brave_dump
+from wallet_scripts.WS_phantom import phantom_chrome_dump
 
 selection = []
 
@@ -99,6 +100,15 @@ def address_finder_run():
         except:
             with open(P + '/' + 'WalletSleuth_log.txt', 'a') as log_file:
                 log_file.write("ERROR: (BITKEEP - BRAVE) - Wallet not found!\n")
+
+    #Phantom
+    if phantom_var.get() == 1 and phantom_dropdown.get() == "Chrome":
+        try:
+            phantom_chrome_dump(X, P)
+            selection.append(P + '/' + 'phantom_chrome_addresses.csv')
+        except:
+            with open(P + '/' + 'WalletSleuth_log.txt', 'a') as log_file:
+                log_file.write("ERROR: (PHANTOM - CHROME) - Wallet not found!\n")
 
     #-------------------------------------# 
     #-------------------------------------# 
