@@ -11,7 +11,7 @@ from tkinter.filedialog import askdirectory
 from wallet_scripts.WS_atomic_wallet import atomic_wallet_dump
 from wallet_scripts.WS_metamask import metamask_chrome_dump, metamask_edge_dump, metamask_brave_dump
 from wallet_scripts.WS_bravebrowser import bravebrowser_dump
-from wallet_scripts.WS_bitkeep import bitkeep_chrome_dump
+from wallet_scripts.WS_bitkeep import bitkeep_chrome_dump, bitkeep_brave_dump
 
 selection = []
 
@@ -91,6 +91,14 @@ def address_finder_run():
         except:
             with open(P + '/' + 'WalletSleuth_log.txt', 'a') as log_file:
                 log_file.write("ERROR: (BITKEEP - CHROME) - Wallet not found!\n")
+    
+    if bitkeep_var.get() == 1 and bitkeep_dropdown.get() == "Brave":
+        try:
+            bitkeep_brave_dump(X, P)
+            selection.append(P + '/' + 'BK_brave_addresses.csv')
+        except:
+            with open(P + '/' + 'WalletSleuth_log.txt', 'a') as log_file:
+                log_file.write("ERROR: (BITKEEP - BRAVE) - Wallet not found!\n")
 
     #-------------------------------------# 
     #-------------------------------------# 
@@ -215,7 +223,7 @@ brave_wallet_check = ttk.Checkbutton(button_frame, text = "Brave Browser", varia
 
 bitkeep_check = ttk.Checkbutton(button_frame, text = "Bitkeep", variable=bitkeep_var, onvalue=1, offvalue =0).grid(row=[4], column=[0], sticky=W)
 bitkeep_dropdown.set("Select Browser ")
-bitkeep_drop = tk.OptionMenu(button_frame, bitkeep_dropdown, "-Brave", "Chrome", "-Firefox", "-Opera")
+bitkeep_drop = tk.OptionMenu(button_frame, bitkeep_dropdown, "Brave", "Chrome", "-Firefox", "-Opera")
 bitkeep_drop.grid(row = 4, column=1)
 
 nami_check = ttk.Checkbutton(button_frame, text = "Nami", variable=nami_var, onvalue=1, offvalue =0).grid(row=[5], column=[0], sticky=W)
