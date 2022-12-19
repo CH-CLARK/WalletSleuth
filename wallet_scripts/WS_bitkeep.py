@@ -102,11 +102,57 @@ def bitkeep_chrome_dump(ask_dir, output_dir):
                     pass
 
     if default_list:
-        print("DO DEFAULT LOCATION")
+        leveldb_records = ccl_chrome_ldb_scripts.ccl_leveldb.RawLevelDb(ask_dir + r"\Local\Google\Chrome\User Data\Default\Local Extension Settings\jiidiaalihmmhddjgbnbgdfflelocpak")#change input path to \AppData\Roaming\atomic\Local Storage\leveldb 
+        def_location = ask_dir + "/Local/Google/Chrome/User Data/Default/Local Extension Settings/jiidiaalihmmhddjgbnbgdfflelocpak"
+        
+        if leveldb_records:
+            with open(output_path, "w", encoding="utf-8", newline="") as file1:
+                writes = csv.writer(file1, quoting=csv.QUOTE_ALL)
+                writes.writerow(
+                    [
+                        "key-text", "value-text", "seq"
+                    ])
+
+                for record in leveldb_records.iterate_records_raw():
+                    writes.writerow([
+                        record.user_key.decode(ENCODING, "replace"),
+                        record.value.decode(ENCODING, "replace"),
+                        record.seq,
+                    ])
+
+                
+            data_text = "accounts"
+            with open(output_path, newline="", errors = 'ignore') as csvfile:
+                dataone = csv.DictReader(csvfile)
+
+                accounts_seq_list = []
+                for row in dataone:
+                    if row['key-text'] == data_text:
+                        accounts_seq_list.append(int(row["seq"]))
+                        accounts_max_seq = max(accounts_seq_list)
+
+                csvfile.seek(0)
+
+                for row in dataone:
+                    if row['key-text'] == data_text and int(row['seq']) == accounts_max_seq:
+                        most_recent_valuetext = row['value-text']
+            
+            json_obj = json.loads(most_recent_valuetext)
+            
+            currency_data = json_obj.get('currency')
+
+            for x in range(len(currency_data)):
+                
+                bk_address_output = currency_data[x]['symbol'], currency_data[x]['address'] ,'Bitkeep (Chrome)', def_location
+                
+                bitkeep_chrome_output.append(bk_address_output) 
+
+    with open(output_dir + '/' + 'WalletSleuth_log.txt', 'a') as log_file:
+        log_file.write('ACTION: (BITKEEP - CHROME) - Addresses identified in Default Profile.\n')
+
+
 
     with open(output_dir + '/' + 'BK_chrome_addresses.csv', 'w', newline='') as file:
         write = csv.writer(file) 
         write.writerows(bitkeep_chrome_output)
-
-    os.remove(output_path)
     
