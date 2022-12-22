@@ -139,6 +139,8 @@ def address_finder_run():
     logging_text_win.insert(tk.END, read_log)
     logging_text_win.config(state=DISABLED)
 
+    messagebox.showinfo(title="Wallet Sleuth", message="Search Complete!")
+
 
 #-----------------------------------------------------------#
 #----------------------WINDOW SETTINGS----------------------#
@@ -292,6 +294,18 @@ tree.pack()
 #Logging Text Window
 logging_text_win = tk.Text(log_win, height=500, width = 500)
 logging_text_win.pack()
+
+
+#===========================================================#
+#--------------------------HELP PAGE------------------------#
+#===========================================================#
+#Help Text Window
+help_text_win = tk.Text(help_win, bg='grey93',height=500, width = 500)
+help_text_win.pack()
+
+filetest = open('app_files/help_win.txt').read()
+help_text_win.insert(0.0, filetest)
+help_text_win.config(state=DISABLED, wrap='word')
 
 
 ws_window.mainloop()

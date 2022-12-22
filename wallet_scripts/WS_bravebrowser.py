@@ -145,5 +145,3 @@ def bravebrowser_dump(ask_dir, output_dir):
     with open(output_dir + '/' + 'bravebrowser_addresses.csv', 'w', newline='') as output_file:
         write = csv.writer(output_file)
         write.writerows(bravebrowser_output)
-
-    os.remove(output_file)
