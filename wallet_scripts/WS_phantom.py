@@ -83,26 +83,20 @@ def phantom_chrome_dump(ask_dir, output_dir):
 
                     for x in range(len(json_obj['value'])):
                         currency_data = list(json_obj["value"].keys())[x]
-                        print(currency_data)
-                        
-                        phantom_address_output = 'SOL', currency_data ,'Phantom (Chrome)', def_location
+                        phantom_address_output = 'SOL', currency_data ,'Phantom (Chrome)', profiles_ldb_loc
                         
                         phantom_chrome_output.append(phantom_address_output) 
-
-                        print(phantom_address_output)
-
 
                     with open(output_dir + '/' + 'phantom_chrome_addresses.csv', 'a', newline='') as file:
                         write = csv.writer(file) 
                         write.writerow(phantom_chrome_output)
                     
-
                     with open(output_dir + '/' + 'WalletSleuth_log.txt', 'a') as log_file:
                         log_file.write('ACTION: (PHANTOM - CHROME) - Addresses identified in ' + profiles +'.\n')
 
-
                 except Exception:
                     pass
+
 
     if default_list:
         leveldb_records = ccl_chrome_ldb_scripts.ccl_leveldb.RawLevelDb(ask_dir + r"\Local\Google\Chrome\User Data\Default\Local Extension Settings\bfnaelmomeimhlpmgjnjophhpkkoljpa") 
@@ -144,17 +138,12 @@ def phantom_chrome_dump(ask_dir, output_dir):
 
             for x in range(len(json_obj['value'])):
                 currency_data = list(json_obj["value"].keys())[x]
-                print(currency_data)
-                
                 phantom_address_output = 'SOL', currency_data ,'Phantom (Chrome)', def_location
                 
                 phantom_chrome_output.append(phantom_address_output) 
 
-                print(phantom_address_output)
-
     with open(output_dir + '/' + 'WalletSleuth_log.txt', 'a') as log_file:
         log_file.write('ACTION: (PHANTOM - CHROME) - Addresses identified in Default Profile.\n')
-
 
     with open(output_dir + '/' + 'phantom_chrome_addresses.csv', 'w', newline='') as file:
         write = csv.writer(file) 
