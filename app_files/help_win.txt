@@ -6,7 +6,7 @@ The huge number of wallet applications means that not every wallet may be suppor
 
 -------------------------------------------------------------------------------------------
 **USAGE**
-Wallet Sleuth Requires three main inputs: Appdata, Output and Wallet Selection.
+Wallet Sleuth requires three main inputs: Appdata, Output and Wallet Selection.
 
 Appdata - The AppData directory of the user.
 
