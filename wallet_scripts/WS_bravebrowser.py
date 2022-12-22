@@ -78,7 +78,7 @@ def bravebrowser_dump(ask_dir, output_dir):
                     bravebrowser_output.append(solana_ouput)
 
         with open(output_dir + '/' + 'WalletSleuth_log.txt', 'a') as log_file:
-            log_file.write('ACTION: (BRAVE BROWSER) - Addresses Identified in Default.\n')
+            log_file.write('ACTION: (BRAVE BROWSER) - Addresses identified in Default.\n')
 
 
     if profiles_list:
@@ -139,7 +139,7 @@ def bravebrowser_dump(ask_dir, output_dir):
 
 
         with open(output_dir + '/' + 'WalletSleuth_log.txt', 'a') as log_file:
-            log_file.write('ACTION: (BRAVE BROWSER) - Addresses Identified in ' + profiles_list[x] +'.\n')
+            log_file.write('ACTION: (BRAVE BROWSER) - Addresses identified in ' + profiles_list[x] +'.\n')
 
 
     with open(output_dir + '/' + 'bravebrowser_addresses.csv', 'w', newline='') as output_file:
