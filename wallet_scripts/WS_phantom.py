@@ -67,26 +67,29 @@ def phantom_chrome_dump(ask_dir, output_dir):
                     with open(output_path, newline="", errors = 'ignore') as csvfile:
                         dataone = csv.DictReader(csvfile)
 
-                        accounts_offset_list = []
+                        accounts_seq_list = []
                         for row in dataone:
                             if row['key-text'] == data_text:
-                                accounts_offset_list.append(int(row["offset"]))
-                                accounts_max_offset = max(accounts_offset_list)
+                                accounts_seq_list.append(int(row["seq"]))
+                                accounts_max_seq = max(accounts_seq_list)
 
                         csvfile.seek(0)
 
                         for row in dataone:
-                            if row['key-text'] == data_text and int(row['offset']) == accounts_max_offset:
+                            if row['key-text'] == data_text and int(row['seq']) == accounts_max_seq:
                                 most_recent_valuetext = row['value-text']
 
                     json_obj = json.loads(most_recent_valuetext)
 
+                    for x in range(len(json_obj['value'])):
+                        currency_data = list(json_obj["value"].keys())[x]
+                        print(currency_data)
+                        
+                        phantom_address_output = 'SOL', currency_data ,'Phantom (Chrome)', def_location
+                        
+                        phantom_chrome_output.append(phantom_address_output) 
 
-                    currency_data = json_obj.get('currency')
-
-                    for x in range(len(currency_data)):
-                        bk_address_output = currency_data[x]['symbol'], currency_data[x]['address'], 'Phantom (Chrome)', profiles_ldb_loc
-                        phantom_chrome_output.append(bk_address_output)
+                        print(phantom_address_output)
 
 
                     with open(output_dir + '/' + 'phantom_chrome_addresses.csv', 'a', newline='') as file:
@@ -102,9 +105,58 @@ def phantom_chrome_dump(ask_dir, output_dir):
                     pass
 
     if default_list:
-        print("do default")
+        leveldb_records = ccl_chrome_ldb_scripts.ccl_leveldb.RawLevelDb(ask_dir + r"\Local\Google\Chrome\User Data\Default\Local Extension Settings\bfnaelmomeimhlpmgjnjophhpkkoljpa") 
+        def_location = ask_dir + "/Local/Google/Chrome/User Data/Default/Local Extension Settings/bfnaelmomeimhlpmgjnjophhpkkoljpa"
+        
+        if leveldb_records:
+            with open(output_path, "w", encoding="utf-8", newline="") as file1:
+                writes = csv.writer(file1, quoting=csv.QUOTE_ALL)
+                writes.writerow(
+                    [
+                        "key-text", "value-text", "offset", "seq"
+                    ])
 
-    with open(output_dir + '/' + 'phantom_brave_addresses.csv', 'w', newline='') as file:
+                for record in leveldb_records.iterate_records_raw():
+                    writes.writerow([
+                        record.user_key.decode(ENCODING, "replace"),
+                        record.value.decode(ENCODING, "replace"),
+                        record.offset,
+                        record.seq,
+                    ])
+
+            data_text = "ownerToClusterToLamportBalance"
+            with open(output_path, newline="", errors = 'ignore') as csvfile:
+                dataone = csv.DictReader(csvfile)
+
+                accounts_seq_list = []
+                for row in dataone:
+                    if row['key-text'] == data_text:
+                        accounts_seq_list.append(int(row["seq"]))
+                        accounts_max_seq = max(accounts_seq_list)
+                
+                csvfile.seek(0)
+
+                for row in dataone:
+                    if row['key-text'] == data_text and int(row['seq']) == accounts_max_seq:
+                        most_recent_valuetext = row['value-text']
+
+            json_obj = json.loads(most_recent_valuetext)
+
+            for x in range(len(json_obj['value'])):
+                currency_data = list(json_obj["value"].keys())[x]
+                print(currency_data)
+                
+                phantom_address_output = 'SOL', currency_data ,'Phantom (Chrome)', def_location
+                
+                phantom_chrome_output.append(phantom_address_output) 
+
+                print(phantom_address_output)
+
+    with open(output_dir + '/' + 'WalletSleuth_log.txt', 'a') as log_file:
+        log_file.write('ACTION: (PHANTOM - CHROME) - Addresses identified in Default Profile.\n')
+
+
+    with open(output_dir + '/' + 'phantom_chrome_addresses.csv', 'w', newline='') as file:
         write = csv.writer(file) 
         write.writerows(phantom_chrome_output)
 
