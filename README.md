@@ -1,5 +1,5 @@
 # WalletSleuth
-Wallet Sleuth is a free tool that aims to quickly identify user cryptocurrency addresses from a variety of wallet applications! Wallet Sleuth is made in spare time and out of personal interest.
+Wallet Sleuth is a free tool that aims to quickly identify user cryptocurrency addresses from a variety of wallet applications!
 
 ## Usage
 Wallet Sleuth requires three main inputs: Appdata, Output and Wallet Selection.
@@ -18,4 +18,4 @@ Currently supported wallets include:
 * MetaMask (Brave, Chrome, Edge)
 * Brave Browser
 * Bitkeep (Brave, Chrome)
-* Phantom (Chrome)
+* Phantom (Brave, Chrome)

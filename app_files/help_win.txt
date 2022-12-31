@@ -2,7 +2,7 @@ WALLET SLEUTH
 -------------------------------------------------------------------------------------------
 Wallet Sleuth is a free tool that aims to quickly identify user cryptocurrency addresses from a variety of wallet applications!
 
-The huge number of wallet applications means that not every wallet may be supported right now, but if there is a specific wallet you would like to see supported please let us know via GitHub. Wallet Sleuth is made in spare time and out of personal interest, so if you like Wallet Sleuth or it has been useful to you please let us know!
+The huge number of wallet applications means that not every wallet may be supported right now, but if there is a specific wallet you would like to see supported please let us know via GitHub. If you like Wallet Sleuth or it has been useful to you please let us know!
 
 -------------------------------------------------------------------------------------------
 **USAGE**

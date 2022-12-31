@@ -12,7 +12,7 @@ from wallet_scripts.WS_atomic_wallet import atomic_wallet_dump
 from wallet_scripts.WS_metamask import metamask_chrome_dump, metamask_edge_dump, metamask_brave_dump
 from wallet_scripts.WS_bravebrowser import bravebrowser_dump
 from wallet_scripts.WS_bitkeep import bitkeep_chrome_dump, bitkeep_brave_dump
-from wallet_scripts.WS_phantom import phantom_chrome_dump
+from wallet_scripts.WS_phantom import phantom_chrome_dump, phantom_brave_dump
 
 selection = []
 
@@ -109,6 +109,14 @@ def address_finder_run():
         except:
             with open(P + '/' + 'WalletSleuth_log.txt', 'a') as log_file:
                 log_file.write("ERROR: (PHANTOM - CHROME) - Wallet not found!\n")
+
+    if phantom_var.get() == 1 and phantom_dropdown.get() == "Brave":
+        try:
+            phantom_brave_dump(X, P)
+            selection.append(P + '/' + 'phantom_brave_addresses.csv')
+        except:
+            with open(P + '/' + 'WalletSleuth_log.txt', 'a') as log_file:
+                log_file.write("ERROR: (PHANTOM - BRAVE) - Wallet not found!\n")
 
     #-------------------------------------# 
     #-------------------------------------# 
@@ -237,7 +245,7 @@ bitkeep_drop.grid(row = 4, column=1)
 
 phantom_check = ttk.Checkbutton(button_frame, text = "Phantom", variable=phantom_var, onvalue=1, offvalue=0).grid(row=[5], column=[0], sticky=W)
 phantom_dropdown.set("Select Browser ")
-phantom_drop = tk.OptionMenu(button_frame, phantom_dropdown, "-Brave", "Chrome", "-Firefox", "-Opera")
+phantom_drop = tk.OptionMenu(button_frame, phantom_dropdown, "Brave", "Chrome", "-Firefox", "-Opera")
 phantom_drop.grid(row = 5, column=1)
 
 #Address Identifier Buttons
