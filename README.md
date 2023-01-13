@@ -19,3 +19,4 @@ Currently supported wallets include:
 * Brave Browser
 * Bitkeep (Brave, Chrome)
 * Phantom (Brave, Chrome)
+* Opera Browser
