@@ -1,5 +1,5 @@
 # WalletSleuth
-Wallet Sleuth is a free tool that aims to quickly identify user cryptocurrency addresses from a variety of wallet applications!
+Wallet Sleuth is a free triage tool that aims to quickly identify user cryptocurrency addresses from a variety of wallet applications!
 
 ## Usage
 Wallet Sleuth requires three main inputs: Appdata, Output and Wallet Selection.
