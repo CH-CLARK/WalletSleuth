@@ -13,7 +13,7 @@ Wallet Selection - Wallet applications to search for cryptocurrency addresses th
 After running, an information box will notify you when the search is complete. Any identified cryptocurrency addresses are displayed in the output window and a log file details actions and errors in the search.
 
 ## Supported Wallets
-Wallet Sleuth is currently capable of identifying 40+ cryptocurrencies from the following supported wallets:
+Wallet Sleuth is currently capable of identifying 40+ cryptocurrency address types from the following supported wallets:
 * Atomic Wallet
 * MetaMask (Brave, Chrome, Edge)
 * Brave Browser
