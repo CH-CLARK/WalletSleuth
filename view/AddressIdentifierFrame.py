@@ -65,9 +65,7 @@ class AddressIdentifierFrame(Frame):
         self.output_label: ttk.Label = None
         self.appdata_label: ttk.Label = None
 
-        # self.wallets = self.__get_wallets()
         self.wallets = { key: WalletSelection(wallet) for (key, wallet) in wallets.items() }
-
         self.__build_ui()
 
     def get_wallets(self) -> list[WalletSelection]:
@@ -78,11 +76,9 @@ class AddressIdentifierFrame(Frame):
 
     def set_output_path_label(self, path: Path) -> None:
         self.output_label.config(text=path)
-        # ttk.Label(self.button_labelframe, text=path).place(x=450, y=360)
 
     def set_appdata_path_label(self, path):
         self.appdata_label.config(text=path)
-        # ttk.Label(self.button_labelframe, text=self._appdata_path).place(x=450, y=330)
 
     def set_log_path(self, path: Path) -> None:
         self._log_file_path = path
