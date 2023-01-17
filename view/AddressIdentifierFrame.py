@@ -100,10 +100,9 @@ class AddressIdentifierFrame(Frame):
         self.button_labelframe = ttk.LabelFrame(self)
         self.button_labelframe.pack(fill="both", expand="yes", padx=10, pady =10)
 
-        print("Setting labels")
-        self.output_label = ttk.Label(self.button_labelframe, text="")#.place(x=450, y=360)
+        self.output_label = ttk.Label(self.button_labelframe, text="")
         self.output_label.place(x=450, y=330)
-        self.appdata_label = ttk.Label(self.button_labelframe, text="")#.place(x=450, y=330)
+        self.appdata_label = ttk.Label(self.button_labelframe, text="")
         self.appdata_label.place(x=450, y=330)
         
         button_canvas = tk.Canvas(self.button_labelframe, width=300, height=400, bg="#F0F0F0")
