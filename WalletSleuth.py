@@ -325,9 +325,11 @@ logging_text_win.pack()
 help_text_win = tk.Text(help_win, bg='grey93',height=500, width = 500)
 help_text_win.pack()
 
-filetest = open('app_files/help_win.txt').read()
-help_text_win.insert(0.0, filetest)
-help_text_win.config(state=DISABLED, wrap='word')
+filetest = open('app_files/help_win.txt')
+
+with open('app_files/help_win.txt') as help_text:
+    help_text_win.insert(0.0, help_text.read())
+    help_text_win.config(state=DISABLED, wrap='word')
 
 
 ws_window.mainloop()
