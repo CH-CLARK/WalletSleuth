@@ -34,6 +34,7 @@ class WalletSleuthView(tk.Tk):
         self.output_frame: OutputFrame = None
         self.logging_frame: LoggingFrame = None
         self.help_frame: HelpFrame = None
+        self.cc_mm = None
 
         self.__create_ui(wallets)
     
@@ -48,9 +49,12 @@ class WalletSleuthView(tk.Tk):
         self.output_frame = OutputFrame(self)
         self.logging_frame = LoggingFrame(self)
         self.help_frame = HelpFrame(self)
+        self.cc_mm = HelpFrame(self)
 
         self.notebook.add(self.identifier_frame, text="Address Identifier")
         self.notebook.add(self.output_frame, text="Output")
         self.notebook.add(self.logging_frame, text="Process Log")
         self.notebook.add(self.help_frame, text="Help")
+        self.notebook.add(self.cc_mm, text = 'cc_mm')
+
     

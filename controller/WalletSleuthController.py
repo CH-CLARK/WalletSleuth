@@ -47,11 +47,11 @@ class WalletSleuthController:
         #
         # Logging the selected items
         #
-        wallet_selection_options = self.view.identifier_frame.get_wallets()        
-        self.log.write("Selections:")
-        for ws in wallet_selection_options:
-            self.log.write(f"  {ws}")
-        self.log.write("")
+        # wallet_selection_options = self.view.identifier_frame.get_wallets()        
+        # self.log.write("Selections:")
+        # for ws in wallet_selection_options:
+        #     self.log.write(f"  {ws}")
+        # self.log.write("")
 
         #
         # Iterating through the processed wallets

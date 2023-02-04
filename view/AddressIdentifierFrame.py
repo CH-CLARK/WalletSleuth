@@ -8,7 +8,7 @@ from model.Browser import Browser
 
 from model.Wallet import Wallet
 
-class WalletSelection:
+class WalletSelectable:
     def __init__(self, wallet: Wallet):
         self.wallet = wallet
         
@@ -43,6 +43,7 @@ class WalletSelection:
 
         return self.wallet.dumper
 
+    #assists logging
     def __str__(self):
         checkmark = "X" if self.is_selected else " "
         browser_options = f": {self.selected_browser.name}" if self.selected_browser is not None else ""
@@ -65,18 +66,24 @@ class AddressIdentifierFrame(Frame):
         self.output_label: ttk.Label = None
         self.appdata_label: ttk.Label = None
 
-        self.wallets = { key: WalletSelection(wallet) for (key, wallet) in wallets.items() }
+        #this is wallet selction, converts wallets dict to wal selction dict.
+        self.selectable_wallets = { wallet_name: WalletSelectable(wallet) for (wallet_name, wallet) in wallets.items() }
         self.__build_ui()
 
-    def get_wallets(self) -> list[WalletSelection]:
-        return [ws for ws in self.wallets.values()]
+    #these are about wallet selction 
+    #lists all selectable wallets
+    def get_wallets(self) -> list[WalletSelectable]:
+        return [ws for ws in self.selectable_wallets.values()]
 
-    def get_selected_wallets(self) -> list[WalletSelection]:
-        return [ws for ws in self.wallets.values() if ws.is_selected]
+    #lists selected wallets
+    def get_selected_wallets(self) -> list[WalletSelectable]:
+        return [ws for ws in self.selectable_wallets.values() if ws.is_selected]
 
+    #output path
     def set_output_path_label(self, path: Path) -> None:
         self.output_label.config(text=path)
 
+    #input
     def set_appdata_path_label(self, path):
         self.appdata_label.config(text=path)
 
@@ -98,9 +105,11 @@ class AddressIdentifierFrame(Frame):
 
         self.output_label = ttk.Label(self.button_labelframe, text="")
         self.output_label.place(x=450, y=330)
+        #fix me
         self.appdata_label = ttk.Label(self.button_labelframe, text="")
         self.appdata_label.place(x=450, y=330)
-        
+    
+        #wal canvas scroll f2
         button_canvas = tk.Canvas(self.button_labelframe, width=300, height=400, bg="#F0F0F0")
         button_canvas.pack(side=constants.LEFT)
 
@@ -117,7 +126,7 @@ class AddressIdentifierFrame(Frame):
     
     def __build_wallet_selections(self, container: Frame) -> None:
         """Builds the UI for the wallet checkboxes and dropdowns"""
-        wallets = sorted(self.wallets.values(), key=lambda w: w.wallet.name)
+        wallets = sorted(self.selectable_wallets.values(), key=lambda sw: sw.wallet.name)
 
         for i, ws in enumerate(wallets):
             checkbox = ttk.Checkbutton(
@@ -130,11 +139,9 @@ class AddressIdentifierFrame(Frame):
 
             checkbox.grid(row=[i + 1], column=[0], sticky=constants.W)
 
-            if not ws.wallet.has_browsers:
-                continue
-
-            dropdown = tk.OptionMenu(container, ws._dropdown_value, *[b.name for b in ws.wallet.browsers])
-            dropdown.grid(row=i + 1, column=1)
+            if ws.wallet.has_browsers:
+                dropdown = tk.OptionMenu(container, ws._dropdown_value, *[b.name for b in ws.wallet.browsers])
+                dropdown.grid(row=i + 1, column=1)
     
     def __build_buttons(self, container: Frame):
         """Builds the Address Identifier buttons"""
