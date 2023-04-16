@@ -105,7 +105,7 @@ def metamask_chrome_dump(ask_dir, output_dir):
 
     if default_list:
 
-        leveldb_records = ccl_chrome_ldb_scripts.ccl_leveldb.RawLevelDb(ask_dir + r"\Local\Google\Chrome\User Data\Default\Local Extension Settings\nkbihfbeogaeaoehlefnkodbefgpgknn")#change input path to \AppData\Roaming\atomic\Local Storage\leveldb 
+        leveldb_records = ccl_chrome_ldb_scripts.ccl_leveldb.RawLevelDb(ask_dir + r"\Local\Google\Chrome\User Data\Default\Local Extension Settings\nkbihfbeogaeaoehlefnkodbefgpgknn") 
         def_location = ask_dir + "/Local/Google/Chrome/User Data/Default/Local Extension Settings/nkbihfbeogaeaoehlefnkodbefgpgknn"
         
         if leveldb_records:
