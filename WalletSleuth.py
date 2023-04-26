@@ -15,6 +15,7 @@ from wallet_scripts.WS_bitkeep import bitkeep_chrome_dump, bitkeep_brave_dump
 from wallet_scripts.WS_phantom import phantom_chrome_dump, phantom_brave_dump
 from wallet_scripts.WS_operabrowser import operabrowser_dump
 from wallet_scripts.WS_guarda import guarda_chrome_dump
+from wallet_scripts.WS_brave_legacy import brave_legacy_dump
 
 selection = []
 
@@ -137,7 +138,16 @@ def address_finder_run():
             selection.append(P + '/' + 'guarda_chrome_addresses.csv')
         except:
             with open(P + '/' + 'WalletSleuth_log.txt', 'a') as log_file:
-                log_file.write("ERROR: (GUARDA - CHROME) - Wallet not found!\n")       
+                log_file.write("ERROR: (GUARDA - CHROME) - Wallet not found!\n")    
+
+    #Brave Browser Wallet
+    if brave_legacy_var.get() == 1:
+        try:
+            brave_legacy_dump(X, P)
+            selection.append(P + '/' + 'brave_legacy_addresses.csv')
+        except:
+            with open(P + '/' + 'WalletSleuth_log.txt', 'a') as log_file:
+                log_file.write("ERROR: (BRAVE LEGACY) - Wallet not found!\n")   
 
     #-------------------------------------# 
     #-------------------------------------# 
@@ -252,16 +262,19 @@ opera_browser_var = tk.IntVar()
 guarda_var = tk.IntVar()
 guarda_dropdown = tk.StringVar()
 
+brave_legacy_var = tk.IntVar()
+
+
 #WS - Checkbox Wallet Selection
 atomic_wallet_check = ttk.Checkbutton(button_frame, text = "Atomic Wallet", variable=atomic_wallet_var, onvalue=1, offvalue=0)
-atomic_wallet_check.grid(row=[1], column=[0])
+atomic_wallet_check.grid(row=[1], column=[0], sticky=W)
 
 metamask_check = ttk.Checkbutton(button_frame, text = "MetaMask", variable=metamask_var, onvalue=1, offvalue =0).grid(row=[2], column=[0], sticky=W)
 metamask_dropdown.set("Select Browser ")
 metamask_drop = tk.OptionMenu(button_frame, metamask_dropdown, "Brave", "Chrome", "Edge", "-Firefox", "-Opera")
 metamask_drop.grid(row = 2, column=1)
 
-brave_wallet_check = ttk.Checkbutton(button_frame, text = "Brave Browser", variable = brave_browser_var, onvalue=1, offvalue=0).grid(row=[3], column=[0])
+brave_wallet_check = ttk.Checkbutton(button_frame, text = "Brave Browser", variable = brave_browser_var, onvalue=1, offvalue=0).grid(row=[3], column=[0], sticky=W)
 
 bitkeep_check = ttk.Checkbutton(button_frame, text = "Bitkeep", variable=bitkeep_var, onvalue=1, offvalue =0).grid(row=[4], column=[0], sticky=W)
 bitkeep_dropdown.set("Select Browser ")
@@ -273,13 +286,14 @@ phantom_dropdown.set("Select Browser ")
 phantom_drop = tk.OptionMenu(button_frame, phantom_dropdown, "Brave", "Chrome", "-Firefox", "-Opera")
 phantom_drop.grid(row = 5, column=1)
 
-opera_wallet_check = ttk.Checkbutton(button_frame, text = "Opera Browser", variable = opera_browser_var, onvalue=1, offvalue=0).grid(row=[6], column=[0])
+opera_wallet_check = ttk.Checkbutton(button_frame, text = "Opera Browser", variable = opera_browser_var, onvalue=1, offvalue=0).grid(row=[6], column=[0], sticky=W)
 
 guarda_check = ttk.Checkbutton(button_frame, text = "Guarda", variable=guarda_var, onvalue=1, offvalue =0).grid(row=[7], column=[0], sticky=W)
 guarda_dropdown.set("Select Browser ")
 guarda_drop = tk.OptionMenu(button_frame, guarda_dropdown, "-Brave", "Chrome", "-Firefox", "-Opera")
 guarda_drop.grid(row = 7, column=1)
 
+brave_legacy_check = ttk.Checkbutton(button_frame, text = "Brave Legacy Wallet", variable = brave_legacy_var, onvalue=1, offvalue=0).grid(row=[8], column=[0], sticky=W)
 
 #Address Identifier Buttons
 run_button = ttk.Button(button_labelframe, text = "Run", command=address_finder_run)
