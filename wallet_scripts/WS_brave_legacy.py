@@ -37,7 +37,7 @@ def brave_legacy_dump(ask_dir, output_dir):
     default_list = [idx for idx in folders_list if idx.lower().startswith(default_check.lower())]
 
 
-    output_path = ask_dir + r"\MM_brave_legacy_LDB.csv"
+    output_path = ask_dir + r"\brave_legacy_LDB.csv"
     metamask_brave_output = []
 
 
@@ -93,7 +93,7 @@ def brave_legacy_dump(ask_dir, output_dir):
                         default_output = 'VARIOUS - See Documention!', metamask_address, 'Brave Legacy Extension (Brave)', profiles_ldb_loc
                         metamask_brave_output.append(default_output)
                     
-                    with open(output_dir + '/' + 'MM_brave_legacy_addresses.csv', 'a', newline='') as file:
+                    with open(output_dir + '/' + 'brave_legacy_addresses.csv', 'a', newline='') as file:
                         write = csv.writer(file) 
                         write.writerow(metamask_brave_output)
 
@@ -154,7 +154,7 @@ def brave_legacy_dump(ask_dir, output_dir):
     with open(output_dir + '/' + 'WalletSleuth_log.txt', 'a') as log_file:
         log_file.write('ACTION: (BRAVE LEGACY EXTENSION - BRAVE) - Addresses identified in Default Profile.\n')
 
-    with open(output_dir + '/' + 'MM_brave_legacy_addresses.csv', 'w', newline='') as file:
+    with open(output_dir + '/' + 'brave_legacy_addresses.csv', 'w', newline='') as file:
         write = csv.writer(file) 
         write.writerows(metamask_brave_output)
 
