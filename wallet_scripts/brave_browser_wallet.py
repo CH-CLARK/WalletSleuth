@@ -1,16 +1,24 @@
-#Generic Imports
-import sys
-import os
-import json
+#generic imports
 import csv
-import pathlib
+import json
+import os
+import sys
 
-def bravebrowser_dump(ask_dir, output_dir):
-    bravebrowser_userdata = ask_dir + "/Local/BraveSoftware/Brave-Browser/User Data"
+#controller imports
+import controller.config
+
+#CCL Imports
+import ccl_chrome_ldb_scripts.ccl_leveldb
+
+
+def brave_wallet():
+    appdata_dir = controller.config.APPDATA
+    output_dir = controller.config.OUTPUT
+
+    bravebrowser_userdata = appdata_dir + "/Local/BraveSoftware/Brave-Browser/User Data"
 
     folders_list = os.listdir(bravebrowser_userdata)
 
-    #checking for profile locations
     profiles_check  = "Profile"
     profiles_list = [idx for idx in folders_list if idx.lower().startswith(profiles_check.lower())]
     profiles_list_len = len(profiles_list)
@@ -77,10 +85,6 @@ def bravebrowser_dump(ask_dir, output_dir):
                     solana_ouput = 'VARIOUS - See Documention!', solana_addresses,  'Brave Browser Wallet', default_user_location
                     bravebrowser_output.append(solana_ouput)
 
-        with open(output_dir + '/' + 'WalletSleuth_log.txt', 'a') as log_file:
-            log_file.write('ACTION: (BRAVE BROWSER) - Addresses identified in Default.\n')
-
-
     if profiles_list:
         for x in range(profiles_list_len):
             profiles_user_location = bravebrowser_userdata + '/' + profiles_list[x] +'/Preferences'
@@ -137,11 +141,6 @@ def bravebrowser_dump(ask_dir, output_dir):
                     pro_sol_ouput = 'VARIOUS - See Documention!', pro_sol_addresses,  'Brave Browser Wallet', profiles_user_location
                     bravebrowser_output.append(pro_sol_ouput)
 
-
-        with open(output_dir + '/' + 'WalletSleuth_log.txt', 'a') as log_file:
-            log_file.write('ACTION: (BRAVE BROWSER) - Addresses identified in ' + profiles_list[x] +'.\n')
-
-
-    with open(output_dir + '/' + 'bravebrowser_addresses.csv', 'w', newline='') as output_file:
+    with open(output_dir + '/' + 'brave_browser_addresses.csv', 'w', newline='') as output_file:
         write = csv.writer(output_file)
         write.writerows(bravebrowser_output)

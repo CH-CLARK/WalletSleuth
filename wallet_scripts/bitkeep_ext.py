@@ -1,12 +1,15 @@
-#Generic Imports
-import sys
-import os
-import json
+#generic imports
 import csv
-import pathlib
+import json
+import os
+import sys
+
+#controller imports
+import controller.config
 
 #CCL Imports
 import ccl_chrome_ldb_scripts.ccl_leveldb
+
 
 maxInt = sys.maxsize
 
@@ -21,29 +24,29 @@ while True:
 
 ENCODING = "iso-8859-1"
 
-def bitkeep_chrome_dump(ask_dir, output_dir):
-    chrome_user_data = ask_dir + "/Local/Google/Chrome/User Data"
+def bitkeep_chrome():
+    appdata_dir = controller.config.APPDATA
+    output_dir = controller.config.OUTPUT
 
+    chrome_user_data = appdata_dir + "/Local/Google/Chrome/User Data"
     folders_list = os.listdir(chrome_user_data)
 
     #Checking profiles locations
-    profiles_check  = "Profile"
+    profiles_check = "Profile"
     profiles_list = [idx for idx in folders_list if idx.lower().startswith(profiles_check.lower())]
     profiles_list_len = len(profiles_list)
-
+    
     #Checking default location
     default_check = "Default"
     default_list = [idx for idx in folders_list if idx.lower().startswith(default_check.lower())]
 
-    output_path = ask_dir + r"\BK_chrome_LDB.csv"
-
+    output_path = output_dir + r"\BK_chrome_LDB.csv"
     bitkeep_chrome_output = []
 
     if profiles_list:
         for x in range(profiles_list_len):
-            profiles_ldb_loc = ask_dir + "/Local/Google/Chrome/User Data/" + profiles_list[x] + "/Local Extension Settings/jiidiaalihmmhddjgbnbgdfflelocpak"
-            profiles = profiles_list[x]
-
+            profiles_ldb_loc = appdata_dir + "/Local/Google/Chrome/User Data/" + profiles_list[x] + "/Local Extension Settings/jiidiaalihmmhddjgbnbgdfflelocpak"
+            
             if profiles_ldb_loc:
                 try:
                     leveldb_records = ccl_chrome_ldb_scripts.ccl_leveldb.RawLevelDb(profiles_ldb_loc)
@@ -80,7 +83,7 @@ def bitkeep_chrome_dump(ask_dir, output_dir):
 
 
                     json_obj = json.loads(most_recent_valuetext)
-
+                    
 
                     currency_data = json_obj.get('currency')
 
@@ -89,21 +92,16 @@ def bitkeep_chrome_dump(ask_dir, output_dir):
                         bitkeep_chrome_output.append(bk_address_output)
 
 
-                    with open(output_dir + '/' + 'BK_chrome_addresses.csv', 'a', newline='') as file:
+                    with open(output_dir + '/' + 'bitkeep_chrome_addresses.csv', 'w', newline='') as file:
                         write = csv.writer(file) 
-                        write.writerow(bitkeep_chrome_output)
-                    
-
-                    with open(output_dir + '/' + 'WalletSleuth_log.txt', 'a') as log_file:
-                        log_file.write('ACTION: (BITKEEP - CHROME) - Addresses identified in ' + profiles +'.\n')
-
-
-                except Exception:
+                        write.writerows(bitkeep_chrome_output)  
+                
+                except:
                     pass
 
     if default_list:
-        leveldb_records = ccl_chrome_ldb_scripts.ccl_leveldb.RawLevelDb(ask_dir + r"\Local\Google\Chrome\User Data\Default\Local Extension Settings\jiidiaalihmmhddjgbnbgdfflelocpak") 
-        def_location = ask_dir + "/Local/Google/Chrome/User Data/Default/Local Extension Settings/jiidiaalihmmhddjgbnbgdfflelocpak"
+        leveldb_records = ccl_chrome_ldb_scripts.ccl_leveldb.RawLevelDb(appdata_dir + r"\Local\Google\Chrome\User Data\Default\Local Extension Settings\jiidiaalihmmhddjgbnbgdfflelocpak") 
+        def_location = appdata_dir + "/Local/Google/Chrome/User Data/Default/Local Extension Settings/jiidiaalihmmhddjgbnbgdfflelocpak"
         
         if leveldb_records:
             with open(output_path, "w", encoding="utf-8", newline="") as file1:
@@ -120,7 +118,6 @@ def bitkeep_chrome_dump(ask_dir, output_dir):
                         record.seq,
                     ])
 
-                
             data_text = "accounts"
             with open(output_path, newline="", errors = 'ignore') as csvfile:
                 dataone = csv.DictReader(csvfile)
@@ -136,7 +133,7 @@ def bitkeep_chrome_dump(ask_dir, output_dir):
                 for row in dataone:
                     if row['key-text'] == data_text and int(row['seq']) == accounts_max_seq:
                         most_recent_valuetext = row['value-text']
-            
+
             json_obj = json.loads(most_recent_valuetext)
             
             currency_data = json_obj.get('currency')
@@ -147,39 +144,35 @@ def bitkeep_chrome_dump(ask_dir, output_dir):
                 
                 bitkeep_chrome_output.append(bk_address_output) 
 
-    with open(output_dir + '/' + 'WalletSleuth_log.txt', 'a') as log_file:
-        log_file.write('ACTION: (BITKEEP - CHROME) - Addresses identified in Default Profile.\n')
-
-    with open(output_dir + '/' + 'BK_chrome_addresses.csv', 'w', newline='') as file:
-        write = csv.writer(file) 
-        write.writerows(bitkeep_chrome_output)
+        with open(output_dir + '/' + 'bitkeep_chrome_addresses.csv', 'w', newline='') as file:
+            write = csv.writer(file) 
+            write.writerows(bitkeep_chrome_output)
 
     os.remove(output_path)
 
+def bitkeep_brave():
+    appdata_dir = controller.config.APPDATA
+    output_dir = controller.config.OUTPUT
 
-def bitkeep_brave_dump(ask_dir, output_dir):
-    brave_user_data = ask_dir + "/Local/BraveSoftware/Brave-Browser/User Data"
-
+    brave_user_data = appdata_dir + "/Local/BraveSoftware/Brave-Browser/User Data"
     folders_list = os.listdir(brave_user_data)
 
     #Checking profiles locations
-    profiles_check  = "Profile"
+    profiles_check = "Profile"
     profiles_list = [idx for idx in folders_list if idx.lower().startswith(profiles_check.lower())]
     profiles_list_len = len(profiles_list)
-
+    
     #Checking default location
     default_check = "Default"
     default_list = [idx for idx in folders_list if idx.lower().startswith(default_check.lower())]
 
-    output_path = ask_dir + r"\BK_brave_LDB.csv"
-
+    output_path = output_dir + r"\BK_brave_LDB.csv"
     bitkeep_brave_output = []
 
     if profiles_list:
         for x in range(profiles_list_len):
-            profiles_ldb_loc = ask_dir + "/Local/BraveSoftware/Brave-Browser/User Data/" + profiles_list[x] + "/Local Extension Settings/jiidiaalihmmhddjgbnbgdfflelocpak"
-            profiles = profiles_list[x]
-
+            profiles_ldb_loc = appdata_dir + "/Local/BraveSoftware/Brave-Browser/User Data/" + profiles_list[x] + "/Local Extension Settings/jiidiaalihmmhddjgbnbgdfflelocpak"
+            
             if profiles_ldb_loc:
                 try:
                     leveldb_records = ccl_chrome_ldb_scripts.ccl_leveldb.RawLevelDb(profiles_ldb_loc)
@@ -217,7 +210,6 @@ def bitkeep_brave_dump(ask_dir, output_dir):
 
                     json_obj = json.loads(most_recent_valuetext)
 
-
                     currency_data = json_obj.get('currency')
 
                     for x in range(len(currency_data)):
@@ -225,21 +217,17 @@ def bitkeep_brave_dump(ask_dir, output_dir):
                         bitkeep_brave_output.append(bk_address_output)
 
 
-                    with open(output_dir + '/' + 'BK_brave_addresses.csv', 'a', newline='') as file:
+                    with open(output_dir + '/' + 'bitkeep_brave_addresses.csv', 'w', newline='') as file:
                         write = csv.writer(file) 
-                        write.writerow(bitkeep_brave_output)
-                    
-
-                    with open(output_dir + '/' + 'WalletSleuth_log.txt', 'a') as log_file:
-                        log_file.write('ACTION: (BITKEEP - BRAVE) - Addresses identified in ' + profiles +'.\n')
-
-
-                except Exception:
+                        write.writerows(bitkeep_brave_output)  
+                
+                except Exception as e:
                     pass
 
     if default_list:
-        leveldb_records = ccl_chrome_ldb_scripts.ccl_leveldb.RawLevelDb(ask_dir + r"\Local\BraveSoftware\Brave-Browser\User Data\Default\Local Extension Settings\jiidiaalihmmhddjgbnbgdfflelocpak") 
-        def_location = ask_dir + "/Local/BraveSoftware/Brave-Browser/User Data/Default/Local Extension Settings/jiidiaalihmmhddjgbnbgdfflelocpak"
+        leveldb_records = ccl_chrome_ldb_scripts.ccl_leveldb.RawLevelDb(appdata_dir + r"\Local\BraveSoftware\Brave-Browser\User Data\Default\Local Extension Settings\jiidiaalihmmhddjgbnbgdfflelocpak") 
+        def_location = appdata_dir + "/Local/BraveSoftware/Brave-Software/User Data/Default/Local Extension Settings/jiidiaalihmmhddjgbnbgdfflelocpak"
+
         if leveldb_records:
             with open(output_path, "w", encoding="utf-8", newline="") as file1:
                 writes = csv.writer(file1, quoting=csv.QUOTE_ALL)
@@ -255,7 +243,6 @@ def bitkeep_brave_dump(ask_dir, output_dir):
                         record.seq,
                     ])
 
-                
             data_text = "accounts"
             with open(output_path, newline="", errors = 'ignore') as csvfile:
                 dataone = csv.DictReader(csvfile)
@@ -271,7 +258,7 @@ def bitkeep_brave_dump(ask_dir, output_dir):
                 for row in dataone:
                     if row['key-text'] == data_text and int(row['seq']) == accounts_max_seq:
                         most_recent_valuetext = row['value-text']
-            
+
             json_obj = json.loads(most_recent_valuetext)
             
             currency_data = json_obj.get('currency')
@@ -280,13 +267,10 @@ def bitkeep_brave_dump(ask_dir, output_dir):
                 
                 bk_address_output = currency_data[x]['symbol'], currency_data[x]['address'] ,'Bitkeep (Brave)', def_location
                 
-                bitkeep_brave_output.append(bk_address_output) 
+                bitkeep_brave_output.append(bk_address_output)
 
-    with open(output_dir + '/' + 'WalletSleuth_log.txt', 'a') as log_file:
-        log_file.write('ACTION: (BITKEEP - BRAVE) - Addresses identified in Default Profile.\n')
-
-    with open(output_dir + '/' + 'BK_brave_addresses.csv', 'w', newline='') as file:
-        write = csv.writer(file) 
-        write.writerows(bitkeep_brave_output)
+        with open(output_dir + '/' + 'bitkeep_Brave_addresses.csv', 'w', newline='') as file:
+            write = csv.writer(file) 
+            write.writerows(bitkeep_brave_output)
 
     os.remove(output_path)

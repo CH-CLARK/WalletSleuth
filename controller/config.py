@@ -1,0 +1,2 @@
+APPDATA = None
+OUTPUT = None
