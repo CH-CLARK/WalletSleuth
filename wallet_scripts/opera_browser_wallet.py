@@ -1,13 +1,16 @@
-#Generic Imports
-import sys
-import os
-import json
+#generic imports
 import csv
-import pathlib
+import json
+import os
+import sys
 import ast
+
+#controller imports
+import controller.config
 
 #CCL Imports
 import ccl_chrome_ldb_scripts.ccl_leveldb
+
 
 maxInt = sys.maxsize
 
@@ -22,18 +25,18 @@ while True:
 
 ENCODING = "iso-8859-1"
 
+def opera_wallet():
+    appdata_dir = controller.config.APPDATA
+    output_dir = controller.config.OUTPUT
 
-def operabrowser_dump(ask_dir,output_dir):
-    operabrowser_user_data = ask_dir + "/Roaming/Opera Software/Opera Stable/Local Extension Settings/gojhcdgcpbpfigcaejpfhfegekdgiblk"
+    operabrowser_user_data = appdata_dir + "/Roaming/Opera Software/Opera Stable/Local Extension Settings/gojhcdgcpbpfigcaejpfhfegekdgiblk"
 
     if operabrowser_user_data:
         output_data = []
 
-        output_path = ask_dir + r"\operabrowser_wallet_LDB.csv"
+        output_path = appdata_dir + r"\operabrowser_wallet_LDB.csv"
 
-        leveldb_records = ccl_chrome_ldb_scripts.ccl_leveldb.RawLevelDb(ask_dir + "/Roaming/Opera Software/Opera Stable/Local Extension Settings/gojhcdgcpbpfigcaejpfhfegekdgiblk")
-
-        location = (ask_dir + "/Roaming/Opera Software/Opera Stable/Local Extension Settings/gojhcdgcpbpfigcaejpfhfegekdgiblk")
+        leveldb_records = ccl_chrome_ldb_scripts.ccl_leveldb.RawLevelDb(appdata_dir + "/Roaming/Opera Software/Opera Stable/Local Extension Settings/gojhcdgcpbpfigcaejpfhfegekdgiblk")
 
         with open(output_path, "w", encoding="utf-8", newline="") as file1:
             writes = csv.writer(file1, quoting=csv.QUOTE_ALL, escapechar='£')
@@ -89,10 +92,7 @@ def operabrowser_dump(ask_dir,output_dir):
                 egld = ("EGLD", key, "Opera Browser Wallet", operabrowser_user_data)
                 output_data.append(egld)
 
-        with open(output_dir + '/' + 'WalletSleuth_log.txt', 'a') as log_file:
-            log_file.write('ACTION: (OPERA) - Addresses identified. \n')
-
-    with open(output_dir + '/' + 'operabrowser_addresses.csv', 'w', newline='') as output_file:
+    with open(output_dir + '/' + 'opera_browser_addresses.csv', 'w', newline='') as output_file:
         write = csv.writer(output_file)
         write.writerows(output_data)
 

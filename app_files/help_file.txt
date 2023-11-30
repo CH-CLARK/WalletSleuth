@@ -1,6 +1,6 @@
 WALLET SLEUTH
 -------------------------------------------------------------------------------------------
-Wallet Sleuth is a free triage tool that aims to quickly identify user cryptocurrency addresses from a variety of wallet applications!
+Wallet Sleuth is a triage tool that aims to quickly identify user cryptocurrency addresses from a variety of wallet applications!
 
 The huge number of wallet applications means that not every wallet may be supported right now, but if there is a specific wallet you would like to see supported please let us know via GitHub. If you like Wallet Sleuth or it has been useful to you please let us know!
 
@@ -15,3 +15,5 @@ Output - The Output directory for CSV files containing identified addresses and 
 Wallet Selection - Wallet applications to search for cryptocurrency addresses through.
 
 After running, an information box will notify you when the search is complete. Any identified cryptocurrency addresses are displayed in the output window and a log file details actions and errors in the search.
+
+It is also possible to check for previously connected hardware wallets such as Ledger and Trezor, amoung others, using the 'Connected Hardware Wallet Detector'.

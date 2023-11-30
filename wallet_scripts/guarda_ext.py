@@ -1,9 +1,11 @@
-#Generic Imports
-import sys
-import os
-import json
+#generic imports
 import csv
-import pathlib
+import json
+import os
+import sys
+
+#controller imports
+import controller.config
 
 #CCL Imports
 import ccl_chrome_ldb_scripts.ccl_leveldb
@@ -21,8 +23,12 @@ while True:
 
 ENCODING = "iso-8859-1"
 
-def guarda_chrome_dump(ask_dir, output_dir):
-    chrome_user_data = ask_dir + "/Local/Google/Chrome/User Data"
+def guarda_chrome():
+    appdata_dir = controller.config.APPDATA
+    output_dir = controller.config.OUTPUT
+
+
+    chrome_user_data = appdata_dir + "/Local/Google/Chrome/User Data"
 
     folders_list = os.listdir(chrome_user_data)
 
@@ -35,19 +41,18 @@ def guarda_chrome_dump(ask_dir, output_dir):
     default_check = "Default"
     default_list = [idx for idx in folders_list if idx.lower().startswith(default_check.lower())]
 
-    output_path = ask_dir + r"\Guarda_chrome_LDB.csv"
+    output_path = appdata_dir + r"\Guarda_chrome_LDB.csv"
 
     guarda_chrome_output = []
 
     if profiles_list:
         for x in range(profiles_list_len):
-            profiles_ldb_loc = ask_dir + "/Local/Google/Chrome/User Data/" + profiles_list[x] + "/Local Extension Settings/hpglfhgfnhbgpjdenjgmdgoeiappafln"
-            profiles = profiles_list[x]
+            profiles_ldb_loc = appdata_dir + "/Local/Google/Chrome/User Data/" + profiles_list[x] + "/Local Extension Settings/hpglfhgfnhbgpjdenjgmdgoeiappafln"
 
             if profiles_ldb_loc:
                 try:
                     leveldb_records = ccl_chrome_ldb_scripts.ccl_leveldb.RawLevelDb(profiles_ldb_loc)
-                    
+
                     with open(output_path, "w", encoding="utf-8", newline="") as file1:
                         writes = csv.writer(file1, quoting=csv.QUOTE_ALL)
                         writes.writerow(
@@ -73,7 +78,7 @@ def guarda_chrome_dump(ask_dir, output_dir):
                                 max_seq = max(max_seq_list)
                         
                         csvfile.seek(0)
-                        
+
                         for row in dataone:
                             if row['key-hex'] == data_hex and 'defaultWallet' in row['value-text'] and int(row['seq']) == max_seq:
                                 most_recent_valuetext = row['value-text']
@@ -81,13 +86,11 @@ def guarda_chrome_dump(ask_dir, output_dir):
                                 json_obj = json.loads(most_recent_valuetext)
                                 data = json_obj.get('data')
                                 wallet_data = data['wallets']
+        
 
                     for x in range(len(wallet_data)):
                         guarda_address_output = wallet_data[x]['currency'], wallet_data[x]['address'], 'Guarda (Chrome)', profiles_ldb_loc
                         guarda_chrome_output.append(guarda_address_output)
-
-                    with open(output_dir + '/' + 'WalletSleuth_log.txt', 'a') as log_file:
-                        log_file.write('ACTION: (GUARDA - CHROME) - Addresses identified in ' + profiles + '.\n')
 
                     with open(output_dir + '/' + 'guarda_chrome_addresses.csv', 'w', newline='') as file:
                         write = csv.writer(file) 
@@ -97,8 +100,8 @@ def guarda_chrome_dump(ask_dir, output_dir):
                     pass
 
     if default_list:
-        leveldb_records = ccl_chrome_ldb_scripts.ccl_leveldb.RawLevelDb(ask_dir + r"\Local\Google\Chrome\User Data\Default\Local Extension Settings\hpglfhgfnhbgpjdenjgmdgoeiappafln")
-        def_location = ask_dir + "/Local/Google/Chrome/User Data/Default/Local Extension Settings/hpglfhgfnhbgpjdenjgmdgoeiappafln"
+        leveldb_records = ccl_chrome_ldb_scripts.ccl_leveldb.RawLevelDb(appdata_dir + r"\Local\Google\Chrome\User Data\Default\Local Extension Settings\hpglfhgfnhbgpjdenjgmdgoeiappafln")
+        def_location = appdata_dir + "/Local/Google/Chrome/User Data/Default/Local Extension Settings/hpglfhgfnhbgpjdenjgmdgoeiappafln"
         
         if leveldb_records:
             with open(output_path, "w", encoding="utf-8", newline="") as file1:
@@ -125,7 +128,7 @@ def guarda_chrome_dump(ask_dir, output_dir):
                     max_seq = max(max_seq_list)
 
                 csvfile.seek(0)
-                
+
                 for row in dataone:
                     if row['key-hex'] == data_hex and 'defaultWallet' in row['value-text'] and int(row['seq']) == max_seq:
                         most_recent_valuetext = row['value-text']
@@ -137,16 +140,10 @@ def guarda_chrome_dump(ask_dir, output_dir):
 
             for x in range(len(wallet_data)):
                 guarda_address_output = wallet_data[x]['currency'], wallet_data[x]['address'], 'Guarda (Chrome)', def_location
-
                 guarda_chrome_output.append(guarda_address_output)
-
-
-    with open(output_dir + '/' + 'WalletSleuth_log.txt', 'a') as log_file:
-        log_file.write('ACTION: (GUARDA - CHROME) - Addresses identified in Default Profile.\n')
 
     with open(output_dir + '/' + 'guarda_chrome_addresses.csv', 'w', newline='') as file:
         write = csv.writer(file) 
         write.writerows(guarda_chrome_output)
 
-    
     os.remove(output_path)
