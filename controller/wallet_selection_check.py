@@ -27,7 +27,11 @@ def run_func():
 
     selection = []
 
-    print("----------")
+    with open(output_dir + '/' + 'WalletSleuth_log.txt', 'w') as log_file:
+        log_file.write('+-----------------------------------------------------------------------------------------+\n')
+        log_file.write('|----------------------------------- WALLET SLEUTH LOG -----------------------------------|\n')
+        log_file.write('+-----------------------------------------------------------------------------------------+\n')
+
     print('Run Button Pressed')
 
     #Atomic Wallet 
@@ -35,9 +39,9 @@ def run_func():
         try:
             atomic_wallet()
             selection.append(output_dir + '/' + 'atomic_wallet_addresses.csv')
-        
-        except Exception:
-            print('Atomic Wallet - Wallet Not Found')
+        except:
+            with open(output_dir + '/' + 'WalletSleuth_log.txt', 'a') as log_file:
+                log_file.write("ERROR: (ATOMIC WALLET) - Wallet not found!\n")
 
     #Bitkeep Extension
     if ('Bitkeep*', 'Brave') in Wallet_Selector.selection:

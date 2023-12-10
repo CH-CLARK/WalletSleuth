@@ -4,6 +4,7 @@ import csv
 #tkinter imports
 import tkinter as tk
 import tkinter.ttk as ttk
+from tkinter import DISABLED
 
 #view imports
 from view.address_identifier_frame import Address_Identifier_Frame
@@ -50,7 +51,8 @@ class WS_Main_Window(tk.Tk):
         self.notebook.pack()
 
         self.notebook.bind('<<NotebookTabChanged>>', self.on_tab_changed)
-    
+        self.notebook.bind('<<NotebookTabChanged>>', self.on_tab_changed2)
+
     def on_tab_changed(self, event):
         output_dir = controller.config.OUTPUT
 
@@ -77,3 +79,21 @@ class WS_Main_Window(tk.Tk):
                 path = row['Path']
                 self.output_frame.tree.insert("", 0, values=(currency, address, wallet, path))
 
+    def on_tab_changed2(self, event):
+        output_dir = controller.config.OUTPUT
+
+        tab_title = event.widget.tab('current')['text']
+        # print(tab_title)
+
+        if tab_title != "Process Log":
+            # Prevent running on other tabs
+            return
+        
+        if not output_dir:
+            return
+
+        with open(output_dir + '/' + 'WalletSleuth_log.txt', 'r') as log_file:
+            read_log = log_file.read()
+
+            self.logging_frame.logging_text_win.insert(tk.END, read_log)
+            self.logging_frame.logging_text_win.config(state=DISABLED)
