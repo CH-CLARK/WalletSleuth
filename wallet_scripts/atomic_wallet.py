@@ -70,5 +70,8 @@ def atomic_wallet():
             if i["address"] != "":
                 atomic_output = [i["id"], i["address"], "Atomic Wallet", location]
                 write.writerow(atomic_output)
+
+    with open(output_dir + '/' + 'WalletSleuth_log.txt', 'a') as log_file:
+        log_file.write('ACTION: (Atomic Wallet) - Addresses Identified.\n')
                  
     os.remove(output_path)

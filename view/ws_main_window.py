@@ -51,22 +51,15 @@ class WS_Main_Window(tk.Tk):
         self.notebook.pack()
 
         self.notebook.bind('<<NotebookTabChanged>>', self.on_tab_changed)
-        self.notebook.bind('<<NotebookTabChanged>>', self.on_tab_changed2)
 
     def on_tab_changed(self, event):
         output_dir = controller.config.OUTPUT
 
         tab_title = event.widget.tab('current')['text']
-        # print(tab_title)
-
-        if tab_title != "Output":
-            # Prevent running on other tabs
-            return
         
         if not output_dir:
             return
 
-        # Following line test for deleting rows
         self.output_frame.tree.insert("", 0, values=("currency", "address", "wallet", "path"))
         self.output_frame.tree.delete(*self.output_frame.tree.get_children())
 
@@ -78,19 +71,6 @@ class WS_Main_Window(tk.Tk):
                 wallet = row['Wallet']
                 path = row['Path']
                 self.output_frame.tree.insert("", 0, values=(currency, address, wallet, path))
-
-    def on_tab_changed2(self, event):
-        output_dir = controller.config.OUTPUT
-
-        tab_title = event.widget.tab('current')['text']
-        # print(tab_title)
-
-        if tab_title != "Process Log":
-            # Prevent running on other tabs
-            return
-        
-        if not output_dir:
-            return
 
         with open(output_dir + '/' + 'WalletSleuth_log.txt', 'r') as log_file:
             read_log = log_file.read()
