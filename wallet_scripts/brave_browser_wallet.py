@@ -144,3 +144,6 @@ def brave_wallet():
     with open(output_dir + '/' + 'brave_browser_addresses.csv', 'w', newline='') as output_file:
         write = csv.writer(output_file)
         write.writerows(bravebrowser_output)
+
+    with open(output_dir + '/' + 'WalletSleuth_log.txt', 'a') as log_file:
+        log_file.write('ACTION: Brave Browser Wallet - Addresses Identified.\n')  

@@ -32,8 +32,6 @@ def run_func():
         log_file.write('|----------------------------------- WALLET SLEUTH LOG -----------------------------------|\n')
         log_file.write('+-----------------------------------------------------------------------------------------+\n')
 
-    print('Run Button Pressed')
-
     #Atomic Wallet 
     if ('Atomic Wallet', None) in Wallet_Selector.selection:
         try:
@@ -41,30 +39,30 @@ def run_func():
             selection.append(output_dir + '/' + 'atomic_wallet_addresses.csv')
         except:
             with open(output_dir + '/' + 'WalletSleuth_log.txt', 'a') as log_file:
-                log_file.write("ERROR: (ATOMIC WALLET) - Wallet not found!\n")
+                log_file.write("ERROR: Atomic wallet - Wallet not found!\n")
 
     #Bitkeep Extension
     if ('Bitkeep*', 'Brave') in Wallet_Selector.selection:
         try:
             bitkeep_brave()
             selection.append(output_dir + '/' + 'bitkeep_brave_addresses.csv')
-        except Exception:
-            print('Bitkeep Brave - Wallet Not Found')
+        except:
+            print('ERROR: Bitkeep (Brave) - Wallet Not Found!')
 
     if ('Bitkeep*', 'Chrome') in Wallet_Selector.selection:
         try:
             bitkeep_chrome()
             selection.append(output_dir + '/' + 'bitkeep_chrome_addresses.csv')
-        except Exception:
-            print('Bitkeep Chrome - Wallet Not Found')
+        except:
+            print('ERROR: Bitkeep (Chrome) - Wallet Not Found!')
 
     #Brave Browser Wallet
     if ('Brave Browser Wallet', None) in Wallet_Selector.selection:
         try:
             brave_wallet()
             selection.append(output_dir + '/' + 'brave_browser_addresses.csv')
-        except Exception:
-            print('Brave Browser Wallet - Wallet Not Found')
+        except:
+            print('ERROR: Brave Browser Wallet - Wallet Not Found!')
 
     #Brave Browser Legacy Wallet - SPELLING ERROR
     if ('Brave Browser Legacy', None) in Wallet_Selector.selection:
@@ -72,7 +70,7 @@ def run_func():
             brave_legacy()
             selection.append(output_dir + '/' + 'brave_legacy_addresses.csv')
         except Exception:
-            print('Brave Browser Legacy Wallet - Wallet Not Found')
+            print('ERROR: Brave Browser Legacy Wallet - Wallet Not Found!')
 
     #Guarda Extension
     if ('Guarda*', 'Chrome') in Wallet_Selector.selection:

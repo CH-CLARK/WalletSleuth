@@ -148,6 +148,9 @@ def bitkeep_chrome():
             write = csv.writer(file) 
             write.writerows(bitkeep_chrome_output)
 
+        with open(output_dir + '/' + 'WalletSleuth_log.txt', 'a') as log_file:
+            log_file.write('ACTION: Bitkeep (Chrome) - Addresses Identified.\n')            
+
     os.remove(output_path)
 
 def bitkeep_brave():
@@ -272,5 +275,8 @@ def bitkeep_brave():
         with open(output_dir + '/' + 'bitkeep_Brave_addresses.csv', 'w', newline='') as file:
             write = csv.writer(file) 
             write.writerows(bitkeep_brave_output)
+
+        with open(output_dir + '/' + 'WalletSleuth_log.txt', 'a') as log_file:
+            log_file.write('ACTION: Bitkeep (Brave) - Addresses Identified.\n')  
 
     os.remove(output_path)
