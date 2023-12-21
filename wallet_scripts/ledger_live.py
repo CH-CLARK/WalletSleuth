@@ -61,3 +61,6 @@ def ledger_live_wallet():
     with open(output_dir + '/' + 'ledger_live_addresses.csv', 'w', newline='') as output_file:
         write = csv.writer(output_file)
         write.writerows(ledgerlive_output)
+        
+    with open(output_dir + '/' + 'WalletSleuth_log.txt', 'a') as log_file:
+        log_file.write('ACTION: Ledger Live Wallet - Addresses Identified.\n')            

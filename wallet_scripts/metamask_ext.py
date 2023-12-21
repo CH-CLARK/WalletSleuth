@@ -154,6 +154,9 @@ def metamask_chrome():
         write = csv.writer(file) 
         write.writerows(metamask_chrome_output)
 
+    with open(output_dir + '/' + 'WalletSleuth_log.txt', 'a') as log_file:
+        log_file.write('ACTION: Metamask (Chrome) - Addresses Identified.\n')            
+
     os.remove(output_path)
 
 def metamask_edge():
@@ -229,9 +232,6 @@ def metamask_edge():
                         write = csv.writer(file)
                         write.writerows(metamask_edge_output)
 
-
-                    #logging here
-
                 except Exception as e:
                     pass
     
@@ -285,6 +285,9 @@ def metamask_edge():
     with open(output_dir + '/' + 'metamask_edge_addresses.csv', 'w', newline='') as file:
         write = csv.writer(file) 
         write.writerows(metamask_edge_output)
+
+    with open(output_dir + '/' + 'WalletSleuth_log.txt', 'a') as log_file:
+        log_file.write('ACTION: Metamask (Edge) - Addresses Identified.\n')            
 
     os.remove(output_path)
 
@@ -416,4 +419,7 @@ def metamask_brave():
         write = csv.writer(file) 
         write.writerows(metamask_brave_output)
     
+    with open(output_dir + '/' + 'WalletSleuth_log.txt', 'a') as log_file:
+        log_file.write('ACTION: Metamask (Brave) - Addresses Identified.\n')            
+
     os.remove(output_path)

@@ -146,4 +146,7 @@ def guarda_chrome():
         write = csv.writer(file) 
         write.writerows(guarda_chrome_output)
 
+    with open(output_dir + '/' + 'WalletSleuth_log.txt', 'a') as log_file:
+        log_file.write('ACTION: Guarda (Chrome) - Addresses Identified.\n')            
+
     os.remove(output_path)

@@ -57,7 +57,6 @@ class Address_Identifier_Frame(ttk.Frame):
             ask_dir = askdirectory(title='Select AppData Folder')
             entry=ttk.Label(self.right_canvas, text=ask_dir).place(x=135, y=310)
             controller.config.APPDATA = ask_dir
-            print('Selected Appdata Path: ', controller.config.APPDATA)
         appdata_button = tk.Button(self.right_canvas, text='Appdata Directory', command=select_appdata)
         appdata_button.place(x=10, y=310, height=25, width=120)
 
@@ -66,7 +65,6 @@ class Address_Identifier_Frame(ttk.Frame):
             output_dir = askdirectory(title='Select Output Folder')
             entry=ttk.Label(self.right_canvas, text=output_dir).place(x=135, y=340)
             controller.config.OUTPUT = output_dir
-            print('Selected Output Path: ', controller.config.OUTPUT)
         output_button = tk.Button(self.right_canvas, text='Output Directory', command=select_output)
         output_button.place(x=10, y=340, height=25, width=120)
 

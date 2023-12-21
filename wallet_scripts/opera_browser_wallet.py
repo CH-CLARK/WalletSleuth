@@ -96,4 +96,8 @@ def opera_wallet():
         write = csv.writer(output_file)
         write.writerows(output_data)
 
+    with open(output_dir + '/' + 'WalletSleuth_log.txt', 'a') as log_file:
+        log_file.write('ACTION: Opera Browser Wallet - Addresses Identified.\n')            
+
+
     os.remove(output_path)
