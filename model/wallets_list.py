@@ -6,6 +6,6 @@ names = {
     'Guarda*': {'Chrome'},
     'MetaMask*': {'Brave', 'Chrome', 'Edge'},
     'Opera Browser Wallet': None,
-    'Phantom* WIP': {'Brave', 'Chrome'}, #WIP
+    # 'Phantom* WIP': {'Brave', 'Chrome'}, #WIP
     'Ledger Live': None,
     }
