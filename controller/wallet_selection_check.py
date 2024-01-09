@@ -65,7 +65,7 @@ def run_func():
             brave_wallet()
             selection.append(output_dir + '/' + 'brave_browser_addresses.csv')
         except:
-            print('ERROR: Brave Browser Wallet - Wallet Not Found!\n')
+            log_file.write('ERROR: Brave Browser Wallet - Wallet Not Found!\n')
 
     #Brave Browser Legacy Wallet - SPELLING ERROR
     if ('Brave Browser Legacy', None) in Wallet_Selector.selection:

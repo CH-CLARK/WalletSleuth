@@ -16,7 +16,7 @@ from controller.wallet_selection_check import run_func
 
 #wallet imports
 from wallet_scripts.hardware_wallet_scan import hardware_wallet_scan
-
+from wallet_scripts.wallet_scan import wallet_scan
 
 class Address_Identifier_Frame(ttk.Frame):
     def __init__(self, container: ttk.Notebook) -> None:
@@ -48,9 +48,8 @@ class Address_Identifier_Frame(ttk.Frame):
         HW_wallet_button = tk.Button(self.right_canvas, text='Connected Hardware Wallet Detector',justify='center', command = hardware_wallet_scan)
         HW_wallet_button.place(x=10, y=200, height=25, width=385)
 
-        ##intention is to add a 'Wallet Scan' button that can can for wallets and inform the user what checkbuttons they should select... it is on hold for now.
-        # wallet_scan_button = tk.Button(self.right_canvas, text='Installed Wallet Detector',justify='center', command = run_func)
-        # wallet_scan_button.place(x=10, y=230, height=25, width=385)
+        wallet_scan_button = tk.Button(self.right_canvas, text='Installed Wallet Detector',justify='center', command = wallet_scan)
+        wallet_scan_button.place(x=10, y=230, height=25, width=385)
 
         #AppData Button
         def select_appdata():
