@@ -48,7 +48,7 @@ class Address_Identifier_Frame(ttk.Frame):
         HW_wallet_button = tk.Button(self.right_canvas, text='Connected Hardware Wallet Detector',justify='center', command = hardware_wallet_scan)
         HW_wallet_button.place(x=10, y=200, height=25, width=385)
 
-        wallet_scan_button = tk.Button(self.right_canvas, text='Installed Wallet Detector',justify='center', command = wallet_scan)
+        wallet_scan_button = tk.Button(self.right_canvas, text='Wallet Detector',justify='center', command = wallet_scan)
         wallet_scan_button.place(x=10, y=230, height=25, width=385)
 
         #AppData Button
@@ -58,6 +58,7 @@ class Address_Identifier_Frame(ttk.Frame):
             controller.config.APPDATA = ask_dir
         appdata_button = tk.Button(self.right_canvas, text='Appdata Directory', command=select_appdata)
         appdata_button.place(x=10, y=310, height=25, width=120)
+        
 
         #OutputButton
         def select_output():
