@@ -11,9 +11,9 @@ import controller.config
 import ccl_chrome_ldb_scripts.ccl_leveldb
 
 
-ledgerlive_output = []
-
 def ledger_live_wallet():
+
+    ledgerlive_output = []
     appdata_dir = controller.config.APPDATA
     output_dir = controller.config.OUTPUT
 
