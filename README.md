@@ -2,8 +2,8 @@
 Wallet Sleuth is a triage tool that aims to quickly identify user cryptocurrency addresses from a variety of wallet applications!
 
 <p float="center">
-  <img src="https://github.com/ConnorHClark/WalletSleuth/assets/117690646/c0027ccb-a079-4084-b47c-e58112b81821" width="45%" />
-  <img src="https://github.com/ConnorHClark/WalletSleuth/assets/117690646/74ff07f6-8d14-4926-ab3b-08cac8eb2971" width="45%" />
+  <img src="https://github.com/CH-CLARK/WalletSleuth/assets/117690646/c0027ccb-a079-4084-b47c-e58112b81821" width="45%" />
+  <img src="https://github.com/CH-CLARK/WalletSleuth/assets/117690646/74ff07f6-8d14-4926-ab3b-08cac8eb2971" width="45%" />
 </p>
 
 ## Usage
@@ -23,8 +23,8 @@ Connected Hardware Wallet Detector - Check for previously connected Hardware Wal
 Wallet Detector - Determine what wallets to scan for addresses on by identifying currently installed wallets.
 
 <p float="center">
-  <img src="https://github.com/ConnorHClark/WalletSleuth/assets/117690646/7dc9bcc1-379f-4c24-8ce9-6637252dfaa1" width="45%" />
-  <img src="https://github.com/ConnorHClark/WalletSleuth/assets/117690646/34d5f6c2-9aac-4206-92c3-bfb6e4881078" width="45%" />
+  <img src="https://github.com/CH-CLARK/WalletSleuth/assets/117690646/7dc9bcc1-379f-4c24-8ce9-6637252dfaa1" width="45%" />
+  <img src="https://github.com/CH-CLARK/WalletSleuth/assets/117690646/34d5f6c2-9aac-4206-92c3-bfb6e4881078" width="45%" />
 </p>
 
 ## Supported Wallets
