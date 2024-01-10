@@ -53,6 +53,7 @@ class Address_Identifier_Frame(ttk.Frame):
 
         #AppData Button
         def select_appdata():
+            entry=ttk.Label(self.right_canvas, text='                                                                                                                       ').place(x=135, y=310)
             ask_dir = askdirectory(title='Select AppData Folder')
             entry=ttk.Label(self.right_canvas, text=ask_dir).place(x=135, y=310)
             controller.config.APPDATA = ask_dir
@@ -62,6 +63,7 @@ class Address_Identifier_Frame(ttk.Frame):
 
         #OutputButton
         def select_output():
+            entry=ttk.Label(self.right_canvas, text='                                                                                                                       ').place(x=135, y=340)
             output_dir = askdirectory(title='Select Output Folder')
             entry=ttk.Label(self.right_canvas, text=output_dir).place(x=135, y=340)
             controller.config.OUTPUT = output_dir
