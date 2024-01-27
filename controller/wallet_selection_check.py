@@ -19,6 +19,7 @@ from wallet_scripts.brave_browser_wallet import brave_wallet
 from wallet_scripts.guarda_ext import guarda_chrome
 from wallet_scripts.opera_browser_wallet import opera_wallet
 from wallet_scripts.ledger_live import ledger_live_wallet
+from wallet_scripts.phantom_ext import phantom_chrome
 
 
 def run_func():
@@ -125,7 +126,7 @@ def run_func():
         if ('Ledger Live', None) in Wallet_Selector.selection:
             try:
                 ledger_live_wallet()
-                selection.append(output_dir + '/' + 'ledger_live_addresses.csv' )
+                selection.append(output_dir + '/' + 'ledger_live_addresses.csv')
             except:
                 with open(output_dir + '/' + 'WalletSleuth_log.txt', 'a') as log_file:
                     log_file.write('ERROR: Ledger Live Wallet - Wallet Not Found!\n')
@@ -135,7 +136,12 @@ def run_func():
             print('Phantom Brave function ran')
 
         if ('Phantom*', 'Chrome') in Wallet_Selector.selection:
-            print('Phantom Chrome function ran')
+            try:
+                phantom_chrome()
+                selection.append(output_dir + '/' + 'phantom_chrome_addresses.csv')
+            except:
+                with open(output_dir + '/' + 'WalletSleuth_log.txt', 'a') as log_file:
+                    log_file.write('ERROR: Phantom (Chrome) - Wallet Not Found!\n')
 
     #---------------------------------#
     #---------------------------------#

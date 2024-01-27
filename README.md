@@ -34,17 +34,15 @@ Wallet Detector - Determine what wallets to scan for addresses on by identifying
 - Guarda (Chrome)
 - Ledger Live
 - MetaMask (Brave, Chrome, Edge)
-- Opera Browseer Wallet
-- Phantom (Chrome) __WIP__
+- Opera Browser Wallet
+- Phantom (Chrome)
 
 ## Limitations
-<details>
-  <summary>Click to expand/collapse</summary>
-  - Currently the wallet finder function is limited to wallets in the 'Default' browser user profile, but the address finder will check all profiles for the selected browser.
-  - Support for Windows OS only.
-  - Requires Python 3.8 or higher
+- Currently the wallet finder function is limited to wallets in the 'Default' browser user profile, but the address finder will check all profiles for the selected browser.
+- Support for Windows OS only.
+- Requires Python 3.8 or higher
   
-</details>
+
 
 <p align="center">
   <strong><span style="font-size: 36px;">REMEMBER TO CONFIRM YOU OWN FINDINGS!</span></strong>
