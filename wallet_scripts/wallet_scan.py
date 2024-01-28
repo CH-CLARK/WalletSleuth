@@ -26,7 +26,9 @@ paths = {
     r'Local\Microsoft\Edge\User Data\Default\Local Extension Settings\ejbalbakoplchlghecdalmeeeajnimhm' : 'MetaMask (Edge)',
     r'Local\BraveSoftware\Brave-Browser\User Data\Default\Local Extension Settings\nkbihfbeogaeaoehlefnkodbefgpgknn' : 'MetaMask (Brave)',
 
-    r'Roaming\Opera Software\Opera Stable\Local Extension Settings\gojhcdgcpbpfigcaejpfhfegekdgiblk' : 'Opera Browser Wallet'
+    r'Roaming\Opera Software\Opera Stable\Local Extension Settings\gojhcdgcpbpfigcaejpfhfegekdgiblk' : 'Opera Browser Wallet',
+
+    r'Local\Google\Chrome\User Data\Default\Local Extension Settings\bfnaelmomeimhlpmgjnjophhpkkoljpa' : 'Phantom (Chrome)'
 }
 
 
