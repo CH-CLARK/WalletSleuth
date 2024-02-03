@@ -29,7 +29,7 @@ Wallet Detector - Determine what wallets to scan for addresses on by identifying
 
 ## Supported Wallets
 - Atomic Wallet
-- Bitkeep (Brave, Chrome)
+- Bitget (Brave, Chrome) (Formerly Bitkeep)
 - Brave Browser Wallet
 - Guarda (Chrome)
 - Ledger Live

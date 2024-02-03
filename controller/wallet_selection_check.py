@@ -45,21 +45,21 @@ def run_func():
                     log_file.write("ERROR: Atomic wallet - Wallet not found!\n")
 
         #Bitkeep Extension
-        if ('Bitkeep*', 'Brave') in Wallet_Selector.selection:
+        if ('Bitget*', 'Brave') in Wallet_Selector.selection:
             try:
                 bitkeep_brave()
                 selection.append(output_dir + '/' + 'bitkeep_brave_addresses.csv')
             except:
                 with open(output_dir + '/' + 'WalletSleuth_log.txt', 'a') as log_file:
-                    log_file.write('ERROR: Bitkeep (Brave) - Wallet Not Found!\n')
+                    log_file.write('ERROR: Bitget (Brave) - Wallet Not Found!\n')
 
-        if ('Bitkeep*', 'Chrome') in Wallet_Selector.selection:
+        if ('Bitget*', 'Chrome') in Wallet_Selector.selection:
             try:
                 bitkeep_chrome()
                 selection.append(output_dir + '/' + 'bitkeep_chrome_addresses.csv')
             except:
                 with open(output_dir + '/' + 'WalletSleuth_log.txt', 'a') as log_file:
-                    log_file.write('ERROR: Bitkeep (Chrome) - Wallet Not Found!\n')
+                    log_file.write('ERROR: Bitget (Chrome) - Wallet Not Found!\n')
 
         #Brave Browser Wallet
         if ('Brave Browser Wallet', None) in Wallet_Selector.selection:

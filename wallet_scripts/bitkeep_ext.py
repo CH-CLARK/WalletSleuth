@@ -1,3 +1,7 @@
+'''
+As of August 2023 formerly Bitkeep, now Bitget. I will keep all other varibles the same for now, but ammend output text.
+
+'''
 #generic imports
 import csv
 import json
@@ -88,7 +92,7 @@ def bitkeep_chrome():
                     currency_data = json_obj.get('currency')
 
                     for x in range(len(currency_data)):
-                        bk_address_output = currency_data[x]['symbol'], currency_data[x]['address'], 'Bitkeep (Chrome)', profiles_ldb_loc
+                        bk_address_output = currency_data[x]['symbol'], currency_data[x]['address'], 'Bitget (Chrome)', profiles_ldb_loc
                         bitkeep_chrome_output.append(bk_address_output)
 
 
@@ -140,7 +144,7 @@ def bitkeep_chrome():
 
             for x in range(len(currency_data)):
                 
-                bk_address_output = currency_data[x]['symbol'], currency_data[x]['address'] ,'Bitkeep (Chrome)', def_location
+                bk_address_output = currency_data[x]['symbol'], currency_data[x]['address'] ,'Bitget (Chrome)', def_location
                 
                 bitkeep_chrome_output.append(bk_address_output) 
 
@@ -149,7 +153,7 @@ def bitkeep_chrome():
             write.writerows(bitkeep_chrome_output)
 
         with open(output_dir + '/' + 'WalletSleuth_log.txt', 'a') as log_file:
-            log_file.write('ACTION: Bitkeep (Chrome) - Addresses Identified.\n')            
+            log_file.write('ACTION: Bitget (Chrome) - Addresses Identified.\n')            
 
     os.remove(output_path)
 
@@ -216,7 +220,7 @@ def bitkeep_brave():
                     currency_data = json_obj.get('currency')
 
                     for x in range(len(currency_data)):
-                        bk_address_output = currency_data[x]['symbol'], currency_data[x]['address'], 'Bitkeep (Brave)', profiles_ldb_loc
+                        bk_address_output = currency_data[x]['symbol'], currency_data[x]['address'], 'Bitget (Brave)', profiles_ldb_loc
                         bitkeep_brave_output.append(bk_address_output)
 
 
@@ -268,7 +272,7 @@ def bitkeep_brave():
 
             for x in range(len(currency_data)):
                 
-                bk_address_output = currency_data[x]['symbol'], currency_data[x]['address'] ,'Bitkeep (Brave)', def_location
+                bk_address_output = currency_data[x]['symbol'], currency_data[x]['address'] ,'Bitget (Brave)', def_location
                 
                 bitkeep_brave_output.append(bk_address_output)
 
@@ -277,6 +281,6 @@ def bitkeep_brave():
             write.writerows(bitkeep_brave_output)
 
         with open(output_dir + '/' + 'WalletSleuth_log.txt', 'a') as log_file:
-            log_file.write('ACTION: Bitkeep (Brave) - Addresses Identified.\n')  
+            log_file.write('ACTION: Bitget (Brave) - Addresses Identified.\n')  
 
     os.remove(output_path)

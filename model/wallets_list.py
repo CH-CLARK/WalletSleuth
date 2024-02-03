@@ -1,6 +1,6 @@
 names = {
     'Atomic Wallet': None,
-    'Bitkeep*': {'Brave', 'Chrome'},
+    'Bitget*': {'Brave', 'Chrome'},
     'Brave Browser Wallet': None,
     'Brave Browser Legacy': None,
     'Guarda*': {'Chrome'},

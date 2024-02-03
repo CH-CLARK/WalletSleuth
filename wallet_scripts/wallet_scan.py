@@ -12,8 +12,8 @@ from tkinter import messagebox
 paths = {
     r'Roaming\atomic' : 'Atomic Wallet',
     
-    r'Local\Google\Chrome\User Data\Default\Local Extension Settings\jiidiaalihmmhddjgbnbgdfflelocpak' : 'Bitkeep (Chrome)',
-    r'Local\BraveSoftware\Brave-Browser\User Data\Default\Local Extension Settings\jiidiaalihmmhddjgbnbgdfflelocpak' : 'Bitkeep (Brave)',
+    r'Local\Google\Chrome\User Data\Default\Local Extension Settings\jiidiaalihmmhddjgbnbgdfflelocpak' : 'Bitget (Chrome)',
+    r'Local\BraveSoftware\Brave-Browser\User Data\Default\Local Extension Settings\jiidiaalihmmhddjgbnbgdfflelocpak' : 'Bitget (Brave)',
 
     r'Local\BraveSoftware\Brave-Browser\User Data\Default\Local Extension Settings\odbfpeeihdkbihmopkbjmoonfanlbfcl' : 'Brave Browser Legacy',
     r'Local\BraveSoftware\Brave-Browser\User Data\Default\Preferences' : 'Brave Browser Wallet',
