@@ -1,5 +1,5 @@
 # WalletSleuth
-Wallet Sleuth is a triage tool that aims to quickly identify user cryptocurrency addresses from a variety of wallet applications!
+Wallet Sleuth is a triage tool that aims to quickly identify user cryptocurrency addresses and transactions from a variety of wallet applications!
 
 <p float="center">
   <img src="https://github.com/CH-CLARK/WalletSleuth/assets/117690646/c0027ccb-a079-4084-b47c-e58112b81821" width="45%" />
@@ -36,12 +36,13 @@ Wallet Detector - Determine what wallets to scan for addresses on by identifying
 - MetaMask (Brave, Chrome, Edge)
 - Opera Browser Wallet
 - Phantom (Chrome)
+- Exodus Wallet
 
 ## Limitations
 - Currently the wallet finder function is limited to wallets in the 'Default' browser user profile, but the address finder will check all profiles for the selected browser.
 - Support for Windows OS only.
 - Requires Python 3.8 or higher
-  
+- To parse Transaction IDs from the cache, the brotli extension is required.
 
 
 
