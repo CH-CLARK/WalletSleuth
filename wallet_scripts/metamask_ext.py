@@ -91,14 +91,12 @@ def metamask_chrome():
                     for key in identities_data:
                         new_variable = identities_data[key]
                         metamask_address = new_variable["address"]
-                        profiles_output = 'VARIOUS - See Documention!', metamask_address, 'MetaMask (Chrome)', profiles_ldb_loc
+                        profiles_output = 'Address', 'VARIOUS - See Documention!', metamask_address, 'MetaMask (Chrome)', profiles_ldb_loc
                         metamask_chrome_output.append(profiles_output)
 
                     with open(output_dir + '/' + 'metamask_chrome_addresses.csv', 'w', newline='') as file:
                         write = csv.writer(file)
                         write.writerows(metamask_chrome_output)
-
-                    #logging here
 
                 except Exception as e:
                     pass
@@ -147,7 +145,7 @@ def metamask_chrome():
             for key in identities_data:
                 new_variable = identities_data[key]
                 metamask_address = new_variable["address"]
-                profiles_output = 'VARIOUS - See Documention!', metamask_address, 'MetaMask (Chrome)', def_location
+                profiles_output = 'Address', 'VARIOUS - See Documention!', metamask_address, 'MetaMask (Chrome)', def_location
                 metamask_chrome_output.append(profiles_output)
 
     with open(output_dir + '/' + 'metamask_chrome_addresses.csv', 'w', newline='') as file:
@@ -225,7 +223,7 @@ def metamask_edge():
                     for key in identities_data:
                         new_variable = identities_data[key]
                         metamask_address = new_variable["address"]
-                        profiles_output = 'VARIOUS - See Documention!', metamask_address, 'MetaMask (Edge)', profiles_ldb_loc
+                        profiles_output = 'Address', 'VARIOUS - See Documention!', metamask_address, 'MetaMask (Edge)', profiles_ldb_loc
                         metamask_edge_output.append(profiles_output)
 
                     with open(output_dir + '/' + 'metamask_edge_addresses.csv', 'w', newline='') as file:
@@ -279,7 +277,7 @@ def metamask_edge():
             for key in identities_data:
                 new_variable = identities_data[key]
                 metamask_address = new_variable["address"]
-                default_output = 'VARIOUS - See Documention!', metamask_address, 'MetaMask (Edge)', def_location
+                default_output = 'Address', 'VARIOUS - See Documention!', metamask_address, 'MetaMask (Edge)', def_location
                 metamask_edge_output.append(default_output)
 
     with open(output_dir + '/' + 'metamask_edge_addresses.csv', 'w', newline='') as file:
@@ -357,14 +355,12 @@ def metamask_brave():
                     for key in identities_data:
                         new_variable = identities_data[key]
                         metamask_address = new_variable["address"]
-                        profiles_output = 'VARIOUS - See Documention!', metamask_address, 'MetaMask (Brave)', profiles_ldb_loc
+                        profiles_output = 'Address', 'VARIOUS - See Documention!', metamask_address, 'MetaMask (Brave)', profiles_ldb_loc
                         metamask_brave_output.append(profiles_output)
 
                     with open(output_dir + '/' + 'metamask_brave_addresses.csv', 'w', newline='') as file:
                         write = csv.writer(file)
                         write.writerows(metamask_brave_output)
-
-                   #logging here
 
                 except Exception as e:
                     pass
@@ -412,7 +408,7 @@ def metamask_brave():
             for key in identities_data:
                 new_variable = identities_data[key]
                 metamask_address = new_variable["address"]
-                default_output = 'VARIOUS - See Documention!', metamask_address, 'MetaMask (Brave)', def_location
+                default_output = 'Address', 'VARIOUS - See Documention!', metamask_address, 'MetaMask (Brave)', def_location
                 metamask_brave_output.append(default_output)
 
     with open(output_dir + '/' + 'metamask_brave_addresses.csv', 'w', newline='') as file:

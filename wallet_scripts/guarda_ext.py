@@ -89,7 +89,7 @@ def guarda_chrome():
         
 
                     for x in range(len(wallet_data)):
-                        guarda_address_output = wallet_data[x]['currency'], wallet_data[x]['address'], 'Guarda (Chrome)', profiles_ldb_loc
+                        guarda_address_output = 'Address', wallet_data[x]['currency'], wallet_data[x]['address'], 'Guarda (Chrome)', profiles_ldb_loc
                         guarda_chrome_output.append(guarda_address_output)
 
                     with open(output_dir + '/' + 'guarda_chrome_addresses.csv', 'w', newline='') as file:
@@ -139,7 +139,7 @@ def guarda_chrome():
             wallet_data = data['wallets']
 
             for x in range(len(wallet_data)):
-                guarda_address_output = wallet_data[x]['currency'], wallet_data[x]['address'], 'Guarda (Chrome)', def_location
+                guarda_address_output = 'Address', wallet_data[x]['currency'], wallet_data[x]['address'], 'Guarda (Chrome)', def_location
                 guarda_chrome_output.append(guarda_address_output)
 
     with open(output_dir + '/' + 'guarda_chrome_addresses.csv', 'w', newline='') as file:

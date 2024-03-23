@@ -1,6 +1,6 @@
 WALLET SLEUTH
 -------------------------------------------------------------------------------------------
-Wallet Sleuth is a triage tool that aims to quickly identify user cryptocurrency addresses from a variety of wallet applications!
+Wallet Sleuth is a triage tool that aims to quickly identify user cryptocurrency addresses and transactions from a variety of wallet applications!
 
 -------------------------------------------------------------------------------------------
 **USAGE**

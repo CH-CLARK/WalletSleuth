@@ -29,7 +29,6 @@ def ledger_live_wallet():
     for keys in accounts_obj:
         accounts_data_obj = keys['data']
 
-        #Bitcoin and related requirements
         try:
             bit_resources = accounts_data_obj['bitcoinResources']
             walletAccount_obj = bit_resources['walletAccount']
@@ -38,11 +37,11 @@ def ledger_live_wallet():
             xpub_data_obj = xpub_obj['data']
             addycache = xpub_data_obj['addressCache']
 
-            xpub_addy = params_obj['currency'], params_obj['xpub'], 'Ledger Live', ledger_app_data
+            xpub_addy = 'Extended Public Key (XPUB)', params_obj['currency'], params_obj['xpub'], 'Ledger Live', ledger_app_data
             ledgerlive_output.append(xpub_addy)
             
             for k, v in addycache.items():
-                other_addys = params_obj['currency'], v, 'Ledger Live', ledger_app_data
+                other_addys = 'Address', params_obj['currency'], v, 'Ledger Live', ledger_app_data
                 ledgerlive_output.append(other_addys)
 
         except Exception as e:
@@ -52,7 +51,7 @@ def ledger_live_wallet():
             fresh_addresses = accounts_data_obj['freshAddress']
             currency_id = accounts_data_obj['currencyId']
             if '0x' in fresh_addresses:
-                eth_type_addy = currency_id, fresh_addresses, 'Ledger Live', ledger_app_data
+                eth_type_addy = 'Address', currency_id, fresh_addresses, 'Ledger Live', ledger_app_data
                 ledgerlive_output.append(eth_type_addy)
 
         except Exception as e:

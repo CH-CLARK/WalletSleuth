@@ -19,15 +19,18 @@ TITLE = "Wallet Sleuth 2.0"
 WIDTH = 750
 HEIGHT = 500
 
+# Function to get center screen geometry
 def get_center_screen_geometry(width: int, height: int, tk_instance: tk.Tk) -> str:
     x = int(tk_instance.winfo_screenwidth() / 2 - width / 2)
     y = int(tk_instance.winfo_screenheight() / 2 - height / 2)
-
     return f"{width}x{height}+{x}+{y}"
 
+# WS_Main_Window class
 class WS_Main_Window(tk.Tk):
     def __init__(self) -> None:
         super().__init__()
+
+    
 
         # Window config
         self.title(TITLE)
@@ -37,12 +40,14 @@ class WS_Main_Window(tk.Tk):
         # Notebook
         self.notebook = ttk.Notebook(self, width=750, height=500)
 
+        # Create instances of frames
         self.address_identifier_frame = Address_Identifier_Frame(self.notebook)
         self.output_frame = Output_Frame(self.notebook)
         self.logging_frame = Logging_Frame(self.notebook)
         self.help_frame = Help_Frame(self.notebook)
 
-        self.notebook.add(self.address_identifier_frame, text='Address Identifier')
+        # Add frames to notebook
+        self.notebook.add(self.address_identifier_frame, text='Wallet Sleuth')
         self.notebook.add(self.output_frame, text='Output')
         self.notebook.add(self.logging_frame, text='Process Log')
         self.notebook.add(self.help_frame, text='Help')
@@ -51,6 +56,7 @@ class WS_Main_Window(tk.Tk):
 
         self.notebook.bind('<<NotebookTabChanged>>', self.on_tab_changed)
 
+    # Method to handle tab change
     def on_tab_changed(self, event):
         output_dir = controller.config.OUTPUT
 
@@ -64,22 +70,27 @@ class WS_Main_Window(tk.Tk):
         # Reload content from the file when the tab changes
         if tab_title == 'Output':
             self.load_output_content(output_dir)
+            # self.output_frame.color_code_btc_rows()  #apply color to row - soemthign for a later date maybe
+
         if tab_title == 'Process Log':
             self.load_log_content(output_dir)
 
+    # Method to load output content
     def load_output_content(self, output_dir):
-        self.output_frame.tree.insert("", 0, values=("currency", "address", "wallet", "path"))
+        self.output_frame.tree.insert("", 0, values=("type", "currency", "address", "wallet", "path"))
         self.output_frame.tree.delete(*self.output_frame.tree.get_children())
         
         with open(f'{output_dir}/output.csv') as f:
             reader = csv.DictReader(f, delimiter=',')
             for row in reader:
+                data_type = row['Type']
                 currency = row['Currency']
                 address = row['Address']
                 wallet = row['Wallet']
                 path = row['Path']
-                self.output_frame.tree.insert("", 0, values=(currency, address, wallet, path))
+                self.output_frame.tree.insert("", 0, values=(data_type, currency, address, wallet, path))
 
+    # Method to load log content
     def load_log_content(self, output_dir):
         with open(output_dir + '/' + 'WalletSleuth_log.txt', 'r') as log_file:
             read_log = log_file.read()

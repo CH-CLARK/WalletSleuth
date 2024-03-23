@@ -8,4 +8,5 @@ names = {
     'Opera Browser Wallet': None,
     'Phantom*': {'Chrome'},
     'Ledger Live': None,
+    'Exodus Wallet': None,
     }

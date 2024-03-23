@@ -20,6 +20,7 @@ from wallet_scripts.guarda_ext import guarda_chrome
 from wallet_scripts.opera_browser_wallet import opera_wallet
 from wallet_scripts.ledger_live import ledger_live_wallet
 from wallet_scripts.phantom_ext import phantom_chrome
+from wallet_scripts.exodus_wallet import exodus_wallet
 
 
 def run_func():
@@ -143,12 +144,21 @@ def run_func():
                 with open(output_dir + '/' + 'WalletSleuth_log.txt', 'a') as log_file:
                     log_file.write('ERROR: Phantom (Chrome) - Wallet Not Found!\n')
 
+        #Exodus Wallet 
+        if ('Exodus Wallet', None) in Wallet_Selector.selection:
+            try:
+                exodus_wallet()
+                selection.append(output_dir + '/' + 'exodus_wallet_transactions.csv')
+            except:
+                with open(output_dir + '/' + 'WalletSleuth_log.txt', 'a') as log_file:
+                    log_file.write("ERROR: Exodus Wallet - Wallet not found!\n")
+
     #---------------------------------#
     #---------------------------------#
         #create output file
         with open(output_dir + '/' + 'output.csv', 'w', newline='') as f:
             writer = csv.writer(f)
-            writer.writerow(['Currency', 'Address', 'Wallet', 'Path'])
+            writer.writerow(['Type', 'Currency', 'Address', 'Wallet', 'Path'])
             for file in selection:
                 with open(file, 'r', newline='') as f1:
                     reader = csv.reader(f1)

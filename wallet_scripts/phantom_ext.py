@@ -33,12 +33,10 @@ def phantom_chrome():
 
     folders_list = os.listdir(chrome_user_data)
 
-    #Checking profiles locations
     profiles_check = "Profile"
     profiles_list = [idx for idx in folders_list if idx.lower().startswith(profiles_check.lower())]
     profiles_list_len = len(profiles_list)
 
-    #Checking default location
     default_check = "Default"
     default_list = [idx for idx in folders_list if idx.lower().startswith(default_check.lower())]
 
@@ -103,7 +101,7 @@ def phantom_chrome():
                             else:
                                 mod_chain = chain_type
                         
-                            phantom_address_output = mod_chain, public_key ,'Phantom (Chrome)', profiles_ldb_loc
+                            phantom_address_output = 'Address', mod_chain, public_key ,'Phantom (Chrome)', profiles_ldb_loc
                             phantom_chrome_output.append(phantom_address_output)
 
                     with open(output_dir + '/' + 'phantom_chrome_addresses.csv', 'w', newline='') as file:
@@ -168,7 +166,7 @@ def phantom_chrome():
                     else:
                         mod_chain = chain_type
                     
-                    phantom_address_output = mod_chain, public_key ,'Phantom (Chrome)', def_location
+                    phantom_address_output = 'Address', mod_chain, public_key ,'Phantom (Chrome)', def_location
                     phantom_chrome_output.append(phantom_address_output)
 
     with open(output_dir + '/' + 'phantom_chrome_addresses.csv', 'w', newline='') as file:

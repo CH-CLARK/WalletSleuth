@@ -90,7 +90,7 @@ def brave_legacy():
                     for key in identities_data:
                         new_variable = identities_data[key]
                         brave_legacy_address = new_variable["address"]
-                        profiles_output = 'VARIOUS - See Documention!', brave_legacy_address, 'Brave Browser Legacy Wallet (Brave)', profiles_ldb_loc
+                        profiles_output = 'Address', 'VARIOUS - See Documention!', brave_legacy_address, 'Brave Browser Legacy Wallet (Brave)', profiles_ldb_loc
                         brave_legacy_output.append(profiles_output)
 
                     with open(output_dir + '/' + 'brave_legacy_addresses.csv', 'w', newline='') as file:
@@ -144,7 +144,7 @@ def brave_legacy():
             for key in identities_data:
                 new_variable = identities_data[key]
                 brave_legacy_address = new_variable["address"]
-                profiles_output = 'VARIOUS - See Documention!', brave_legacy_address, 'Brave Browser Legacy Wallet (Brave)', def_location
+                profiles_output = 'Address', 'VARIOUS - See Documention!', brave_legacy_address, 'Brave Browser Legacy Wallet (Brave)', def_location
                 brave_legacy_output.append(profiles_output)
 
     with open(output_dir + '/' + 'brave_legacy_addresses.csv', 'w', newline='') as file:

@@ -58,7 +58,7 @@ def brave_wallet():
                     meta_objs = "m/44'/60'/0'/0/" + num
                     address_obj = default_metas_obj[meta_objs]
                     default_addresses = address_obj['account_address']      
-                    default_output = 'VARIOUS - See Documention!', default_addresses,  'Brave Browser Wallet', default_user_location
+                    default_output = 'Address', 'VARIOUS - See Documention!', default_addresses,  'Brave Browser Wallet', default_user_location
                     bravebrowser_output.append(default_output)
 
             if filecoin_obj:
@@ -70,7 +70,7 @@ def brave_wallet():
                     meta_objs = "m/44'/461'/0'/0/" + num
                     address_obj = filecoin_metas_obj[meta_objs]
                     filecoin_addresses = address_obj['account_address']      
-                    filecoin_output = 'VARIOUS - See Documention!', filecoin_addresses,  'Brave Browser Wallet', default_user_location
+                    filecoin_output = 'Address', 'VARIOUS - See Documention!', filecoin_addresses,  'Brave Browser Wallet', default_user_location
                     bravebrowser_output.append(filecoin_output)
             
             if solana_obj:
@@ -82,7 +82,7 @@ def brave_wallet():
                     meta_objs = "m/44'/501'/" + num + "'/0'"
                     address_obj = solana_metas_obj[meta_objs]
                     solana_addresses = address_obj['account_address']      
-                    solana_ouput = 'VARIOUS - See Documention!', solana_addresses,  'Brave Browser Wallet', default_user_location
+                    solana_ouput = 'Address', 'VARIOUS - See Documention!', solana_addresses,  'Brave Browser Wallet', default_user_location
                     bravebrowser_output.append(solana_ouput)
 
     if profiles_list:
@@ -114,7 +114,7 @@ def brave_wallet():
                         pro_meta_objs = "m/44'/60'/0'/0/" + pro_num
                         pro_address_obj = pro_def_metas_obj[pro_meta_objs]
                         pro_default_addresses = pro_address_obj['account_address']      
-                        pro_default_output = 'VARIOUS - See Documention!', pro_default_addresses,  'Brave Browser Wallet', profiles_user_location
+                        pro_default_output = 'Address', 'VARIOUS - See Documention!', pro_default_addresses,  'Brave Browser Wallet', profiles_user_location
                         bravebrowser_output.append(pro_default_output)
 
                 if pro_file_obj:
@@ -126,7 +126,7 @@ def brave_wallet():
                         pro_meta_objs = "m/44'/461'/0'/0/"  + pro_num
                         pro_address_obj = pro_file_metas_obj[pro_meta_objs]
                         pro_file_addresses = pro_address_obj['account_address']      
-                        pro_file_output = 'VARIOUS - See Documention!', pro_file_addresses,  'Brave Browser Wallet', profiles_user_location
+                        pro_file_output = 'Address', 'VARIOUS - See Documention!', pro_file_addresses,  'Brave Browser Wallet', profiles_user_location
                         bravebrowser_output.append(pro_file_output)
 
                 if pro_sol_obj:
@@ -138,7 +138,7 @@ def brave_wallet():
                     pro_meta_objs = "m/44'/501'/" + pro_num + "'/0'"
                     pro_address_obj = pro_sol_metas_obj[pro_meta_objs]
                     pro_sol_addresses = pro_address_obj['account_address']      
-                    pro_sol_ouput = 'VARIOUS - See Documention!', pro_sol_addresses,  'Brave Browser Wallet', profiles_user_location
+                    pro_sol_ouput = 'Address', 'VARIOUS - See Documention!', pro_sol_addresses,  'Brave Browser Wallet', profiles_user_location
                     bravebrowser_output.append(pro_sol_ouput)
 
     with open(output_dir + '/' + 'brave_browser_addresses.csv', 'w', newline='') as output_file:

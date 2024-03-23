@@ -1,5 +1,5 @@
 """
-Copyright 2020-2021, CCL Forensics
+Copyright 2020-2023, CCL Forensics
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of
 this software and associated documentation files (the "Software"), to deal in
@@ -35,7 +35,7 @@ import ccl_leveldb
 import ccl_v8_value_deserializer
 import ccl_blink_value_deserializer
 
-__version__ = "0.8"
+__version__ = "0.14"
 __description__ = "Module for reading Chromium IndexedDB LevelDB databases."
 __contact__ = "Alex Caithness"
 
@@ -44,7 +44,7 @@ __contact__ = "Alex Caithness"
 #  (it should sit behind a switch for integers, fixed for most other stuff)
 
 
-def _read_le_varint(stream: typing.BinaryIO, *, is_google_32bit=False):
+def _read_le_varint(stream: typing.BinaryIO, *, is_google_32bit=False) -> typing.Optional[tuple[int, bytes]]:
     # this only outputs unsigned
     i = 0
     result = 0
@@ -64,7 +64,7 @@ def _read_le_varint(stream: typing.BinaryIO, *, is_google_32bit=False):
     return result, bytes(underlying_bytes)
 
 
-def read_le_varint(stream: typing.BinaryIO, *, is_google_32bit=False):
+def read_le_varint(stream: typing.BinaryIO, *, is_google_32bit=False) -> typing.Optional[int]:
     x = _read_le_varint(stream, is_google_32bit=is_google_32bit)
     if x is None:
         return None
@@ -72,12 +72,12 @@ def read_le_varint(stream: typing.BinaryIO, *, is_google_32bit=False):
         return x[0]
 
 
-def _le_varint_from_bytes(data: bytes):
+def _le_varint_from_bytes(data: bytes) -> typing.Optional[tuple[int, bytes]]:
     with io.BytesIO(data) as buff:
         return _read_le_varint(buff)
 
 
-def le_varint_from_bytes(data: bytes):
+def le_varint_from_bytes(data: bytes) -> typing.Optional[int]:
     with io.BytesIO(data) as buff:
         return read_le_varint(buff)
 
@@ -151,7 +151,10 @@ class IdbKey:
         return self.raw_key == other.raw_key
 
     def __ne__(self, other):
-        return not self == other
+        return not (self == other)
+
+    def __hash__(self):
+        return self.raw_key.__hash__()
 
 
 class IndexedDBExternalObjectType(enum.IntEnum):
@@ -289,10 +292,31 @@ class ObjectStoreMetadata:
         raise NotImplementedError()
 
 
+@dataclasses.dataclass(frozen=True)
+class BlinkTrailer:
+    # third_party/blink/renderer/bindings/core/v8/serialization/trailer_reader.h
+    offset: int
+    length: int
+
+    TRAILER_SIZE: typing.ClassVar[int] = 13
+    MIN_WIRE_FORMAT_VERSION_FOR_TRAILER: typing.ClassVar[int] = 21
+
+    @classmethod
+    def from_buffer(cls, buffer, trailer_offset: int):
+        tag, offset, length = struct.unpack(">cQI", buffer[trailer_offset: trailer_offset + BlinkTrailer.TRAILER_SIZE])
+        if tag != ccl_blink_value_deserializer.Constants.tag_kTrailerOffsetTag:
+            raise ValueError(
+                f"Trailer doesn't start with kTrailerOffsetTag "
+                f"(expected: 0x{ccl_blink_value_deserializer.Constants.tag_kTrailerOffsetTag.hex()}; "
+                f"got: 0x{tag.hex()}")
+
+        return BlinkTrailer(offset, length)
+
+
 class IndexedDbRecord:
     def __init__(
             self, owner: "IndexedDb", db_id: int, obj_store_id: int, key: IdbKey,
-            value: typing.Any, is_live: bool, ldb_seq_no: int):
+            value: typing.Any, is_live: bool, ldb_seq_no: int, external_value_path: typing.Optional[str] = None):
         self.owner = owner
         self.db_id = db_id
         self.obj_store_id = obj_store_id
@@ -300,6 +324,7 @@ class IndexedDbRecord:
         self.value = value
         self.is_live = is_live
         self.sequence_number = ldb_seq_no
+        self.external_value_path = external_value_path
 
     def resolve_blob_index(self, blob_index: ccl_blink_value_deserializer.BlobIndex) -> IndexedDBExternalObject:
         """Resolve a ccl_blink_value_deserializer.BlobIndex to its IndexedDBExternalObject
@@ -351,14 +376,17 @@ class IndexedDb:
 
         # Loop through the database IDs
         for db_id in global_metadata.db_ids:
-            if db_id.dbid_no > 0x7f:
-                raise NotImplementedError("there could be this many dbs, but I don't support it yet")
+            # if db_id.dbid_no > 0x7f:
+            #     raise NotImplementedError("there could be this many dbs, but I don't support it yet")
+            #
+            # # Database keys end with 0
+            # prefix_database = bytes([0, db_id.dbid_no, 0, 0])
+            #
+            # # Objetstore keys end with 50
+            # prefix_objectstore = bytes([0, db_id.dbid_no, 0, 0, 50])
 
-            # Database keys end with 0
-            prefix_database = bytes([0, db_id.dbid_no, 0, 0])
-
-            # Objetstore keys end with 50
-            prefix_objectstore = bytes([0, db_id.dbid_no, 0, 0, 50])
+            prefix_database = IndexedDb.make_prefix(db_id.dbid_no, 0, 0)
+            prefix_objectstore = IndexedDb.make_prefix(db_id.dbid_no, 0, 0, [50])
 
             for record in reversed(self._fetched_records):
                 if record.key.startswith(prefix_database) and record.state == ccl_leveldb.KeyState.Live:
@@ -421,7 +449,11 @@ class IndexedDb:
         return bytes([byte_one, *yield_le_bytes(db_id), *yield_le_bytes(obj_store_id), *yield_le_bytes(index_id), *end])
 
     @staticmethod
-    def read_prefix(stream: typing.BinaryIO):
+    def read_prefix(stream: typing.BinaryIO) -> tuple[int, int, int, int]:
+        """
+        :param stream: file-like to read the prefix from
+        :return: a tuple of db_id, object_store_id, index_id, length of the prefix
+        """
         lengths_bytes = stream.read(1)
         if not lengths_bytes:
             raise ValueError("Couldn't get enough data when reading prefix length")
@@ -512,16 +544,72 @@ class IndexedDb:
 
         return os_meta
 
+    def read_record_precursor(
+            self, key: IdbKey, db_id: int, store_id: int, buffer: bytes,
+            bad_deserializer_data_handler: typing.Callable[[IdbKey, bytes], typing.Any],
+            external_data_path: typing.Optional[str] = None):
+        val_idx = 0
+        trailer = None
+        blink_type_tag = buffer[val_idx]
+        if blink_type_tag != 0xff:
+            # TODO: probably don't want to fail hard here long term...
+            if bad_deserializer_data_handler is not None:
+                bad_deserializer_data_handler(key, buffer)
+                return None
+            else:
+                raise ValueError("Blink type tag not present")
+
+        val_idx += 1
+
+        blink_version, varint_raw = _le_varint_from_bytes(buffer[val_idx:])
+
+        val_idx += len(varint_raw)
+
+        # Peek the next byte to work out if the data is held externally:
+        # third_party/blink/renderer/modules/indexeddb/idb_value_wrapping.cc
+        if buffer[val_idx] == 0x01:  # kReplaceWithBlob
+            val_idx += 1
+            externally_serialized_blob_size, varint_raw = _le_varint_from_bytes(buffer[val_idx:])
+            val_idx += len(varint_raw)
+            externally_serialized_blob_index, varint_raw = _le_varint_from_bytes(buffer[val_idx:])
+            val_idx += len(varint_raw)
+
+            try:
+                info = self.get_blob_info(db_id, store_id, key.raw_key, externally_serialized_blob_index)
+            except KeyError:
+                info = None
+
+            if info is not None:
+                data_path = pathlib.Path(str(db_id), f"{info.blob_number >> 8:02x}", f"{info.blob_number:x}")
+                try:
+                    blob = self.get_blob(db_id, store_id, key.raw_key, externally_serialized_blob_index).read()
+                except FileNotFoundError:
+                    if bad_deserializer_data_handler is not None:
+                        bad_deserializer_data_handler(key, buffer)
+                        return None
+                    raise
+
+                return self.read_record_precursor(
+                    key, db_id, store_id,
+                    blob,
+                    bad_deserializer_data_handler, str(data_path))
+            else:
+                return None
+        else:
+            if blink_version >= BlinkTrailer.MIN_WIRE_FORMAT_VERSION_FOR_TRAILER:
+                trailer = BlinkTrailer.from_buffer(buffer, val_idx)  # TODO: do something with the trailer
+                val_idx += BlinkTrailer.TRAILER_SIZE
+
+            obj_raw = io.BytesIO(buffer[val_idx:])
+
+        return blink_version, obj_raw, trailer, external_data_path
+
     def iterate_records(
             self, db_id: int, store_id: int, *,
             live_only=False, bad_deserializer_data_handler: typing.Callable[[IdbKey, bytes], typing.Any] = None):
-        # if db_id > 0x7f or store_id > 0x7f:
-        #     raise NotImplementedError("there could be this many dbs or object stores, but I don't support it yet")
-
         blink_deserializer = ccl_blink_value_deserializer.BlinkV8Deserializer()
 
         # goodness me this is a slow way of doing things
-        # prefix = bytes([0, db_id, store_id, 1])
         prefix = IndexedDb.make_prefix(db_id, store_id, 1)
 
         for record in self._db.iterate_records_raw():
@@ -535,21 +623,12 @@ class IndexedDb:
                 value_version, varint_raw = _le_varint_from_bytes(record.value)
                 val_idx = len(varint_raw)
                 # read the blink envelope
-                blink_type_tag = record.value[val_idx]
-                if blink_type_tag != 0xff:
-                    # TODO: probably don't want to fail hard here long term...
-                    if bad_deserializer_data_handler is not None:
-                        bad_deserializer_data_handler(key, record.value)
-                        continue
-                    else:
-                        raise ValueError("Blink type tag not present")
-                val_idx += 1
+                precursor = self.read_record_precursor(
+                    key, db_id, store_id, record.value[val_idx:], bad_deserializer_data_handler)
+                if precursor is None:
+                    continue  # only returns None on error, handled in the function if bad_deserializer_data_handler can
 
-                blink_version, varint_raw = _le_varint_from_bytes(record.value[val_idx:])
-
-                val_idx += len(varint_raw)
-
-                obj_raw = io.BytesIO(record.value[val_idx:])
+                blink_version, obj_raw, trailer, external_path = precursor
 
                 try:
                     deserializer = ccl_v8_value_deserializer.Deserializer(
@@ -561,7 +640,8 @@ class IndexedDb:
                         continue
                     raise
                 yield IndexedDbRecord(self, db_id, store_id, key, value,
-                                      record.state == ccl_leveldb.KeyState.Live, record.seq)
+                                      record.state == ccl_leveldb.KeyState.Live,
+                                      record.seq, external_path)
 
     def get_blob_info(self, db_id: int, store_id: int, raw_key: bytes, file_index: int) -> IndexedDBExternalObject:
         # if db_id > 0x7f or store_id > 0x7f:
@@ -575,14 +655,16 @@ class IndexedDb:
         # prefix = bytes([0, db_id, store_id, 3])
         prefix = IndexedDb.make_prefix(db_id, store_id, 3)
         for record in self._db.iterate_records_raw():
-            if record.key.startswith(prefix):
+            if record.user_key.startswith(prefix):
+                this_raw_key = record.user_key[len(prefix):]
                 buff = io.BytesIO(record.value)
                 idx = 0
                 while buff.tell() < len(record.value):
                     blob_info = IndexedDBExternalObject.from_stream(buff)
-                    self._blob_lookup_cache[(db_id, store_id, raw_key, idx)] = blob_info
+                    self._blob_lookup_cache[(db_id, store_id, this_raw_key, idx)] = blob_info
                     idx += 1
-                break
+                # if this_raw_key == raw_key:
+                #     break
 
         if result := self._blob_lookup_cache.get((db_id, store_id, raw_key, file_index)):
             return result
@@ -597,7 +679,7 @@ class IndexedDb:
 
         # path will be: origin.blob/database id/top 16 bits of blob number with two digits/blob number
         # TODO: check if this is still the case on non-windows systems
-        path = pathlib.Path(self._blob_dir, str(db_id), f"{info.blob_number >> 8:02x}", f"{info.blob_number:x}")
+        path = pathlib.Path(self._blob_dir, f"{db_id:x}", f"{info.blob_number >> 8:02x}", f"{info.blob_number:x}")
 
         if path.exists():
             return path.open("rb")
@@ -698,13 +780,17 @@ class IndexedDb:
 
 
 class WrappedObjectStore:
+    """
+    A wrapper class around a "raw" IndexedDb which simplifies accessing records related to an object store. Usually only
+    created by a WrappedDatabase.
+    """
     def __init__(self, raw_db: IndexedDb,  dbid_no: int, obj_store_id: int):
         self._raw_db = raw_db
         self._dbid_no = dbid_no
         self._obj_store_id = obj_store_id
 
     @property
-    def object_store_id(self):
+    def object_store_id(self) -> int:
         return self._obj_store_id
 
     @property
@@ -717,6 +803,14 @@ class WrappedObjectStore:
         sys.stderr.write(f"ERROR decoding key: {key}\n")
 
     def get_blob(self, raw_key: bytes, file_index: int) -> typing.BinaryIO:
+        """
+        Deprecated: use IndexedDbRecord.get_blob_stream
+
+        :param raw_key: raw key of the record from which the blob originates
+        :param file_index: the file/blob index from a ccl_blink_value_deserializer.BlobIndex
+        :return: a file-like object of the blob
+        """
+
         return self._raw_db.get_blob(self._dbid_no, self.object_store_id, raw_key, file_index)
 
     # def __iter__(self):
@@ -743,6 +837,10 @@ class WrappedObjectStore:
 
 
 class WrappedDatabase:
+    """
+    A wrapper class around the raw "IndexedDb" class which simplifies access to a Database in the IndexedDb. Usually
+    only created by WrappedIndexedDb.
+    """
     def __init__(self, raw_db: IndexedDb,  dbid: DatabaseId):
         self._raw_db = raw_db
         self._dbid = dbid
@@ -759,18 +857,32 @@ class WrappedDatabase:
 
     @property
     def name(self) -> str:
+        """
+        :return: the name of this WrappedDatabase
+        """
         return self._dbid.name
 
     @property
     def origin(self) -> str:
+        """
+        :return: the origin (host name) for this WrappedDatabase
+        """
         return self._dbid.origin
 
     @property
     def db_number(self) -> int:
+        """
+        :return: the numerical ID assigned to this WrappedDatabase
+        """
         return self._dbid.dbid_no
 
     @property
     def object_store_count(self) -> int:
+        """
+        :return: the "MaximumObjectStoreId" value fot this database; NB this may not be the *actual* number of object
+            stores which can be read - it is possible that some object stores may be deleted. Use len() to check the
+            number of object stores you can actually access
+        """
         # NB obj store ids are enumerated from 1.
         return self._raw_db.get_database_metadata(
             self.db_number,
@@ -778,26 +890,55 @@ class WrappedDatabase:
 
     @property
     def object_store_names(self) -> typing.Iterable[str]:
+        """
+        :return: yields the names of the object stores in this WrappedDatabase
+        """
         yield from self._obj_store_names
 
     def get_object_store_by_id(self, obj_store_id: int) -> WrappedObjectStore:
+        """
+        :param obj_store_id: the numerical ID for an object store in this WrappedDatabase
+        :return: the WrappedObjectStore with the ID provided
+        """
         if obj_store_id > 0 and obj_store_id <= self.object_store_count:
             return self._obj_stores[obj_store_id - 1]
         raise ValueError("obj_store_id must be greater than zero and less or equal to object_store_count "
                          "NB object stores are enumerated from 1 - there is no store with id 0")
 
     def get_object_store_by_name(self, name: str) -> WrappedObjectStore:
+        """
+        :param name: the name of an object store in this WrappedDatabase
+        :return: the WrappedObjectStore with the name provided
+        """
         if name in self:
             return self.get_object_store_by_id(self._obj_store_names.index(name) + 1)
         raise KeyError(f"{name} is not an object store in this database")
 
-    def __len__(self):
-        len(self._obj_stores)
+    def __iter__(self) -> typing.Iterable[WrappedObjectStore]:
+        """
+        :return: yields the object stores in this WrappedDatabase
+        """
+        yield from self._obj_stores
 
-    def __contains__(self, item):
+    def __len__(self) -> int:
+        """
+        :return: the number of object stores accessible in this WrappedDatabase
+        """
+        return len(self._obj_stores)
+
+    def __contains__(self, item: str) -> bool:
+        """
+        :param item: the name of an object store in this WrappedDatabase
+        :return: True if the name provided matches one of the Object stores in this WrappedDatabase
+        """
         return item in self._obj_store_names
 
-    def __getitem__(self, item) -> WrappedObjectStore:
+    def __getitem__(self, item: typing.Union[int, str]) -> WrappedObjectStore:
+        """
+        :param item: either the numerical ID of an object store (as an int) or the name of an object store in this
+            WrappedDatabase
+        :return:
+        """
         if isinstance(item, int):
             return self.get_object_store_by_id(item)
         elif isinstance(item, str):
@@ -809,6 +950,10 @@ class WrappedDatabase:
 
 
 class WrappedIndexDB:
+    """
+    A wrapper object around the "raw" IndexedDb class. This should be used in most cases as the code required to use it
+    is simpler and more pythonic.
+    """
     def __init__(self, leveldb_dir: os.PathLike, leveldb_blob_dir: os.PathLike = None):
         self._raw_db = IndexedDb(leveldb_dir, leveldb_blob_dir)
         self._multiple_origins = len(set(x.origin for x in self._raw_db.global_metadata.db_ids)) > 1
@@ -822,21 +967,35 @@ class WrappedIndexDB:
             for x in self._db_number_lookup.values()}
 
     @property
-    def database_count(self):
+    def database_count(self) -> int:
+        """
+        :return: The number of databases in this IndexedDB
+        """
         return len(self._db_number_lookup)
 
     @property
-    def database_ids(self):
+    def database_ids(self) -> typing.Iterable[DatabaseId]:
+        """
+        :return: yields DatabaseId objects which define the databases in this IndexedDb
+        """
         yield from self._raw_db.global_metadata.db_ids
 
     @property
-    def has_multiple_origins(self):
+    def has_multiple_origins(self) -> bool:
         return self._multiple_origins
 
     def __len__(self):
+        """
+        :return: the number of databases in this IndexedDb
+        """
         len(self._db_number_lookup)
 
-    def __contains__(self, item):
+    def __contains__(self, item: typing.Union[str, int, tuple[str, str]]):
+        """
+        :param item: either a database id number, the name of a database (as a string), or (if the database has multiple
+            origins), a tuple of database name and origin
+        :return: True if this IndexedDb contains the referenced database identifier
+        """
         if isinstance(item, str):
             if self.has_multiple_origins:
                 raise ValueError(
@@ -853,6 +1012,12 @@ class WrappedIndexDB:
             raise TypeError("keys must be provided as a tuple of (name, origin) or a str (if only single origin) or int")
 
     def __getitem__(self, item: typing.Union[int, str, typing.Tuple[str, str]]) -> WrappedDatabase:
+        """
+
+        :param item: either a database id number, the name of a database (as a string), or (if the database has multiple
+            origins), a tuple of database name and origin
+        :return: the WrappedDatabase referenced by the id in item
+        """
         if isinstance(item, int):
             if item in self._db_number_lookup:
                 return self._db_number_lookup[item]

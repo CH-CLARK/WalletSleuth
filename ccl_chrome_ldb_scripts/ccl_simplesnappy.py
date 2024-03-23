@@ -26,7 +26,7 @@ import io
 import typing
 import enum
 
-__version__ = "0.2"
+__version__ = "0.3"
 __description__ = "Pure Python reimplementation of Google's Snappy decompression"
 __contact__ = "Alex Caithness"
 
@@ -78,17 +78,17 @@ def read_le_varint(stream: typing.BinaryIO) -> typing.Optional[int]:
 
 
 def read_uint16(stream: typing.BinaryIO) -> int:
-    """Reads a Uint16 from stream"""
+    """Reads an Uint16 from stream"""
     return struct.unpack("<H", stream.read(2))[0]
 
 
 def read_uint24(stream: typing.BinaryIO) -> int:
-    """Reads a Uint24 from stream"""
+    """Reads an Uint24 from stream"""
     return struct.unpack("<I", stream.read(3) + b"\x00")[0]
 
 
 def read_uint32(stream: typing.BinaryIO) -> int:
-    """Reads a Uint32 from stream"""
+    """Reads an Uint32 from stream"""
     return struct.unpack("<I", stream.read(4))[0]
 
 
@@ -163,10 +163,10 @@ def decompress(data: typing.BinaryIO) -> bytes:
                 raise ValueError("Offset cannot be 0")
 
             actual_offset = out.tell() - offset
-            log(f"Current Outstream Length: {out.tell()}")
-            log(f"Backreference length: {length}")
-            log(f"Backreference relative offset: {offset}")
-            log(f"Backreference absolute offset: {actual_offset}")
+            # log(f"Current Outstream Length: {out.tell()}")
+            # log(f"Backreference length: {length}")
+            # log(f"Backreference relative offset: {offset}")
+            # log(f"Backreference absolute offset: {actual_offset}")
 
             # have to read incrementally because you might have to read data that you've just written
             # for i in range(length):

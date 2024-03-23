@@ -18,16 +18,12 @@ def atomic_wallet():
 
     data = []
 
-    #Output path of the dumped out LDB records.
     output_path = output_dir + r"\atomic_wallet_LDB.csv"
 
-    #Finds the required LDB record and does some Alex Caithness wizarary
     leveldb_records = ccl_chrome_ldb_scripts.ccl_leveldb.RawLevelDb(appdata_dir + r"\Roaming\atomic\Local Storage\leveldb")
 
-    #Location of the LDB records
     location = (appdata_dir + "/Roaming/atomic/Local Storage")
 
-    #Parsing outputed LDB data for cryptocurrency addresses
     with open(output_path, "w", encoding="utf-8", newline="") as atomic_wallet_LDB_output:
         writes = csv.writer(atomic_wallet_LDB_output, quoting=csv.QUOTE_ALL, escapechar='£')
         writes.writerow(
@@ -62,13 +58,13 @@ def atomic_wallet():
 
         for i in json_obj:
             if i["address"] != "":
-                atomic_output = [i["id"] + "," + i["address"] + "," + "Atomic Wallet", location]
+                atomic_output = ['Address', i["id"] + "," + i["address"] + "," + "Atomic Wallet", location]
 
     with open(output_dir + '/' + 'atomic_wallet_addresses.csv', 'w', newline='') as atomic_wallet_addresses:
         write = csv.writer(atomic_wallet_addresses)
         for i in json_obj:
             if i["address"] != "":
-                atomic_output = [i["id"], i["address"], "Atomic Wallet", location]
+                atomic_output = ['Address', i["id"], i["address"], "Atomic Wallet", location]
                 write.writerow(atomic_output)
 
     with open(output_dir + '/' + 'WalletSleuth_log.txt', 'a') as log_file:

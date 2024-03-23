@@ -92,7 +92,7 @@ def bitkeep_chrome():
                     currency_data = json_obj.get('currency')
 
                     for x in range(len(currency_data)):
-                        bk_address_output = currency_data[x]['symbol'], currency_data[x]['address'], 'Bitget (Chrome)', profiles_ldb_loc
+                        bk_address_output = 'Address', currency_data[x]['symbol'], currency_data[x]['address'], 'Bitget (Chrome)', profiles_ldb_loc
                         bitkeep_chrome_output.append(bk_address_output)
 
 
@@ -144,7 +144,7 @@ def bitkeep_chrome():
 
             for x in range(len(currency_data)):
                 
-                bk_address_output = currency_data[x]['symbol'], currency_data[x]['address'] ,'Bitget (Chrome)', def_location
+                bk_address_output = 'Address', currency_data[x]['symbol'], currency_data[x]['address'] ,'Bitget (Chrome)', def_location
                 
                 bitkeep_chrome_output.append(bk_address_output) 
 
@@ -220,7 +220,7 @@ def bitkeep_brave():
                     currency_data = json_obj.get('currency')
 
                     for x in range(len(currency_data)):
-                        bk_address_output = currency_data[x]['symbol'], currency_data[x]['address'], 'Bitget (Brave)', profiles_ldb_loc
+                        bk_address_output = 'Address', currency_data[x]['symbol'], currency_data[x]['address'], 'Bitget (Brave)', profiles_ldb_loc
                         bitkeep_brave_output.append(bk_address_output)
 
 
@@ -272,7 +272,7 @@ def bitkeep_brave():
 
             for x in range(len(currency_data)):
                 
-                bk_address_output = currency_data[x]['symbol'], currency_data[x]['address'] ,'Bitget (Brave)', def_location
+                bk_address_output = 'Address', currency_data[x]['symbol'], currency_data[x]['address'] ,'Bitget (Brave)', def_location
                 
                 bitkeep_brave_output.append(bk_address_output)
 

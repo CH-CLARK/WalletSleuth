@@ -74,22 +74,22 @@ def opera_wallet():
 
         for key, value in ammended_json_obj.items():
             if value["coinType"] == 0:
-                btc = ("BTC", key, "Opera Browser Wallet", operabrowser_user_data)
+                btc = ("Extended Public Key (XPUB)", "BTC", key, "Opera Browser Wallet", operabrowser_user_data)
                 output_data.append(btc)
             elif value["coinType"] == 60:
-                eth = ("ETH", key, "Opera Browser Wallet", operabrowser_user_data)
+                eth = ("Address", "ETH", key, "Opera Browser Wallet", operabrowser_user_data)
                 output_data.append(eth)
             elif value["coinType"] == 501:
-                sol = ("SOL", key, "Opera Browser Wallet", operabrowser_user_data)
+                sol = ("Address", "SOL", key, "Opera Browser Wallet", operabrowser_user_data)
                 output_data.append(sol)
             elif value["coinType"] == 397:
-                near = ("NEAR", key, "Opera Browser Wallet", operabrowser_user_data)
+                near = ("Address", "NEAR", key, "Opera Browser Wallet", operabrowser_user_data)
                 output_data.append(near)
             elif value["coinType"] == 235:
-                fio = ("FIO", key, "Opera Browser Wallet", operabrowser_user_data)
+                fio = ("Address", "FIO", key, "Opera Browser Wallet", operabrowser_user_data)
                 output_data.append(fio)
             elif value["coinType"] == 508:
-                egld = ("EGLD", key, "Opera Browser Wallet", operabrowser_user_data)
+                egld = ("Address", "EGLD", key, "Opera Browser Wallet", operabrowser_user_data)
                 output_data.append(egld)
 
     with open(output_dir + '/' + 'opera_browser_addresses.csv', 'w', newline='') as output_file:
