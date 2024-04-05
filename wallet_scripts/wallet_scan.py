@@ -56,7 +56,6 @@ def wallet_scan():
         identified_wallets = "\n".join(directory_results)
 
         messagebox.showinfo('Wallet Detector', 'Identified Wallets:\n' + identified_wallets)
-        print(identified_wallets)
 
     except Exception:
         messagebox.showerror('Error', "You must select an 'Appdata' directory first!")
