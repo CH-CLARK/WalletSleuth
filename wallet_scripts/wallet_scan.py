@@ -30,7 +30,8 @@ paths = {
 
     r'Local\Google\Chrome\User Data\Default\Local Extension Settings\bfnaelmomeimhlpmgjnjophhpkkoljpa' : 'Phantom (Chrome)',
 
-    r'Roaming\Exodus\Partitions\main\Cache\Cache_Data': 'Exodus Wallet'
+    r'Roaming\Exodus\Partitions\main\Cache\Cache_Data': 'Exodus Wallet',
+    r'Roaming\WalletWasabi\Client\Wallets':'Wallet Wasabi'
 }
 
 
@@ -55,6 +56,7 @@ def wallet_scan():
         identified_wallets = "\n".join(directory_results)
 
         messagebox.showinfo('Wallet Detector', 'Identified Wallets:\n' + identified_wallets)
-    
+        print(identified_wallets)
+
     except Exception:
         messagebox.showerror('Error', "You must select an 'Appdata' directory first!")

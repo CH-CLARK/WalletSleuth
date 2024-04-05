@@ -21,6 +21,7 @@ from wallet_scripts.opera_browser_wallet import opera_wallet
 from wallet_scripts.ledger_live import ledger_live_wallet
 from wallet_scripts.phantom_ext import phantom_chrome
 from wallet_scripts.exodus_wallet import exodus_wallet
+from wallet_scripts.wasabi_wallet import wasabi_wallet
 
 
 def run_func():
@@ -152,6 +153,15 @@ def run_func():
             except:
                 with open(output_dir + '/' + 'WalletSleuth_log.txt', 'a') as log_file:
                     log_file.write("ERROR: Exodus Wallet - Wallet not found!\n")
+
+       #Wasabi Wallet 
+        if ('Wasabi Wallet', None) in Wallet_Selector.selection:
+            try:
+                wasabi_wallet()
+                selection.append(output_dir + '/' + 'wasabi_wallet_addresses.csv')
+            except:
+                with open(output_dir + '/' + 'WalletSleuth_log.txt', 'a') as log_file:
+                    log_file.write("ERROR: Wasabi Wallet - Wallet not found!\n")
 
     #---------------------------------#
     #---------------------------------#

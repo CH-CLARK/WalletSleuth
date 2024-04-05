@@ -9,4 +9,5 @@ names = {
     'Phantom*': {'Chrome'},
     'Ledger Live': None,
     'Exodus Wallet': None,
+    'Wasabi Wallet': None,
     }

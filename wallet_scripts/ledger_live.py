@@ -7,10 +7,6 @@ import sys
 #controller imports
 import controller.config
 
-#CCL Imports
-import ccl_chrome_ldb_scripts.ccl_leveldb
-
-
 def ledger_live_wallet():
 
     ledgerlive_output = []

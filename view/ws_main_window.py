@@ -15,7 +15,8 @@ from view.help_frame import Help_Frame
 # Controller imports
 import controller.config
 
-TITLE = "Wallet Sleuth 2.0"
+
+TITLE = "Wallet Sleuth"
 WIDTH = 750
 HEIGHT = 500
 
@@ -30,7 +31,12 @@ class WS_Main_Window(tk.Tk):
     def __init__(self) -> None:
         super().__init__()
 
-    
+        #icon by creatiforest
+        #https://www.freepik.com/icon/search_2549314#fromView=search&page=1&position=15&uuid=5ae816eb-0a9d-49e4-8510-a277e41ec16d
+        with open ('app_files/ascii-art.txt') as art_text:
+            print(art_text.read())
+        
+        print('WALLET SLEUTH v2.24.0405')
 
         # Window config
         self.title(TITLE)

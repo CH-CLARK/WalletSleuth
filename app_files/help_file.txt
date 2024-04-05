@@ -10,9 +10,9 @@ Appdata - The AppData directory of the user.
 
 Output - The Output directory for CSV files containing identified addresses and log files.
 
-Wallet Selection - Wallet applications to search for cryptocurrency addresses through.
+Wallet Selection - Wallet applications to search for cryptocurrency addresses and transactions through.
 
-After running, an information box will notify you when the search is complete. Any identified cryptocurrency addresses are displayed in the output window and a log file details actions and errors in the search.
+After running, an information box will notify you when the search is complete. Any identified cryptocurrency addresses and transactions are displayed in the output window and a log file details actions and errors in the search.
 
 -------------------------------------------------------------------------------------------
 **OTHER FUNCTIONS**
