@@ -37,6 +37,7 @@ Wallet Detector - Determine what wallets to scan for addresses on by identifying
 - Opera Browser Wallet
 - Phantom (Chrome)
 - Exodus Wallet
+- Wasabi Wallet
 
 ## Limitations
 - Currently the wallet finder function is limited to wallets in the 'Default' browser user profile, but the address finder will check all profiles for the selected browser.
