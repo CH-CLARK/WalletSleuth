@@ -1,5 +1,6 @@
 #generic imports
 import csv
+import datetime
 
 #tkinter imports
 import tkinter as tk
@@ -31,11 +32,14 @@ def run_func():
 
         selection = []
 
+        get_now_datetime = datetime.datetime.now()
+        now_formated = get_now_datetime.strftime('%Y-%m-%d, %H:%M:%S')
+
         with open(output_dir + '/' + 'WalletSleuth_log.txt', 'w') as log_file:
             log_file.write('+-----------------------------------------------------------------------------------------+\n')
             log_file.write('|----------------------------------- WALLET SLEUTH LOG -----------------------------------|\n')
             log_file.write('+-----------------------------------------------------------------------------------------+\n')
-            #include selected locations here
+            log_file.write('Start Time: ' + str(now_formated) + '\n')
 
         #Atomic Wallet 
         if ('Atomic Wallet', None) in Wallet_Selector.selection:
