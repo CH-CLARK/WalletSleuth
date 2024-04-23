@@ -34,7 +34,7 @@ def run_func():
         selection = []
 
         get_now_datetime = datetime.datetime.now()
-        now_formated = get_now_datetime.strftime('%Y-%m-%d, %H:%M:%S')
+        now_formated = get_now_datetime.strftime('%Y-%m-%d %H:%M:%S')
 
         with open(output_dir + '/' + 'WalletSleuth_log.txt', 'w') as log_file:
             log_file.write('+-----------------------------------------------------------------------------------------+\n')
