@@ -38,6 +38,7 @@ Wallet Detector - Determine what wallets to scan for addresses on by identifying
 - Phantom (Chrome)
 - Exodus Wallet
 - Wasabi Wallet
+- Litecoin Core
 
 ## Limitations
 - Currently the wallet finder function is limited to wallets in the 'Default' browser user profile, but the address finder will check all profiles for the selected browser.
