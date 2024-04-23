@@ -10,4 +10,5 @@ names = {
     'Ledger Live': None,
     'Exodus Wallet': None,
     'Wasabi Wallet': None,
+    'Litecoin Core': None
     }

@@ -23,6 +23,7 @@ from wallet_scripts.ledger_live import ledger_live_wallet
 from wallet_scripts.phantom_ext import phantom_chrome
 from wallet_scripts.exodus_wallet import exodus_wallet
 from wallet_scripts.wasabi_wallet import wasabi_wallet
+from wallet_scripts.litecoin_core_wallet import litecoin_core_wallet
 
 
 def run_func():
@@ -166,6 +167,17 @@ def run_func():
             except:
                 with open(output_dir + '/' + 'WalletSleuth_log.txt', 'a') as log_file:
                     log_file.write("ERROR: Wasabi Wallet - Wallet not found!\n")
+
+       #Litecoin Core Wallet 
+        if ('Litecoin Core', None) in Wallet_Selector.selection:
+            try:
+                litecoin_core_wallet()
+                selection.append(output_dir + '/' + 'litecoin_core_addresses.csv')
+            except:
+                with open(output_dir + '/' + 'WalletSleuth_log.txt', 'a') as log_file:
+                    log_file.write("ERROR: Litecoin Core Wallet - Wallet not found!\n")
+
+        
 
     #---------------------------------#
     #---------------------------------#
