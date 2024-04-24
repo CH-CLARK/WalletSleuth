@@ -241,7 +241,7 @@ class LdbFile:
         is_compressed = trailer[0] != 0
         if is_compressed:
             with io.BytesIO(raw_block) as buff:
-                raw_block = ccl_simplesnappy.decompress(buff)
+                raw_block = ccl_chrome_ldb_scripts.ccl_simplesnappy.decompress(buff)
 
         return Block(raw_block, is_compressed, self, handle.offset)
 
