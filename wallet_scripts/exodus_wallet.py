@@ -3,9 +3,13 @@ import csv
 import hashlib
 import itertools
 import mimetypes
-import brotli
 import gzip
 import zlib
+
+try:
+    import brotli
+except:
+    pass
 
 #controller
 import controller.config
