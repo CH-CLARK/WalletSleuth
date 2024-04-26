@@ -416,7 +416,7 @@ def metamask_brave():
             
             pref_controller_data = json_obj.get('PreferencesController')
             identities_data = pref_controller_data["identities"]
-
+            
             #Writing identified data to CSV
             for key in identities_data:
                 new_variable = identities_data[key]
@@ -430,7 +430,7 @@ def metamask_brave():
                 log_file.write('ACTION: Metamask (Brave) - No Addresses Identified.\n')    
     
         else:
-            with open(output_dir + '/' + 'metamask_chrome_addresses.csv', 'w', newline='') as file:
+            with open(output_dir + '/' + 'metamask_brave_addresses.csv', 'w', newline='') as file:
                 write = csv.writer(file) 
                 write.writerows(metamask_brave_output)
 
