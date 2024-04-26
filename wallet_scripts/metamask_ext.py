@@ -150,18 +150,17 @@ def metamask_chrome():
 
     
 #this should check for identifies data and if the length of the string is 0, it wil inform the user that no addessses exist. the reason for this is i noticed that a user might have MM installed, but never have opened it
-    try:
         if len(identities_data) == 0:
             with open(output_dir + '/' + 'WalletSleuth_log.txt', 'a') as log_file:
                 log_file.write('ACTION: Metamask (Chrome) - No Addresses Identified.\n')    
     
-    except Exception:
-        with open(output_dir + '/' + 'metamask_chrome_addresses.csv', 'w', newline='') as file:
-            write = csv.writer(file) 
-            write.writerows(metamask_chrome_output)
+        else:
+            with open(output_dir + '/' + 'metamask_chrome_addresses.csv', 'w', newline='') as file:
+                write = csv.writer(file) 
+                write.writerows(metamask_chrome_output)
 
-        with open(output_dir + '/' + 'WalletSleuth_log.txt', 'a') as log_file:
-            log_file.write('ACTION: Metamask (Chrome) - Addresses Identified.\n')            
+            with open(output_dir + '/' + 'WalletSleuth_log.txt', 'a') as log_file:
+                log_file.write('ACTION: Metamask (Chrome) - Addresses Identified.\n')            
 
     os.remove(output_path)
 
@@ -289,18 +288,17 @@ def metamask_edge():
                 metamask_edge_output.append(default_output)
 
 #this should check for identifies data and if the length of the string is 0, it wil inform the user that no addessses exist. the reason for this is i noticed that a user might have MM installed, but never have opened it
-    try:
         if len(identities_data) == 0:
             with open(output_dir + '/' + 'WalletSleuth_log.txt', 'a') as log_file:
                 log_file.write('ACTION: Metamask (Brave) - No Addresses Identified.\n')    
     
-    except Exception:
-        with open(output_dir + '/' + 'metamask_chrome_addresses.csv', 'w', newline='') as file:
-            write = csv.writer(file) 
-            write.writerows(metamask_edge_output)
+        else:
+            with open(output_dir + '/' + 'metamask_chrome_addresses.csv', 'w', newline='') as file:
+                write = csv.writer(file) 
+                write.writerows(metamask_edge_output)
 
-        with open(output_dir + '/' + 'WalletSleuth_log.txt', 'a') as log_file:
-            log_file.write('ACTION: Metamask (Edge) - Addresses Identified.\n')          
+            with open(output_dir + '/' + 'WalletSleuth_log.txt', 'a') as log_file:
+                log_file.write('ACTION: Metamask (Edge) - Addresses Identified.\n')          
 
     os.remove(output_path)
 
@@ -427,17 +425,16 @@ def metamask_brave():
                 metamask_brave_output.append(default_output)
 
 #this should check for identifies data and if the length of the string is 0, it wil inform the user that no addessses exist. the reason for this is i noticed that a user might have MM installed, but never have opened it
-    try:
         if len(identities_data) == 0:
             with open(output_dir + '/' + 'WalletSleuth_log.txt', 'a') as log_file:
                 log_file.write('ACTION: Metamask (Brave) - No Addresses Identified.\n')    
     
-    except Exception:
-        with open(output_dir + '/' + 'metamask_chrome_addresses.csv', 'w', newline='') as file:
-            write = csv.writer(file) 
-            write.writerows(metamask_brave_output)
+        else:
+            with open(output_dir + '/' + 'metamask_chrome_addresses.csv', 'w', newline='') as file:
+                write = csv.writer(file) 
+                write.writerows(metamask_brave_output)
 
-        with open(output_dir + '/' + 'WalletSleuth_log.txt', 'a') as log_file:
-            log_file.write('ACTION: Metamask (Brave) - Addresses Identified.\n')        
+            with open(output_dir + '/' + 'WalletSleuth_log.txt', 'a') as log_file:
+                log_file.write('ACTION: Metamask (Brave) - Addresses Identified.\n')        
 
     os.remove(output_path)
