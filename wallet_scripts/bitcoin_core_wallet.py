@@ -3,7 +3,7 @@ import os
 
 import controller.config
 
-def bitcoin_core():
+def bitcoin_core_wallet():
 
     stripped_list =[]
 

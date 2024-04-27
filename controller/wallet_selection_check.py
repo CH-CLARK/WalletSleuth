@@ -24,7 +24,7 @@ from wallet_scripts.phantom_ext import phantom_chrome
 from wallet_scripts.exodus_wallet import exodus_wallet
 from wallet_scripts.wasabi_wallet import wasabi_wallet
 from wallet_scripts.litecoin_core_wallet import litecoin_core_wallet
-from wallet_scripts.bitcoin_core_wallet import bitcoin_core
+from wallet_scripts.bitcoin_core_wallet import bitcoin_core_wallet
 
 
 def run_func():
@@ -180,7 +180,7 @@ def run_func():
 
         if ('Bitcoin Core', None) in Wallet_Selector.selection:
             try:
-                bitcoin_core()
+                bitcoin_core_wallet()
                 selection.append(output_dir + '/' + 'bitcoin_core_addresses.csv')
             except:
                 with open(output_dir + '/' + 'WalletSleuth_log.txt', 'a') as log_file:

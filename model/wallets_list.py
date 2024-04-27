@@ -41,6 +41,6 @@ except Exception as e:
 
     sep_list = "\n".join(no_brotli)
 
-    warning = f"The Brotli library is required to parse transactions from the following wallets\n\n{sep_list}\n\nThese wallets will be omitted from the selection.\n\nPlease downlaod the latest release of Wallet Sleuth or intall the Brotli library to parse data from these wallets."
+    warning = f"The Brotli library is required to parse transactions from the following wallets:\n\n{sep_list}\n\nThese wallets will be omitted from the selection.\n\nPlease downlaod the latest release of Wallet Sleuth or intall the Brotli library to parse data from these wallets."
 
     messagebox.showwarning('Wallet Sleuth', warning)
