@@ -20,7 +20,7 @@ from wallet_scripts.brave_browser_wallet import brave_wallet
 from wallet_scripts.guarda_ext import guarda_chrome
 from wallet_scripts.opera_browser_wallet import opera_wallet
 from wallet_scripts.ledger_live import ledger_live_wallet
-from wallet_scripts.phantom_ext import phantom_chrome
+from wallet_scripts.phantom_ext import phantom_chrome, phantom_brave
 from wallet_scripts.exodus_wallet import exodus_wallet
 from wallet_scripts.wasabi_wallet import wasabi_wallet
 from wallet_scripts.litecoin_core_wallet import litecoin_core_wallet
@@ -141,7 +141,12 @@ def run_func():
 
         #Phantom Extension - WIP
         if ('Phantom*', 'Brave') in Wallet_Selector.selection:
-            print('Phantom Brave function ran')
+            try:
+                phantom_brave()
+                selection.append(output_dir + '/' + 'phantom_brave_addresses.csv')
+            except:
+                with open(output_dir + '/' + 'WalletSleuth_log.txt', 'a') as log_file:
+                    log_file.write('ERROR: Phantom (Brave) - Wallet Not Found!\n')
 
         if ('Phantom*', 'Chrome') in Wallet_Selector.selection:
             try:
