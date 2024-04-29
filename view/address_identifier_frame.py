@@ -1,7 +1,7 @@
 #tkinter imports
 import tkinter as tk
 import tkinter.ttk as ttk
-from tkinter import LEFT, Y, RIGHT, DISABLED
+from tkinter import LEFT, Y, RIGHT, DISABLED, PhotoImage
 from tkinter.filedialog import askdirectory
 
 #model imports
@@ -43,6 +43,12 @@ class Address_Identifier_Frame(ttk.Frame):
 
         self.wallet_selector = Wallet_Selector.wallet_selection(self, container, names)
 
+        #Title Image
+        original_image = PhotoImage(file="app_files/title.png")
+        resized_image = original_image.subsample(2, 2)
+        image_label = tk.Label(self.right_canvas, image=resized_image)
+        image_label.image = resized_image
+        image_label.place(x=2, y=0)
 
         #wallet Finder Button
         HW_wallet_button = tk.Button(self.right_canvas, text='Connected Hardware Wallet Detector',justify='center', command = hardware_wallet_scan)

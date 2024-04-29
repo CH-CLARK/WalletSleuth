@@ -35,6 +35,8 @@ class WS_Main_Window(tk.Tk):
         self.title(TITLE)
         self.resizable(False, False)
         self.geometry(get_center_screen_geometry(WIDTH, HEIGHT, self))
+        icon_path = 'app_files/icon.ico'
+        self.iconbitmap(icon_path)
 
         # Notebook
         self.notebook = ttk.Notebook(self, width=750, height=500)
