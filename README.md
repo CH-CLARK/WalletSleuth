@@ -38,7 +38,7 @@ Wallet Detector - Determine what wallets to scan for addresses on by identifying
 - Litecoin Core
 - MetaMask (Brave, Chrome, Edge)
 - Opera Browser Wallet
-- Phantom (Chrome)
+- Phantom (Brave, Chrome)
 - Wasabi Wallet
 
 ## Limitations
