@@ -203,9 +203,14 @@ def run_func():
                     reader = csv.reader(f1)
                     new_data = [row for row in reader]
                     writer.writerows(new_data)
-        
+                    
         #completion notification
-        messagebox.showinfo('Wallet Sleuth', 'Search Complete!')
+        if Wallet_Selector.selection:
+            messagebox.showinfo('Wallet Sleuth', 'Search Complete!')
+
+        if not Wallet_Selector.selection:
+            messagebox.showinfo('Wallet Sleuth', 'No Wallets Selected!')
+
     
     except Exception:
         messagebox.showerror('Error', "You must select an 'Appdata' & 'Output' directory first!")

@@ -23,7 +23,7 @@ def exodus_wallet():
 
     in_cache_dir = appdata_dir + "/Roaming/Exodus/Partitions/main/Cache/Cache_Data"
 
-    output_path = appdata_dir
+    output_path = output_dir
 
     default_row_headers = ["file_hash", "key", "request_time", "response_time", "date", "content-type"]
     rows = []
