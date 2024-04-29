@@ -50,7 +50,7 @@ def run_func():
                 selection.append(output_dir + '/' + 'atomic_wallet_addresses.csv')
             except:
                 with open(output_dir + '/' + 'WalletSleuth_log.txt', 'a') as log_file:
-                    log_file.write("ERROR: Atomic wallet - Wallet not found!\n")
+                    log_file.write("ERROR: Atomic Wallet - Wallet not found!\n")
 
         #Bitkeep Extension
         if ('Bitget*', 'Brave') in Wallet_Selector.selection:
