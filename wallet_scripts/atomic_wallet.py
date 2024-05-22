@@ -15,6 +15,7 @@ ENCODING = "iso-8859-1"
 def atomic_wallet():
     appdata_dir = controller.config.APPDATA
     output_dir = controller.config.OUTPUT
+    log_name = controller.config.WS_MAIN_LOG_NAME
 
     data = []
 
@@ -67,7 +68,7 @@ def atomic_wallet():
                 atomic_output = ['Address', i["id"], i["address"], "Atomic Wallet", location]
                 write.writerow(atomic_output)
 
-    with open(output_dir + '/' + 'WalletSleuth_log.txt', 'a') as log_file:
+    with open(output_dir + '/' + log_name, 'a') as log_file:
         log_file.write('ACTION: Atomic Wallet - Addresses Identified.\n')
                  
     os.remove(output_path)

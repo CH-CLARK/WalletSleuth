@@ -27,6 +27,7 @@ ENCODING = "iso-8859-1"
 def phantom_chrome():
     appdata_dir = controller.config.APPDATA
     output_dir = controller.config.OUTPUT
+    log_name = controller.config.WS_MAIN_LOG_NAME
 
 
     chrome_user_data = appdata_dir + "/Local/Google/Chrome/User Data"
@@ -173,7 +174,7 @@ def phantom_chrome():
         write = csv.writer(file) 
         write.writerows(phantom_chrome_output)
 
-    with open(output_dir + '/' + 'WalletSleuth_log.txt', 'a') as log_file:
+    with open(output_dir + '/' + log_name, 'a') as log_file:
         log_file.write('ACTION: Phantom (Chrome) - Addresses Identified.\n') 
 
     os.remove(output_path)
@@ -181,6 +182,7 @@ def phantom_chrome():
 def phantom_brave():
     appdata_dir = controller.config.APPDATA
     output_dir = controller.config.OUTPUT
+    log_name = controller.config.WS_MAIN_LOG_NAME
 
     brave_user_data = appdata_dir + "/Local/BraveSoftware/Brave-Browser/User Data"
 
@@ -326,7 +328,7 @@ def phantom_brave():
         write = csv.writer(file) 
         write.writerows(phantom_brave_output)
 
-    with open(output_dir + '/' + 'WalletSleuth_log.txt', 'a') as log_file:
+    with open(output_dir + '/' + log_name, 'a') as log_file:
         log_file.write('ACTION: Phantom (brave) - Addresses Identified.\n') 
 
     os.remove(output_path)

@@ -26,6 +26,7 @@ ENCODING = "iso-8859-1"
 def guarda_chrome():
     appdata_dir = controller.config.APPDATA
     output_dir = controller.config.OUTPUT
+    log_name = controller.config.WS_MAIN_LOG_NAME
 
 
     chrome_user_data = appdata_dir + "/Local/Google/Chrome/User Data"
@@ -146,7 +147,7 @@ def guarda_chrome():
         write = csv.writer(file) 
         write.writerows(guarda_chrome_output)
 
-    with open(output_dir + '/' + 'WalletSleuth_log.txt', 'a') as log_file:
+    with open(output_dir + '/' + log_name, 'a') as log_file:
         log_file.write('ACTION: Guarda (Chrome) - Addresses Identified.\n')            
 
     os.remove(output_path)

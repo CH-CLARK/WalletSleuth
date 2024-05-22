@@ -93,7 +93,9 @@ class WS_Main_Window(tk.Tk):
 
     # Method to load log content
     def load_log_content(self, output_dir):
-        with open(output_dir + '/' + 'WalletSleuth_log.txt', 'r') as log_file:
+        log_name = controller.config.WS_MAIN_LOG_NAME
+
+        with open(output_dir + '/' + log_name, 'r') as log_file:
             read_log = log_file.read()
 
             self.logging_frame.logging_text_win.config(state=tk.NORMAL)

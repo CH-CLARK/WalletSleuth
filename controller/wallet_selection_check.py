@@ -31,13 +31,15 @@ def run_func():
     try:
         appdata_dir = controller.config.APPDATA
         output_dir = controller.config.OUTPUT
+        log_name = controller.config.WS_MAIN_LOG_NAME
+
 
         selection = []
 
         get_now_datetime = datetime.datetime.now()
         now_formated = get_now_datetime.strftime('%Y-%m-%d %H:%M:%S')
 
-        with open(output_dir + '/' + 'WalletSleuth_log.txt', 'w') as log_file:
+        with open(output_dir + '/' + log_name, 'w') as log_file:
             log_file.write('+-----------------------------------------------------------------------------------------+\n')
             log_file.write('|----------------------------------- WALLET SLEUTH LOG -----------------------------------|\n')
             log_file.write('+-----------------------------------------------------------------------------------------+\n')
@@ -49,7 +51,7 @@ def run_func():
                 atomic_wallet()
                 selection.append(output_dir + '/' + 'atomic_wallet_addresses.csv')
             except:
-                with open(output_dir + '/' + 'WalletSleuth_log.txt', 'a') as log_file:
+                with open(output_dir + '/' + log_name, 'a') as log_file:
                     log_file.write("ERROR: Atomic Wallet - Wallet not found!\n")
 
         #Bitkeep Extension
@@ -58,7 +60,7 @@ def run_func():
                 bitkeep_brave()
                 selection.append(output_dir + '/' + 'bitkeep_brave_addresses.csv')
             except:
-                with open(output_dir + '/' + 'WalletSleuth_log.txt', 'a') as log_file:
+                with open(output_dir + '/' + log_name, 'a') as log_file:
                     log_file.write('ERROR: Bitget (Brave) - Wallet Not Found!\n')
 
         if ('Bitget*', 'Chrome') in Wallet_Selector.selection:
@@ -66,7 +68,7 @@ def run_func():
                 bitkeep_chrome()
                 selection.append(output_dir + '/' + 'bitkeep_chrome_addresses.csv')
             except:
-                with open(output_dir + '/' + 'WalletSleuth_log.txt', 'a') as log_file:
+                with open(output_dir + '/' + log_name, 'a') as log_file:
                     log_file.write('ERROR: Bitget (Chrome) - Wallet Not Found!\n')
 
         #Brave Browser Wallet
@@ -75,7 +77,7 @@ def run_func():
                 brave_wallet()
                 selection.append(output_dir + '/' + 'brave_browser_addresses.csv')
             except:
-                with open(output_dir + '/' + 'WalletSleuth_log.txt', 'a') as log_file:
+                with open(output_dir + '/' + log_name, 'a') as log_file:
                     log_file.write('ERROR: Brave Browser Wallet - Wallet Not Found!\n')
 
         #Brave Browser Legacy Wallet - SPELLING ERROR
@@ -84,7 +86,7 @@ def run_func():
                 brave_legacy()
                 selection.append(output_dir + '/' + 'brave_legacy_addresses.csv')
             except:
-                with open(output_dir + '/' + 'WalletSleuth_log.txt', 'a') as log_file:
+                with open(output_dir + '/' + log_name, 'a') as log_file:
                     log_file.write('ERROR: Brave Browser Legacy Wallet - Wallet Not Found!\n')
 
         #Guarda Extension
@@ -93,7 +95,7 @@ def run_func():
                 guarda_chrome()
                 selection.append(output_dir + '/' + 'guarda_chrome_addresses.csv')
             except:
-                with open(output_dir + '/' + 'WalletSleuth_log.txt', 'a') as log_file:
+                with open(output_dir + '/' + log_name, 'a') as log_file:
                     log_file.write('ERROR: Guarda (Chrome) - Wallet Not Found!\n')
 
         #MetaMask Extension
@@ -102,7 +104,7 @@ def run_func():
                 metamask_brave()
                 selection.append(output_dir + '/' + 'metamask_brave_addresses.csv')
             except:
-                with open(output_dir + '/' + 'WalletSleuth_log.txt', 'a') as log_file:
+                with open(output_dir + '/' + log_name, 'a') as log_file:
                     log_file.write('ERROR: Metamask (Brave) - Wallet Not Found!\n')
 
         if ('MetaMask*', 'Chrome') in Wallet_Selector.selection:
@@ -110,7 +112,7 @@ def run_func():
                 metamask_chrome()
                 selection.append(output_dir + '/' + 'metamask_chrome_addresses.csv')
             except:
-                with open(output_dir + '/' + 'WalletSleuth_log.txt', 'a') as log_file:
+                with open(output_dir + '/' + log_name, 'a') as log_file:
                     log_file.write('ERROR: Metamask (Chrome) - Wallet Not Found!\n')
 
         if ('MetaMask*', 'Edge') in Wallet_Selector.selection:
@@ -118,7 +120,7 @@ def run_func():
                 metamask_edge()
                 selection.append(output_dir + '/' + 'metamask_edge_addresses.csv')
             except:
-                with open(output_dir + '/' + 'WalletSleuth_log.txt', 'a') as log_file:
+                with open(output_dir + '/' + log_name, 'a') as log_file:
                     log_file.write('ERROR: Metamask (Edge) - Wallet Not Found!\n')
 
         #Opera Browser Wallet
@@ -127,7 +129,7 @@ def run_func():
                 opera_wallet()
                 selection.append(output_dir + '/' + 'opera_browser_addresses.csv')
             except:
-                with open(output_dir + '/' + 'WalletSleuth_log.txt', 'a') as log_file:
+                with open(output_dir + '/' + log_name, 'a') as log_file:
                     log_file.write('ERROR: Opera Browser Wallet - Wallet Not Found!\n')
 
         #Ledger Live
@@ -136,7 +138,7 @@ def run_func():
                 ledger_live_wallet()
                 selection.append(output_dir + '/' + 'ledger_live_addresses.csv')
             except:
-                with open(output_dir + '/' + 'WalletSleuth_log.txt', 'a') as log_file:
+                with open(output_dir + '/' + log_name, 'a') as log_file:
                     log_file.write('ERROR: Ledger Live Wallet - Wallet Not Found!\n')
 
         #Phantom Extension - WIP
@@ -145,7 +147,7 @@ def run_func():
                 phantom_brave()
                 selection.append(output_dir + '/' + 'phantom_brave_addresses.csv')
             except:
-                with open(output_dir + '/' + 'WalletSleuth_log.txt', 'a') as log_file:
+                with open(output_dir + '/' + log_name, 'a') as log_file:
                     log_file.write('ERROR: Phantom (Brave) - Wallet Not Found!\n')
 
         if ('Phantom*', 'Chrome') in Wallet_Selector.selection:
@@ -153,7 +155,7 @@ def run_func():
                 phantom_chrome()
                 selection.append(output_dir + '/' + 'phantom_chrome_addresses.csv')
             except:
-                with open(output_dir + '/' + 'WalletSleuth_log.txt', 'a') as log_file:
+                with open(output_dir + '/' + log_name, 'a') as log_file:
                     log_file.write('ERROR: Phantom (Chrome) - Wallet Not Found!\n')
 
         #Exodus Wallet 
@@ -162,7 +164,7 @@ def run_func():
                 exodus_wallet()
                 selection.append(output_dir + '/' + 'exodus_wallet_transactions.csv')
             except:
-                with open(output_dir + '/' + 'WalletSleuth_log.txt', 'a') as log_file:
+                with open(output_dir + '/' + log_name, 'a') as log_file:
                     log_file.write("ERROR: Exodus Wallet - Wallet not found!\n")
 
        #Wasabi Wallet 
@@ -171,7 +173,7 @@ def run_func():
                 wasabi_wallet()
                 selection.append(output_dir + '/' + 'wasabi_wallet_addresses.csv')
             except:
-                with open(output_dir + '/' + 'WalletSleuth_log.txt', 'a') as log_file:
+                with open(output_dir + '/' + log_name, 'a') as log_file:
                     log_file.write("ERROR: Wasabi Wallet - Wallet not found!\n")
 
        #Litecoin Core Wallet 
@@ -180,7 +182,7 @@ def run_func():
                 litecoin_core_wallet()
                 selection.append(output_dir + '/' + 'litecoin_core_addresses.csv')
             except:
-                with open(output_dir + '/' + 'WalletSleuth_log.txt', 'a') as log_file:
+                with open(output_dir + '/' + log_name, 'a') as log_file:
                     log_file.write("ERROR: Litecoin Core Wallet - Wallet not found!\n")
 
         if ('Bitcoin Core', None) in Wallet_Selector.selection:
@@ -188,7 +190,7 @@ def run_func():
                 bitcoin_core_wallet()
                 selection.append(output_dir + '/' + 'bitcoin_core_addresses.csv')
             except:
-                with open(output_dir + '/' + 'WalletSleuth_log.txt', 'a') as log_file:
+                with open(output_dir + '/' + log_name, 'a') as log_file:
                     log_file.write("ERROR: bitcoin Core Wallet - Wallet not found!\n")
 
         

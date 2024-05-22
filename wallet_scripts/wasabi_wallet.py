@@ -13,6 +13,7 @@ def wasabi_wallet():
 
     appdata_dir = controller.config.APPDATA
     output_dir = controller.config.OUTPUT
+    log_name = controller.config.WS_MAIN_LOG_NAME
 
     wasabi_wallets_loc = appdata_dir + "/Roaming/WalletWasabi/Client/Wallets"
     try:
@@ -32,7 +33,7 @@ def wasabi_wallet():
             write = csv.writer(output_file)
             write.writerows(wasabi_output)
         
-        with open(output_dir + '/' + 'WalletSleuth_log.txt', 'a') as log_file:
+        with open(output_dir + '/' + log_name, 'a') as log_file:
             log_file.write('ACTION: Wasabi Wallet - Addresses Identified.\n')    
 
     except Exception as e:

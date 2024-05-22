@@ -31,6 +31,7 @@ ENCODING = "iso-8859-1"
 def bitkeep_chrome():
     appdata_dir = controller.config.APPDATA
     output_dir = controller.config.OUTPUT
+    log_name = controller.config.WS_MAIN_LOG_NAME
 
     chrome_user_data = appdata_dir + "/Local/Google/Chrome/User Data"
     folders_list = os.listdir(chrome_user_data)
@@ -152,7 +153,7 @@ def bitkeep_chrome():
             write = csv.writer(file) 
             write.writerows(bitkeep_chrome_output)
 
-        with open(output_dir + '/' + 'WalletSleuth_log.txt', 'a') as log_file:
+        with open(output_dir + '/' + log_name, 'a') as log_file:
             log_file.write('ACTION: Bitget (Chrome) - Addresses Identified.\n')            
 
     os.remove(output_path)
@@ -160,6 +161,7 @@ def bitkeep_chrome():
 def bitkeep_brave():
     appdata_dir = controller.config.APPDATA
     output_dir = controller.config.OUTPUT
+    log_name = controller.config.WS_MAIN_LOG_NAME
 
     brave_user_data = appdata_dir + "/Local/BraveSoftware/Brave-Browser/User Data"
     folders_list = os.listdir(brave_user_data)
@@ -280,7 +282,7 @@ def bitkeep_brave():
             write = csv.writer(file) 
             write.writerows(bitkeep_brave_output)
 
-        with open(output_dir + '/' + 'WalletSleuth_log.txt', 'a') as log_file:
+        with open(output_dir + '/' + log_name, 'a') as log_file:
             log_file.write('ACTION: Bitget (Brave) - Addresses Identified.\n')  
 
     os.remove(output_path)

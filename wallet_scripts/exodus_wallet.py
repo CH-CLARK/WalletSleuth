@@ -20,6 +20,7 @@ import ccl_chrome_ldb_scripts.ccl_chromium_cache
 def exodus_wallet():
     appdata_dir = controller.config.APPDATA
     output_dir = controller.config.OUTPUT
+    log_name = controller.config.WS_MAIN_LOG_NAME
 
     in_cache_dir = appdata_dir + "/Roaming/Exodus/Partitions/main/Cache/Cache_Data"
 
@@ -89,7 +90,7 @@ def exodus_wallet():
             for row in filtered_rows:
                 csv_filtered_out.writerow(["Transaction ID"] + list(row.values()) + ["Exodus Wallet", str(in_cache_dir)])
 
-        with open(output_dir + '/' + 'WalletSleuth_log.txt', 'a') as log_file:
+        with open(output_dir + '/' + log_name, 'a') as log_file:
             log_file.write('ACTION: Exodus Wallet - No Transactions Identified \n')
     
     if filtered_rows:
@@ -99,5 +100,5 @@ def exodus_wallet():
             for row in filtered_rows:
                 csv_filtered_out.writerow(["Transaction ID"] + list(row.values()) + ["Exodus Wallet", str(in_cache_dir)])
 
-        with open(output_dir + '/' + 'WalletSleuth_log.txt', 'a') as log_file:
+        with open(output_dir + '/' + log_name, 'a') as log_file:
             log_file.write('ACTION: Exodus Wallet - Transactions Identified.\n')

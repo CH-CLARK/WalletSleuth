@@ -28,6 +28,7 @@ ENCODING = "iso-8859-1"
 def opera_wallet():
     appdata_dir = controller.config.APPDATA
     output_dir = controller.config.OUTPUT
+    log_name = controller.config.WS_MAIN_LOG_NAME
 
     operabrowser_user_data = appdata_dir + "/Roaming/Opera Software/Opera Stable/Local Extension Settings/gojhcdgcpbpfigcaejpfhfegekdgiblk"
 
@@ -96,7 +97,7 @@ def opera_wallet():
         write = csv.writer(output_file)
         write.writerows(output_data)
 
-    with open(output_dir + '/' + 'WalletSleuth_log.txt', 'a') as log_file:
+    with open(output_dir + '/' + log_name, 'a') as log_file:
         log_file.write('ACTION: Opera Browser Wallet - Addresses Identified.\n')            
 
 

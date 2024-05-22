@@ -14,6 +14,7 @@ import ccl_chrome_ldb_scripts.ccl_leveldb
 def brave_wallet():
     appdata_dir = controller.config.APPDATA
     output_dir = controller.config.OUTPUT
+    log_name = controller.config.WS_MAIN_LOG_NAME
 
     bravebrowser_userdata = appdata_dir + "/Local/BraveSoftware/Brave-Browser/User Data"
 
@@ -145,5 +146,5 @@ def brave_wallet():
         write = csv.writer(output_file)
         write.writerows(bravebrowser_output)
 
-    with open(output_dir + '/' + 'WalletSleuth_log.txt', 'a') as log_file:
+    with open(output_dir + '/' + log_name, 'a') as log_file:
         log_file.write('ACTION: Brave Browser Wallet - Addresses Identified.\n')  

@@ -27,6 +27,7 @@ ENCODING = "iso-8859-1"
 def metamask_chrome():
     appdata_dir = controller.config.APPDATA
     output_dir = controller.config.OUTPUT
+    log_name = controller.config.WS_MAIN_LOG_NAME
 
     chrome_user_data = appdata_dir + "/Local/Google/Chrome/User Data"
     folders_list = os.listdir(chrome_user_data)
@@ -151,7 +152,7 @@ def metamask_chrome():
     
 #this should check for identifies data and if the length of the string is 0, it wil inform the user that no addessses exist. the reason for this is i noticed that a user might have MM installed, but never have opened it
         if len(identities_data) == 0:
-            with open(output_dir + '/' + 'WalletSleuth_log.txt', 'a') as log_file:
+            with open(output_dir + '/' + log_name, 'a') as log_file:
                 log_file.write('ACTION: Metamask (Chrome) - No Addresses Identified.\n')    
     
         else:
@@ -159,7 +160,7 @@ def metamask_chrome():
                 write = csv.writer(file) 
                 write.writerows(metamask_chrome_output)
 
-            with open(output_dir + '/' + 'WalletSleuth_log.txt', 'a') as log_file:
+            with open(output_dir + '/' + log_name, 'a') as log_file:
                 log_file.write('ACTION: Metamask (Chrome) - Addresses Identified.\n')            
 
     os.remove(output_path)
@@ -167,6 +168,7 @@ def metamask_chrome():
 def metamask_edge():
     appdata_dir = controller.config.APPDATA
     output_dir = controller.config.OUTPUT
+    log_name = controller.config.WS_MAIN_LOG_NAME
 
     edge_user_data = appdata_dir + "/Local/Microsoft/Edge/User Data"
     folders_list = os.listdir(edge_user_data)
@@ -289,7 +291,7 @@ def metamask_edge():
 
 #this should check for identifies data and if the length of the string is 0, it wil inform the user that no addessses exist. the reason for this is i noticed that a user might have MM installed, but never have opened it
         if len(identities_data) == 0:
-            with open(output_dir + '/' + 'WalletSleuth_log.txt', 'a') as log_file:
+            with open(output_dir + '/' + log_name, 'a') as log_file:
                 log_file.write('ACTION: Metamask (Brave) - No Addresses Identified.\n')    
     
         else:
@@ -297,7 +299,7 @@ def metamask_edge():
                 write = csv.writer(file) 
                 write.writerows(metamask_edge_output)
 
-            with open(output_dir + '/' + 'WalletSleuth_log.txt', 'a') as log_file:
+            with open(output_dir + '/' + log_name, 'a') as log_file:
                 log_file.write('ACTION: Metamask (Edge) - Addresses Identified.\n')          
 
     os.remove(output_path)
@@ -305,6 +307,7 @@ def metamask_edge():
 def metamask_brave():
     appdata_dir = controller.config.APPDATA
     output_dir = controller.config.OUTPUT
+    log_name = controller.config.WS_MAIN_LOG_NAME
 
     brave_user_data = appdata_dir + "/Local/BraveSoftware/Brave-Browser/User Data"
     folders_list = os.listdir(brave_user_data)
@@ -426,7 +429,7 @@ def metamask_brave():
 
 #this should check for identifies data and if the length of the string is 0, it wil inform the user that no addessses exist. the reason for this is i noticed that a user might have MM installed, but never have opened it
         if len(identities_data) == 0:
-            with open(output_dir + '/' + 'WalletSleuth_log.txt', 'a') as log_file:
+            with open(output_dir + '/' + log_name, 'a') as log_file:
                 log_file.write('ACTION: Metamask (Brave) - No Addresses Identified.\n')    
     
         else:
@@ -434,7 +437,7 @@ def metamask_brave():
                 write = csv.writer(file) 
                 write.writerows(metamask_brave_output)
 
-            with open(output_dir + '/' + 'WalletSleuth_log.txt', 'a') as log_file:
+            with open(output_dir + '/' + log_name, 'a') as log_file:
                 log_file.write('ACTION: Metamask (Brave) - Addresses Identified.\n')        
 
     os.remove(output_path)

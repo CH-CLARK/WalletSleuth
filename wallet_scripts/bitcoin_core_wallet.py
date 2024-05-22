@@ -9,6 +9,7 @@ def bitcoin_core_wallet():
 
     appdata_dir = controller.config.APPDATA
     output_dir = controller.config.OUTPUT
+    log_name = controller.config.WS_MAIN_LOG_NAME
 
     bitcoin_app_data = appdata_dir + "/Roaming/Bitcoin/wallets"
 
@@ -58,7 +59,7 @@ def bitcoin_core_wallet():
                                 if i not in stripped_list_no_dups:
                                     stripped_list_no_dups.append(i)
 
-        with open(output_dir + '/' + 'WalletSleuth_log.txt', 'a') as log_file:
+        with open(output_dir + '/' + log_name, 'a') as log_file:
             log_file.write('ACTION: Bitcoin Core Wallet - Addresses Identified.\n')  
 
         with open(output_dir + '/' + 'bitcoin_core_addresses.csv', 'w', newline='') as output_file:
