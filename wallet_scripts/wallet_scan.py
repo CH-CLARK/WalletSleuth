@@ -6,7 +6,7 @@ import controller.config
 
 #tkinter imports
 import tkinter as tk
-from tkinter import messagebox
+from tkinter import messagebox, filedialog
 
 #paths to check - Limitation currently is that it only checks the default (NOT PROFILEs) for each wallet
 paths = {
@@ -38,6 +38,7 @@ paths = {
     r'Roaming\Litecoin\wallets': 'Litecoin Core',
 
     r'Roaming\Bitcoin\wallets': 'Bitcoin Core'
+
 }
 
 
@@ -56,10 +57,33 @@ def wallet_scan():
             else:
                 pass
             
-
         identified_wallets = "\n".join(directory_results)
 
-        messagebox.showinfo('Wallet Detector', 'Identified Wallets:\n' + identified_wallets)
+        response = messagebox.askquestion('Wallet Detector', 'Identified Wallets:\n' + identified_wallets + '\n\nDo you wish to save these results?\n', icon = 'info')
+
+        if response == 'yes':
+            file_path = save_output()
+            if file_path:
+                with open(file_path, 'a') as file:
+                    file.write(identified_wallets)
+
+            if response == 'no':
+                pass
 
     except Exception:
         messagebox.showerror('Error', "You must select an 'Appdata' directory first!")
+
+
+def save_output():
+    file_path  = filedialog.asksaveasfilename(defaultextension='.txt', initialfile='WS_Scan_Results.txt')
+
+    if file_path:
+        with open(file_path, 'w') as file:
+            file.write('+-----------------------------------------------------------------------------------------+\n')
+            file.write('|----------------------------------- IDENTIFIED WALLETS ----------------------------------|\n')
+            file.write('+-----------------------------------------------------------------------------------------+\n')
+
+
+        return file_path
+    else:
+        pass
