@@ -23,8 +23,8 @@ Connected Hardware Wallet Detector - Check for previously connected Hardware Wal
 Wallet Detector - Determine what wallets to scan for addresses on by identifying currently installed wallets.
 
 <p float="center">
-  <img src="https://github.com/CH-CLARK/WalletSleuth/assets/117690646/e3b3290d-bc57-4465-aafe-6e56054f2452" width="45%" />
-  <img src="https://github.com/CH-CLARK/WalletSleuth/assets/117690646/bfc9f6ee-09bf-430a-95a6-da96f3af02da" width="45%" />
+  <img src="https://github.com/CH-CLARK/WalletSleuth/assets/117690646/2c687e42-59dc-4745-9950-296248ca7632" width="45%" />
+  <img src="https://github.com/CH-CLARK/WalletSleuth/assets/117690646/0900f067-005f-4c4f-9a31-2bc1221ed9d8" width="45%" />
   
 </p>
 
@@ -47,7 +47,7 @@ Wallet Detector - Determine what wallets to scan for addresses on by identifying
 - Currently the wallet finder function is limited to wallets in the 'Default' browser user profile, but the address finder will check all profiles for the selected browser.
 - Support for Windows OS only.
 - Requires Python 3.8 or higher
-- To parse Transaction IDs from the cache, the brotli extension is required.
+- To parse Transaction IDs from the Exodus cache, the brotli extension is required.
 
 
 
