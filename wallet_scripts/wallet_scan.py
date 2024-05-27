@@ -37,8 +37,9 @@ paths = {
 
     r'Roaming\Litecoin\wallets': 'Litecoin Core',
 
-    r'Roaming\Bitcoin\wallets': 'Bitcoin Core'
+    r'Roaming\Bitcoin\wallets': 'Bitcoin Core',
 
+    r'Local\Google\Chrome\User Data\Default\Local Extension Settings\hnfanknocfeofbddgcijnmhnfnkdnaad' : 'Coinbase Wallet (Chrome)',
 }
 
 
