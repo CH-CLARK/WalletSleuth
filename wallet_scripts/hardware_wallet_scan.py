@@ -106,8 +106,8 @@ def hardware_wallet_scan():
         wallet_devices.append("D'CENT - Biometric Wallet")
     
     if not wallet_devices:
-        messagebox.showinfo('Connect Hardware Wallet Detector', "No previously connected hardware wallet devices identified!")
+        messagebox.showinfo('Connected Hardware Wallet Detector', "No previously connected hardware wallet devices identified!")
 
     if wallet_devices:
         items_text = "\n".join(wallet_devices)
-        messagebox.showinfo('Connect Hardware Wallet Detector', "Previously connected hardware wallet devices:\n" + items_text)
+        messagebox.showinfo('Connected Hardware Wallet Detector', "Previously connected hardware wallet devices:\n" + items_text)

@@ -31,9 +31,9 @@ import dataclasses
 import types
 import typing
 
-import ccl_leveldb
-import ccl_v8_value_deserializer
-import ccl_blink_value_deserializer
+import ccl_chrome_ldb_scripts.ccl_leveldb
+import ccl_chrome_ldb_scripts.ccl_v8_value_deserializer
+import ccl_chrome_ldb_scripts.ccl_blink_value_deserializer
 
 __version__ = "0.14"
 __description__ = "Module for reading Chromium IndexedDB LevelDB databases."
@@ -304,10 +304,10 @@ class BlinkTrailer:
     @classmethod
     def from_buffer(cls, buffer, trailer_offset: int):
         tag, offset, length = struct.unpack(">cQI", buffer[trailer_offset: trailer_offset + BlinkTrailer.TRAILER_SIZE])
-        if tag != ccl_blink_value_deserializer.Constants.tag_kTrailerOffsetTag:
+        if tag != ccl_chrome_ldb_scripts.ccl_blink_value_deserializer.Constants.tag_kTrailerOffsetTag:
             raise ValueError(
                 f"Trailer doesn't start with kTrailerOffsetTag "
-                f"(expected: 0x{ccl_blink_value_deserializer.Constants.tag_kTrailerOffsetTag.hex()}; "
+                f"(expected: 0x{ccl_chrome_ldb_scripts.ccl_blink_value_deserializer.Constants.tag_kTrailerOffsetTag.hex()}; "
                 f"got: 0x{tag.hex()}")
 
         return BlinkTrailer(offset, length)
@@ -326,12 +326,12 @@ class IndexedDbRecord:
         self.sequence_number = ldb_seq_no
         self.external_value_path = external_value_path
 
-    def resolve_blob_index(self, blob_index: ccl_blink_value_deserializer.BlobIndex) -> IndexedDBExternalObject:
+    def resolve_blob_index(self, blob_index: ccl_chrome_ldb_scripts.ccl_blink_value_deserializer.BlobIndex) -> IndexedDBExternalObject:
         """Resolve a ccl_blink_value_deserializer.BlobIndex to its IndexedDBExternalObject
          to get metadata (file name, timestamps, etc)"""
         return self.owner.get_blob_info(self.db_id, self.obj_store_id, self.key.raw_key, blob_index.index_id)
 
-    def get_blob_stream(self, blob_index: ccl_blink_value_deserializer.BlobIndex) -> typing.BinaryIO:
+    def get_blob_stream(self, blob_index: ccl_chrome_ldb_scripts.ccl_blink_value_deserializer.BlobIndex) -> typing.BinaryIO:
         """Resolve a ccl_blink_value_deserializer.BlobIndex to a stream of its content"""
         return self.owner.get_blob(self.db_id, self.obj_store_id, self.key.raw_key, blob_index.index_id)
 
@@ -345,7 +345,7 @@ class IndexedDb:
     # Currently I just assume that everything falls between 1 and 127 for simplicity as it makes scanning the keys
     # lots easier.
     def __init__(self, leveldb_dir: os.PathLike, leveldb_blob_dir: os.PathLike = None):
-        self._db = ccl_leveldb.RawLevelDb(leveldb_dir)
+        self._db = ccl_chrome_ldb_scripts.ccl_leveldb.RawLevelDb(leveldb_dir)
         self._blob_dir = leveldb_blob_dir
         self.global_metadata = None
         self.database_metadata = None
@@ -367,7 +367,7 @@ class IndexedDb:
 
         for record in self._fetched_records:
             # Global Metadata
-            if record.key.startswith(b"\x00\x00\x00\x00") and record.state == ccl_leveldb.KeyState.Live:
+            if record.key.startswith(b"\x00\x00\x00\x00") and record.state == ccl_chrome_ldb_scripts.ccl_leveldb.KeyState.Live:
                 if record.key not in global_metadata_raw or global_metadata_raw[record.key].seq < record.seq:
                     global_metadata_raw[record.key] = record
 
@@ -389,13 +389,13 @@ class IndexedDb:
             prefix_objectstore = IndexedDb.make_prefix(db_id.dbid_no, 0, 0, [50])
 
             for record in reversed(self._fetched_records):
-                if record.key.startswith(prefix_database) and record.state == ccl_leveldb.KeyState.Live:
+                if record.key.startswith(prefix_database) and record.state == ccl_chrome_ldb_scripts.ccl_leveldb.KeyState.Live:
                     # we only want live keys and the newest version thereof (highest seq)
                     meta_type = record.key[len(prefix_database)]
                     old_version = database_metadata_raw.get((db_id.dbid_no, meta_type))
                     if old_version is None or old_version.seq < record.seq:
                         database_metadata_raw[(db_id.dbid_no, meta_type)] = record
-                if record.key.startswith(prefix_objectstore) and record.state == ccl_leveldb.KeyState.Live:
+                if record.key.startswith(prefix_objectstore) and record.state == ccl_chrome_ldb_scripts.ccl_leveldb.KeyState.Live:
                     # we only want live keys and the newest version thereof (highest seq)
                     try:
                         objstore_id, varint_raw = _le_varint_from_bytes(record.key[len(prefix_objectstore):])
@@ -483,13 +483,13 @@ class IndexedDb:
     def get_object_store_metadata(self, db_id: int, obj_store_id: int, meta_type: ObjectStoreMetadataType):
         return self.object_store_meta.get_meta(db_id, obj_store_id, meta_type)
 
-    def _get_raw_global_metadata(self, live_only=True) -> typing.Dict[bytes, ccl_leveldb.Record]:
+    def _get_raw_global_metadata(self, live_only=True) -> typing.Dict[bytes, ccl_chrome_ldb_scripts.ccl_leveldb.Record]:
         # Global metadata always has the prefix 0 0 0 0
         if not live_only:
             raise NotImplementedError("Deleted metadata not implemented yet")
         meta = {}
         for record in self._db.iterate_records_raw(reverse=True):
-            if record.key.startswith(b"\x00\x00\x00\x00") and record.state == ccl_leveldb.KeyState.Live:
+            if record.key.startswith(b"\x00\x00\x00\x00") and record.state == ccl_chrome_ldb_scripts.ccl_leveldb.KeyState.Live:
                 # we only want live keys and the newest version thereof (highest seq)
                 if record.key not in meta or meta[record.key].seq < record.seq:
                     meta[record.key] = record
@@ -509,7 +509,7 @@ class IndexedDb:
             # prefix = bytes([0, db_id.dbid_no, 0, 0])
             prefix = IndexedDb.make_prefix(db_id.dbid_no, 0, 0)
             for record in self._db.iterate_records_raw(reverse=True):
-                if record.key.startswith(prefix) and record.state == ccl_leveldb.KeyState.Live:
+                if record.key.startswith(prefix) and record.state == ccl_chrome_ldb_scripts.ccl_leveldb.KeyState.Live:
                     # we only want live keys and the newest version thereof (highest seq)
                     meta_type = record.key[len(prefix)]
                     old_version = db_meta.get((db_id.dbid_no, meta_type))
@@ -532,7 +532,7 @@ class IndexedDb:
             prefix = IndexedDb.make_prefix(db_id.dbid_no, 0, 0, [50])
 
             for record in self._db.iterate_records_raw(reverse=True):
-                if record.key.startswith(prefix) and record.state == ccl_leveldb.KeyState.Live:
+                if record.key.startswith(prefix) and record.state == ccl_chrome_ldb_scripts.ccl_leveldb.KeyState.Live:
                     # we only want live keys and the newest version thereof (highest seq)
                     objstore_id, varint_raw = _le_varint_from_bytes(record.key[len(prefix):])
                     meta_type = record.key[len(prefix) + len(varint_raw)]
@@ -607,7 +607,7 @@ class IndexedDb:
     def iterate_records(
             self, db_id: int, store_id: int, *,
             live_only=False, bad_deserializer_data_handler: typing.Callable[[IdbKey, bytes], typing.Any] = None):
-        blink_deserializer = ccl_blink_value_deserializer.BlinkV8Deserializer()
+        blink_deserializer = ccl_chrome_ldb_scripts.ccl_blink_value_deserializer.BlinkV8Deserializer()
 
         # goodness me this is a slow way of doing things
         prefix = IndexedDb.make_prefix(db_id, store_id, 1)
@@ -618,7 +618,7 @@ class IndexedDb:
                 if not record.value:
                     # empty values will obviously fail, returning None is probably better than dying.
                     yield IndexedDbRecord(self, db_id, store_id, key, None,
-                                          record.state == ccl_leveldb.KeyState.Live, record.seq)
+                                          record.state == ccl_chrome_ldb_scripts.ccl_leveldb.KeyState.Live, record.seq)
                     continue
                 value_version, varint_raw = _le_varint_from_bytes(record.value)
                 val_idx = len(varint_raw)
@@ -631,7 +631,7 @@ class IndexedDb:
                 blink_version, obj_raw, trailer, external_path = precursor
 
                 try:
-                    deserializer = ccl_v8_value_deserializer.Deserializer(
+                    deserializer = ccl_chrome_ldb_scripts.ccl_v8_value_deserializer.Deserializer(
                         obj_raw, host_object_delegate=blink_deserializer.read)
                     value = deserializer.read()
                 except Exception:
@@ -640,7 +640,7 @@ class IndexedDb:
                         continue
                     raise
                 yield IndexedDbRecord(self, db_id, store_id, key, value,
-                                      record.state == ccl_leveldb.KeyState.Live,
+                                      record.state == ccl_chrome_ldb_scripts.ccl_leveldb.KeyState.Live,
                                       record.seq, external_path)
 
     def get_blob_info(self, db_id: int, store_id: int, raw_key: bytes, file_index: int) -> IndexedDBExternalObject:
@@ -699,7 +699,7 @@ class IndexedDb:
         # This is a slow way of doing this:
         prefix = bytes.fromhex("00 00 00 00 32")
         for record in self._db.iterate_records_raw():
-            if record.state != ccl_leveldb.KeyState.Live:
+            if record.state != ccl_chrome_ldb_scripts.ccl_leveldb.KeyState.Live:
                 continue
             if record.user_key.startswith(prefix):
                 # process the key first as they define what we'll do later

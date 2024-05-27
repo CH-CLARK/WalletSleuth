@@ -25,6 +25,7 @@ from wallet_scripts.exodus_wallet import exodus_wallet
 from wallet_scripts.wasabi_wallet import wasabi_wallet
 from wallet_scripts.litecoin_core_wallet import litecoin_core_wallet
 from wallet_scripts.bitcoin_core_wallet import bitcoin_core_wallet
+from wallet_scripts.coinbase_wallet_ext import coinbase_wallet_chrome
 
 
 def run_func():
@@ -192,6 +193,14 @@ def run_func():
             except:
                 with open(output_dir + '/' + log_name, 'a') as log_file:
                     log_file.write("ERROR: bitcoin Core Wallet - Wallet not found!\n")
+
+        if ('Coinbase Wallet*', 'Chrome') in Wallet_Selector.selection:
+            try:
+                coinbase_wallet_chrome()
+                selection.append(output_dir + '/' + 'coinbase_wallet_addresses.csv')
+            except:
+                with open(output_dir + '/' + log_name, 'a') as log_file:
+                    log_file.write('ERROR: Coinbase Wallet (Chrome) - Wallet Not Found!\n')
 
         
     #---------------------------------#
