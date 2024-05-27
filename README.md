@@ -23,8 +23,9 @@ Connected Hardware Wallet Detector - Check for previously connected Hardware Wal
 Wallet Detector - Determine what wallets to scan for addresses on by identifying currently installed wallets.
 
 <p float="center">
-  <img src="https://github.com/CH-CLARK/WalletSleuth/assets/117690646/7dc9bcc1-379f-4c24-8ce9-6637252dfaa1" width="45%" />
-  <img src="https://github.com/CH-CLARK/WalletSleuth/assets/117690646/34d5f6c2-9aac-4206-92c3-bfb6e4881078" width="45%" />
+  <img src="https://github.com/CH-CLARK/WalletSleuth/assets/117690646/e3b3290d-bc57-4465-aafe-6e56054f2452" width="45%" />
+  <img src="https://github.com/CH-CLARK/WalletSleuth/assets/117690646/bfc9f6ee-09bf-430a-95a6-da96f3af02da" width="45%" />
+  
 </p>
 
 ## Supported Wallets
@@ -32,6 +33,7 @@ Wallet Detector - Determine what wallets to scan for addresses on by identifying
 - Bitcoin Core
 - Bitget (Brave, Chrome) (Formerly Bitkeep)
 - Brave Browser Wallet
+- Coinbase Wallet (Chrome)
 - Exodus Wallet
 - Guarda (Chrome)
 - Ledger Live
