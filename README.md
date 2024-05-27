@@ -3,7 +3,7 @@ Wallet Sleuth is a triage tool that aims to quickly identify user cryptocurrency
 
 <p float="center">
   <img src="https://github.com/CH-CLARK/WalletSleuth/assets/117690646/067a1942-caf5-4c37-b366-ff32e154ecfa" width="45%" />
-  <img src="https://github.com/CH-CLARK/WalletSleuth/assets/117690646/74ff07f6-8d14-4926-ab3b-08cac8eb2971" width="45%" />
+  <img src="https://github.com/CH-CLARK/WalletSleuth/assets/117690646/3dd518af-8aef-415f-acf9-fa80a0d664b3" width="45%" />
 </p>
 
 ## Usage
