@@ -19,8 +19,9 @@ paths = {
     r'Local\BraveSoftware\Brave-Browser\User Data\Default\Preferences' : 'Brave Browser Wallet',
 
     r'Local\Google\Chrome\User Data\Default\Local Extension Settings\hpglfhgfnhbgpjdenjgmdgoeiappafln' : 'Guarda (Chrome)',
+    r'Roaming\Opera Software\Opera Stable\Default\Local Extension Settings\acdamagkdfmpkclpoglgnbddngblgibo': 'Guarda (Opera)',
 
-    r'Roaming\Ledger Live' : 'Ledger Live',
+    r'Roaming\Ledger Live': 'Ledger Live',
 
     r'Local\Google\Chrome\User Data\Default\Local Extension Settings\nkbihfbeogaeaoehlefnkodbefgpgknn' : 'MetaMask (Chrome)',
     r'Local\Microsoft\Edge\User Data\Default\Local Extension Settings\ejbalbakoplchlghecdalmeeeajnimhm' : 'MetaMask (Edge)',

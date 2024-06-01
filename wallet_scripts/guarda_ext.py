@@ -151,3 +151,130 @@ def guarda_chrome():
         log_file.write('ACTION: Guarda (Chrome) - Addresses Identified.\n')            
 
     os.remove(output_path)
+
+def guarda_opera():
+    appdata_dir = controller.config.APPDATA
+    output_dir = controller.config.OUTPUT
+    log_name = controller.config.WS_MAIN_LOG_NAME
+
+    opera_user_data = appdata_dir + "/Roaming/Opera Software/Opera Stable/"
+
+    folders_list = os.listdir(opera_user_data)
+
+    #Checking profiles locations
+    profiles_check = "Profile"
+    profiles_list = [idx for idx in folders_list if idx.lower().startswith(profiles_check.lower())]
+    profiles_list_len = len(profiles_list)
+
+    #Checking default location
+    default_check = "Default"
+    default_list = [idx for idx in folders_list if idx.lower().startswith(default_check.lower())]
+
+    output_path = appdata_dir + r"\Guarda_opera_LDB.csv"
+
+    guarda_opera_output = []
+    
+    if profiles_list:
+        for x in range(profiles_list_len):
+            profiles_ldb_loc = appdata_dir + "/Roaming/Opera Software/Opera Stable/" + profiles_list[x] + "/Local Extension Settings/acdamagkdfmpkclpoglgnbddngblgibo"
+
+            if profiles_ldb_loc:
+                try:
+                    leveldb_records = ccl_chrome_ldb_scripts.ccl_leveldb.RawLevelDb(profiles_ldb_loc)
+
+                    with open(output_path, "w", encoding="utf-8", newline="") as file1:
+                        writes = csv.writer(file1, quoting=csv.QUOTE_ALL)
+                        writes.writerow(
+                            [
+                                "key-hex", "value-text", "seq"
+                            ])
+                                
+                        for record in leveldb_records.iterate_records_raw():
+                            writes.writerow([
+                                record.user_key.hex(" ", 1),
+                                record.value.decode(ENCODING, "replace"),
+                                record.seq,
+                            ])
+
+                    data_hex = "64 61 74 61"
+                    with open(output_path, newline="") as csvfile:
+                        dataone = csv.DictReader(csvfile)
+
+                        max_seq_list = []
+                        for row in dataone:
+                            if row['key-hex'] == data_hex:
+                                max_seq_list.append(int(row["seq"]))
+                                max_seq = max(max_seq_list)
+                        
+                        csvfile.seek(0)
+
+                        for row in dataone:
+                            if row['key-hex'] == data_hex and 'defaultWallet' in row['value-text'] and int(row['seq']) == max_seq:
+                                most_recent_valuetext = row['value-text']
+                    
+                                json_obj = json.loads(most_recent_valuetext)
+                                data = json_obj.get('data')
+                                wallet_data = data['wallets']
+
+                    for x in range(len(wallet_data)):
+                        guarda_address_output = 'Address', wallet_data[x]['currency'], wallet_data[x]['address'], 'Guarda (Opera)', profiles_ldb_loc
+                        guarda_opera_output.append(guarda_address_output)
+
+                    with open(output_dir + '/' + 'guarda_Opera_addresses.csv', 'w', newline='') as file:
+                        write = csv.writer(file) 
+                        write.writerows(guarda_opera_output)
+
+                except Exception:
+                    pass
+
+    if default_list:
+        leveldb_records = ccl_chrome_ldb_scripts.ccl_leveldb.RawLevelDb(appdata_dir + r"\Roaming\Opera Software\Opera Stable\Default\Local Extension Settings\acdamagkdfmpkclpoglgnbddngblgibo")
+        def_location = appdata_dir + "/Roaming/Opera Software/Opera Stable/Default/Local Extension Settings/acdamagkdfmpkclpoglgnbddngblgibo"
+        
+        if leveldb_records:
+            with open(output_path, "w", encoding="utf-8", newline="") as file1:
+                writes = csv.writer(file1, quoting=csv.QUOTE_ALL)
+                writes.writerow(
+                    [
+                        "key-hex", "value-text", "seq"
+                    ])
+
+                for record in leveldb_records.iterate_records_raw():
+                    writes.writerow([
+                        record.user_key.hex(" ", 1),
+                        record.value.decode(ENCODING, "replace"),
+                        record.seq,
+                    ])
+    
+            #Identifies specific values in LDB for correct address identification
+            data_hex = "64 61 74 61"
+            with open(output_path, newline="") as csvfile:
+                dataone = csv.DictReader(csvfile)
+                max_seq_list = []
+                for row in dataone:
+                    max_seq_list.append(int(row["seq"]))
+                    max_seq = max(max_seq_list)
+
+                csvfile.seek(0)
+
+                for row in dataone:
+                    if row['key-hex'] == data_hex and 'defaultWallet' in row['value-text'] and int(row['seq']) == max_seq:
+                        most_recent_valuetext = row['value-text']
+
+            json_obj = json.loads(most_recent_valuetext)
+
+            data = json_obj.get('data')
+            wallet_data = data['wallets']
+
+            for x in range(len(wallet_data)):
+                guarda_address_output = 'Address', wallet_data[x]['currency'], wallet_data[x]['address'], 'Guarda (Opera)', def_location
+                guarda_opera_output.append(guarda_address_output)
+
+    with open(output_dir + '/' + 'guarda_opera_addresses.csv', 'w', newline='') as file:
+        write = csv.writer(file) 
+        write.writerows(guarda_opera_output)
+
+    with open(output_dir + '/' + log_name, 'a') as log_file:
+        log_file.write('ACTION: Guarda (Opera) - Addresses Identified.\n')            
+
+    os.remove(output_path)

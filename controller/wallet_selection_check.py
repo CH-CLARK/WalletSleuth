@@ -17,7 +17,7 @@ from wallet_scripts.metamask_ext import metamask_chrome, metamask_edge, metamask
 from wallet_scripts.bitkeep_ext import bitkeep_chrome, bitkeep_brave
 from wallet_scripts.brave_browser_legacy import brave_legacy
 from wallet_scripts.brave_browser_wallet import brave_wallet
-from wallet_scripts.guarda_ext import guarda_chrome
+from wallet_scripts.guarda_ext import guarda_chrome, guarda_opera
 from wallet_scripts.opera_browser_wallet import opera_wallet
 from wallet_scripts.ledger_live import ledger_live_wallet
 from wallet_scripts.phantom_ext import phantom_chrome, phantom_brave
@@ -98,6 +98,14 @@ def run_func():
             except:
                 with open(output_dir + '/' + log_name, 'a') as log_file:
                     log_file.write('ERROR: Guarda (Chrome) - Wallet Not Found!\n')
+
+        if ('Guarda*', 'Opera') in Wallet_Selector.selection:
+            try:
+                guarda_opera()
+                selection.append(output_dir + '/' + 'guarda_opera_addresses.csv')
+            except:
+                with open(output_dir + '/' + log_name, 'a') as log_file:
+                    log_file.write('ERROR: Guarda (Opera) - Wallet Not Found!\n')
 
         #MetaMask Extension
         if ('MetaMask*', 'Brave') in Wallet_Selector.selection:
