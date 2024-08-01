@@ -71,6 +71,7 @@ def bitkeep_chrome():
                             ])
 
                     data_text = "accounts"
+                    
                     with open(output_path, newline="", errors = 'ignore') as csvfile:
                         dataone = csv.DictReader(csvfile)
 
@@ -86,10 +87,7 @@ def bitkeep_chrome():
                             if row['key-text'] == data_text and int(row['seq']) == accounts_max_seq:
                                 most_recent_valuetext = row['value-text']
 
-
                     json_obj = json.loads(most_recent_valuetext)
-                    
-
                     currency_data = json_obj.get('currency')
 
                     for x in range(len(currency_data)):
@@ -97,7 +95,7 @@ def bitkeep_chrome():
                         bitkeep_chrome_output.append(bk_address_output)
 
 
-                    with open(output_dir + '/' + 'bitkeep_chrome_addresses.csv', 'w', newline='') as file:
+                    with open(output_dir + '/' + 'bitget^_chrome_addresses.csv', 'w', newline='') as file:
                         write = csv.writer(file) 
                         write.writerows(bitkeep_chrome_output)  
                 
@@ -124,6 +122,7 @@ def bitkeep_chrome():
                     ])
 
             data_text = "accounts"
+
             with open(output_path, newline="", errors = 'ignore') as csvfile:
                 dataone = csv.DictReader(csvfile)
 
@@ -140,18 +139,17 @@ def bitkeep_chrome():
                         most_recent_valuetext = row['value-text']
 
             json_obj = json.loads(most_recent_valuetext)
-            
             currency_data = json_obj.get('currency')
 
             for x in range(len(currency_data)):
                 
                 bk_address_output = 'Address', currency_data[x]['symbol'], currency_data[x]['address'] ,'Bitget (Chrome)', def_location
                 
-                bitkeep_chrome_output.append(bk_address_output) 
+                bitkeep_chrome_output.append(bk_address_output)
 
-        with open(output_dir + '/' + 'bitkeep_chrome_addresses.csv', 'w', newline='') as file:
-            write = csv.writer(file) 
-            write.writerows(bitkeep_chrome_output)
+        with open(output_dir + '/' + 'bitget^_chrome_addresses.csv', 'w', newline='') as file:
+                write = csv.writer(file) 
+                write.writerows(bitkeep_chrome_output)
 
         with open(output_dir + '/' + log_name, 'a') as log_file:
             log_file.write('ACTION: Bitget (Chrome) - Addresses Identified.\n')            
@@ -226,7 +224,7 @@ def bitkeep_brave():
                         bitkeep_brave_output.append(bk_address_output)
 
 
-                    with open(output_dir + '/' + 'bitkeep_brave_addresses.csv', 'w', newline='') as file:
+                    with open(output_dir + '/' + 'bitget^_brave_addresses.csv', 'w', newline='') as file:
                         write = csv.writer(file) 
                         write.writerows(bitkeep_brave_output)  
                 
@@ -253,6 +251,7 @@ def bitkeep_brave():
                     ])
 
             data_text = "accounts"
+
             with open(output_path, newline="", errors = 'ignore') as csvfile:
                 dataone = csv.DictReader(csvfile)
 
@@ -269,7 +268,6 @@ def bitkeep_brave():
                         most_recent_valuetext = row['value-text']
 
             json_obj = json.loads(most_recent_valuetext)
-            
             currency_data = json_obj.get('currency')
 
             for x in range(len(currency_data)):
@@ -278,7 +276,7 @@ def bitkeep_brave():
                 
                 bitkeep_brave_output.append(bk_address_output)
 
-        with open(output_dir + '/' + 'bitkeep_Brave_addresses.csv', 'w', newline='') as file:
+        with open(output_dir + '/' + 'bitget^_brave_addresses.csv', 'w', newline='') as file:
             write = csv.writer(file) 
             write.writerows(bitkeep_brave_output)
 

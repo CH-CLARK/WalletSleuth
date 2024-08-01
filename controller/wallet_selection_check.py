@@ -10,7 +10,7 @@ from tkinter import LEFT, W, messagebox
 #controller imports
 from controller.wallet_selector import Wallet_Selector
 import controller.config
-        
+
 #wallet imports
 from wallet_scripts.atomic_wallet import atomic_wallet
 from wallet_scripts.metamask_ext import metamask_chrome, metamask_edge, metamask_brave
@@ -28,216 +28,90 @@ from wallet_scripts.bitcoin_core_wallet import bitcoin_core_wallet
 from wallet_scripts.coinbase_wallet_ext import coinbase_wallet_chrome, coinbase_wallet_brave
 
 
+def process_wallet(wallet_name, browser_type, function, output_dir, log_file_path, selection):
+    try:
+        function()
+        wallet_name = wallet_name.lower().replace(' ', '_')
+
+        if browser_type:
+            browser_type = browser_type.lower()
+            csv_file = f"{output_dir}/{wallet_name}_{browser_type}_addresses.csv"
+
+        else:
+            csv_file = f"{output_dir}/{wallet_name}_addresses.csv"
+        selection.append(csv_file)
+
+    except Exception as e:
+        messagebox.showerror('ERROR', f"ERROR: {wallet_name} ({browser_type}) - Wallet Not Found!")
+
 def run_func():
     try:
         appdata_dir = controller.config.APPDATA
         output_dir = controller.config.OUTPUT
         log_name = controller.config.WS_MAIN_LOG_NAME
+        log_file_path = f"{output_dir}/{log_name}"
 
+        #check directories set
+        if not appdata_dir:
+            raise ValueError("Appdata directory is not set!")
+        if not output_dir:
+            raise ValueError("Output directory is not set!")
 
         selection = []
+        now_formatted = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
 
-        get_now_datetime = datetime.datetime.now()
-        now_formated = get_now_datetime.strftime('%Y-%m-%d %H:%M:%S')
-
-        with open(output_dir + '/' + log_name, 'w') as log_file:
+        with open(log_file_path, 'w') as log_file:
             log_file.write('+-----------------------------------------------------------------------------------------+\n')
             log_file.write('|----------------------------------- WALLET SLEUTH LOG -----------------------------------|\n')
             log_file.write('+-----------------------------------------------------------------------------------------+\n')
-            log_file.write('Start Time: ' + str(now_formated) + '\n')
+            log_file.write('Start Time: ' + str(now_formatted) + '\n')
 
-        #Atomic Wallet 
-        if ('Atomic Wallet', None) in Wallet_Selector.selection:
-            try:
-                atomic_wallet()
-                selection.append(output_dir + '/' + 'atomic_wallet_addresses.csv')
-            except:
-                with open(output_dir + '/' + log_name, 'a') as log_file:
-                    log_file.write("ERROR: Atomic Wallet - Wallet not found!\n")
+        #dicationary map to wallet fucntions
+        wallet_functions = {
+            ('Atomic Wallet', None): atomic_wallet,
+            ('Bitget^', 'Brave'): bitkeep_brave,
+            ('Bitget^', 'Chrome'): bitkeep_chrome,
+            ('Brave Browser Wallet', None): brave_wallet,
+            ('Brave Browser Legacy', None): brave_legacy,
+            ('Guarda^', 'Chrome'): guarda_chrome,
+            ('Guarda^', 'Opera'): guarda_opera,
+            ('MetaMask^', 'Brave'): metamask_brave,
+            ('MetaMask^', 'Chrome'): metamask_chrome,
+            ('MetaMask^', 'Edge'): metamask_edge,
+            ('Opera Browser Wallet', None): opera_wallet,
+            ('Ledger Live', None): ledger_live_wallet,
+            ('Phantom^', 'Brave'): phantom_brave,
+            ('Phantom^', 'Chrome'): phantom_chrome,
+            ('Exodus Wallet', None): exodus_wallet,
+            ('Wasabi Wallet', None): wasabi_wallet,
+            ('Litecoin Core', None): litecoin_core_wallet,
+            ('Bitcoin Core', None): bitcoin_core_wallet,
+            ('Coinbase Wallet^', 'Chrome'): coinbase_wallet_chrome,
+            ('Coinbase Wallet^', 'Brave'): coinbase_wallet_brave
+        }
 
-        #Bitkeep Extension
-        if ('Bitget*', 'Brave') in Wallet_Selector.selection:
-            try:
-                bitkeep_brave()
-                selection.append(output_dir + '/' + 'bitkeep_brave_addresses.csv')
-            except:
-                with open(output_dir + '/' + log_name, 'a') as log_file:
-                    log_file.write('ERROR: Bitget (Brave) - Wallet Not Found!\n')
+        #process slected wallets
+        for selection_key in Wallet_Selector.selection:
+            if selection_key in wallet_functions:
+                wallet_name, browser_type = selection_key
+                function = wallet_functions[selection_key]
+                process_wallet(wallet_name, browser_type, function, output_dir, log_file_path, selection)
 
-        if ('Bitget*', 'Chrome') in Wallet_Selector.selection:
-            try:
-                bitkeep_chrome()
-                selection.append(output_dir + '/' + 'bitkeep_chrome_addresses.csv')
-            except:
-                with open(output_dir + '/' + log_name, 'a') as log_file:
-                    log_file.write('ERROR: Bitget (Chrome) - Wallet Not Found!\n')
-
-        #Brave Browser Wallet
-        if ('Brave Browser Wallet', None) in Wallet_Selector.selection:
-            try:
-                brave_wallet()
-                selection.append(output_dir + '/' + 'brave_browser_addresses.csv')
-            except:
-                with open(output_dir + '/' + log_name, 'a') as log_file:
-                    log_file.write('ERROR: Brave Browser Wallet - Wallet Not Found!\n')
-
-        #Brave Browser Legacy Wallet - SPELLING ERROR
-        if ('Brave Browser Legacy', None) in Wallet_Selector.selection:
-            try:
-                brave_legacy()
-                selection.append(output_dir + '/' + 'brave_legacy_addresses.csv')
-            except:
-                with open(output_dir + '/' + log_name, 'a') as log_file:
-                    log_file.write('ERROR: Brave Browser Legacy Wallet - Wallet Not Found!\n')
-
-        #Guarda Extension
-        if ('Guarda*', 'Chrome') in Wallet_Selector.selection:
-            try:
-                guarda_chrome()
-                selection.append(output_dir + '/' + 'guarda_chrome_addresses.csv')
-            except:
-                with open(output_dir + '/' + log_name, 'a') as log_file:
-                    log_file.write('ERROR: Guarda (Chrome) - Wallet Not Found!\n')
-
-        if ('Guarda*', 'Opera') in Wallet_Selector.selection:
-            try:
-                guarda_opera()
-                selection.append(output_dir + '/' + 'guarda_opera_addresses.csv')
-            except:
-                with open(output_dir + '/' + log_name, 'a') as log_file:
-                    log_file.write('ERROR: Guarda (Opera) - Wallet Not Found!\n')
-
-        #MetaMask Extension
-        if ('MetaMask*', 'Brave') in Wallet_Selector.selection:
-            try:
-                metamask_brave()
-                selection.append(output_dir + '/' + 'metamask_brave_addresses.csv')
-            except:
-                with open(output_dir + '/' + log_name, 'a') as log_file:
-                    log_file.write('ERROR: Metamask (Brave) - Wallet Not Found!\n')
-
-        if ('MetaMask*', 'Chrome') in Wallet_Selector.selection:
-            try:
-                metamask_chrome()
-                selection.append(output_dir + '/' + 'metamask_chrome_addresses.csv')
-            except:
-                with open(output_dir + '/' + log_name, 'a') as log_file:
-                    log_file.write('ERROR: Metamask (Chrome) - Wallet Not Found!\n')
-
-        if ('MetaMask*', 'Edge') in Wallet_Selector.selection:
-            try:
-                metamask_edge()
-                selection.append(output_dir + '/' + 'metamask_edge_addresses.csv')
-            except:
-                with open(output_dir + '/' + log_name, 'a') as log_file:
-                    log_file.write('ERROR: Metamask (Edge) - Wallet Not Found!\n')
-
-        #Opera Browser Wallet
-        if ('Opera Browser Wallet', None) in Wallet_Selector.selection:
-            try:
-                opera_wallet()
-                selection.append(output_dir + '/' + 'opera_browser_addresses.csv')
-            except:
-                with open(output_dir + '/' + log_name, 'a') as log_file:
-                    log_file.write('ERROR: Opera Browser Wallet - Wallet Not Found!\n')
-
-        #Ledger Live
-        if ('Ledger Live', None) in Wallet_Selector.selection:
-            try:
-                ledger_live_wallet()
-                selection.append(output_dir + '/' + 'ledger_live_addresses.csv')
-            except:
-                with open(output_dir + '/' + log_name, 'a') as log_file:
-                    log_file.write('ERROR: Ledger Live Wallet - Wallet Not Found!\n')
-
-        #Phantom Extension - WIP
-        if ('Phantom*', 'Brave') in Wallet_Selector.selection:
-            try:
-                phantom_brave()
-                selection.append(output_dir + '/' + 'phantom_brave_addresses.csv')
-            except:
-                with open(output_dir + '/' + log_name, 'a') as log_file:
-                    log_file.write('ERROR: Phantom (Brave) - Wallet Not Found!\n')
-
-        if ('Phantom*', 'Chrome') in Wallet_Selector.selection:
-            try:
-                phantom_chrome()
-                selection.append(output_dir + '/' + 'phantom_chrome_addresses.csv')
-            except:
-                with open(output_dir + '/' + log_name, 'a') as log_file:
-                    log_file.write('ERROR: Phantom (Chrome) - Wallet Not Found!\n')
-
-        #Exodus Wallet 
-        if ('Exodus Wallet', None) in Wallet_Selector.selection:
-            try:
-                exodus_wallet()
-                selection.append(output_dir + '/' + 'exodus_wallet_transactions.csv')
-            except:
-                with open(output_dir + '/' + log_name, 'a') as log_file:
-                    log_file.write("ERROR: Exodus Wallet - Wallet not found!\n")
-
-       #Wasabi Wallet 
-        if ('Wasabi Wallet', None) in Wallet_Selector.selection:
-            try:
-                wasabi_wallet()
-                selection.append(output_dir + '/' + 'wasabi_wallet_addresses.csv')
-            except:
-                with open(output_dir + '/' + log_name, 'a') as log_file:
-                    log_file.write("ERROR: Wasabi Wallet - Wallet not found!\n")
-
-       #Litecoin Core Wallet 
-        if ('Litecoin Core', None) in Wallet_Selector.selection:
-            try:
-                litecoin_core_wallet()
-                selection.append(output_dir + '/' + 'litecoin_core_addresses.csv')
-            except:
-                with open(output_dir + '/' + log_name, 'a') as log_file:
-                    log_file.write("ERROR: Litecoin Core Wallet - Wallet not found!\n")
-
-        if ('Bitcoin Core', None) in Wallet_Selector.selection:
-            try:
-                bitcoin_core_wallet()
-                selection.append(output_dir + '/' + 'bitcoin_core_addresses.csv')
-            except:
-                with open(output_dir + '/' + log_name, 'a') as log_file:
-                    log_file.write("ERROR: bitcoin Core Wallet - Wallet not found!\n")
-
-        if ('Coinbase Wallet*', 'Chrome') in Wallet_Selector.selection:
-            try:
-                coinbase_wallet_chrome()
-                selection.append(output_dir + '/' + 'coinbase_wallet_addresses.csv')
-            except:
-                with open(output_dir + '/' + log_name, 'a') as log_file:
-                    log_file.write('ERROR: Coinbase Wallet (Chrome) - Wallet Not Found!\n')
-
-        if ('Coinbase Wallet*', 'Brave') in Wallet_Selector.selection:
-            try:
-                coinbase_wallet_brave()
-                selection.append(output_dir + '/' + 'coinbase_wallet_addresses.csv')
-            except:
-                with open(output_dir + '/' + log_name, 'a') as log_file:
-                    log_file.write('ERROR: Coinbase Wallet (Brave) - Wallet Not Found!\n')
-
-        
-    #---------------------------------#
-    #---------------------------------#
-        #create output file
-        with open(output_dir + '/' + 'output.csv', 'w', newline='') as f:
+        #output creation
+        with open(f"{output_dir}/output.csv", 'w', newline='') as f:
             writer = csv.writer(f)
             writer.writerow(['Type', 'Currency', 'Address', 'Wallet', 'Path'])
             for file in selection:
                 with open(file, 'r', newline='') as f1:
                     reader = csv.reader(f1)
-                    new_data = [row for row in reader]
-                    writer.writerows(new_data)
-                    
-        #completion notification
+                    writer.writerows(reader)
+
+        #completion notifications
         if Wallet_Selector.selection:
             messagebox.showinfo('Wallet Sleuth', 'Search Complete!')
+        else:
+            messagebox.showerror('Wallet Sleuth', 'No Wallets Selected!')
 
-        if not Wallet_Selector.selection:
-            messagebox.showinfo('Wallet Sleuth', 'No Wallets Selected!')
-
-    
-    except Exception:
-        messagebox.showerror('Error', "You must select an 'Appdata' & 'Output' directory first!")
+    #all other errors
+    except Exception as e:
+        messagebox.showerror('Error', f'An unexpected error occurred: "{str(e)}"\n\nPlease report this to the developer!')

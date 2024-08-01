@@ -44,7 +44,6 @@ def phantom_chrome():
     output_path = appdata_dir + r"\Phantom_chrome_LDB.csv"
 
     phantom_chrome_output = []
-
     if profiles_list:
         for x in range(profiles_list_len):
             profiles_ldb_loc = appdata_dir + "/Local/Google/Chrome/User Data/" + profiles_list[x] + "/Local Extension Settings/bfnaelmomeimhlpmgjnjophhpkkoljpa"
@@ -68,7 +67,6 @@ def phantom_chrome():
                                 record.offset,
                                 record.seq,
                             ])
-
 
                     data_text = ".phantom-labs.vault.accounts"
 
@@ -105,72 +103,79 @@ def phantom_chrome():
                             phantom_address_output = 'Address', mod_chain, public_key ,'Phantom (Chrome)', profiles_ldb_loc
                             phantom_chrome_output.append(phantom_address_output)
 
-                    with open(output_dir + '/' + 'phantom_chrome_addresses.csv', 'w', newline='') as file:
+                    with open(output_dir + '/' + 'phantom^_chrome_addresses.csv', 'w', newline='') as file:
                         write = csv.writer(file) 
                         write.writerows(phantom_chrome_output)
 
-                except Exception:
+                except Exception as e:
                     pass
 
     if default_list:
-        leveldb_records = ccl_chrome_ldb_scripts.ccl_leveldb.RawLevelDb(appdata_dir + r"\Local\Google\Chrome\User Data\Default\Local Extension Settings\bfnaelmomeimhlpmgjnjophhpkkoljpa") 
-        def_location = appdata_dir + "/Local/Google/Chrome/User Data/Default/Local Extension Settings/bfnaelmomeimhlpmgjnjophhpkkoljpa"
+        try:
+            leveldb_records = ccl_chrome_ldb_scripts.ccl_leveldb.RawLevelDb(appdata_dir + r"\Local\Google\Chrome\User Data\Default\Local Extension Settings\bfnaelmomeimhlpmgjnjophhpkkoljpa") 
+            def_location = appdata_dir + "/Local/Google/Chrome/User Data/Default/Local Extension Settings/bfnaelmomeimhlpmgjnjophhpkkoljpa"
+        except Exception as e:
+            pass
         
-        if leveldb_records:
-            with open(output_path, "w", encoding="utf-8", newline="") as file1:
-                writes = csv.writer(file1, quoting=csv.QUOTE_ALL)
-                writes.writerow(
-                    [
-                        "key-text", "value-text", "offset", "seq"
-                    ])
+        try:
+            if leveldb_records:
+                with open(output_path, "w", encoding="utf-8", newline="") as file1:
+                    writes = csv.writer(file1, quoting=csv.QUOTE_ALL)
+                    writes.writerow(
+                        [
+                            "key-text", "value-text", "offset", "seq"
+                        ])
 
-                for record in leveldb_records.iterate_records_raw():
-                    writes.writerow([
-                        record.user_key.decode(ENCODING, "replace"),
-                        record.value.decode(ENCODING, "replace"),
-                        record.offset,
-                        record.seq,
-                    ])
+                    for record in leveldb_records.iterate_records_raw():
+                        writes.writerow([
+                            record.user_key.decode(ENCODING, "replace"),
+                            record.value.decode(ENCODING, "replace"),
+                            record.offset,
+                            record.seq,
+                        ])
 
-            data_text = ".phantom-labs.vault.accounts"
+                data_text = ".phantom-labs.vault.accounts"
 
-            with open(output_path, newline="", errors = 'ignore') as csvfile:
-                dataone = csv.DictReader(csvfile)
+                with open(output_path, newline="", errors = 'ignore') as csvfile:
+                    dataone = csv.DictReader(csvfile)
 
-                accounts_seq_list = []
-            
-                for row in dataone:
-                    if row['key-text'] == data_text:
-                        accounts_seq_list.append(int(row["seq"]))
-                        accounts_max_seq = max(accounts_seq_list)
-                        
-                    
-                csvfile.seek(0)
-
-                for row in dataone:
-                    if row['key-text'] == data_text and int(row['seq']) == accounts_max_seq:
-                        most_recent_valuetext = row['value-text']
+                    accounts_seq_list = []
                 
+                    for row in dataone:
+                        if row['key-text'] == data_text:
+                            accounts_seq_list.append(int(row["seq"]))
+                            accounts_max_seq = max(accounts_seq_list)
+                            
+                        
+                    csvfile.seek(0)
 
-            json_obj = json.loads(most_recent_valuetext)
-
-            accounts = json_obj.get('accounts', [])
-
-            for account in accounts:
-                chains = account.get('chains', {})
-
-                for chain_type, chain_data in chains.items():
-                    public_key = chain_data.get('publicKey')
-
-                    if public_key and public_key.startswith('0x'):
-                        mod_chain = 'eth'
-                    else:
-                        mod_chain = chain_type
+                    for row in dataone:
+                        if row['key-text'] == data_text and int(row['seq']) == accounts_max_seq:
+                            most_recent_valuetext = row['value-text']
                     
-                    phantom_address_output = 'Address', mod_chain, public_key ,'Phantom (Chrome)', def_location
-                    phantom_chrome_output.append(phantom_address_output)
 
-    with open(output_dir + '/' + 'phantom_chrome_addresses.csv', 'w', newline='') as file:
+                json_obj = json.loads(most_recent_valuetext)
+
+                accounts = json_obj.get('accounts', [])
+
+                for account in accounts:
+                    chains = account.get('chains', {})
+
+                    for chain_type, chain_data in chains.items():
+                        public_key = chain_data.get('publicKey')
+
+                        if public_key and public_key.startswith('0x'):
+                            mod_chain = 'eth'
+                        else:
+                            mod_chain = chain_type
+                        
+                        phantom_address_output = 'Address', mod_chain, public_key ,'Phantom (Chrome)', def_location
+                        phantom_chrome_output.append(phantom_address_output)
+
+        except Exception as e:
+            pass
+
+    with open(output_dir + '/' + 'phantom^_chrome_addresses.csv', 'w', newline='') as file:
         write = csv.writer(file) 
         write.writerows(phantom_chrome_output)
 
@@ -198,16 +203,18 @@ def phantom_brave():
     output_path = appdata_dir + r"\Phantom_brave_LDB.csv"
 
     phantom_brave_output = []
-
     if profiles_list:
         for x in range(profiles_list_len):
-            profiles_ldb_loc = appdata_dir + "/Local/BraveSoftware/Brave-Browser/User Data" + profiles_list[x] + "/Local Extension Settings/bfnaelmomeimhlpmgjnjophhpkkoljpa"
+            profiles_ldb_loc = appdata_dir + "/Local/BraveSoftware/Brave-Browser/User Data/" + profiles_list[x] + "/Local Extension Settings/bfnaelmomeimhlpmgjnjophhpkkoljpa"
             profiles = profiles_list[x]
 
             if profiles_ldb_loc:
                 try:
                     leveldb_records = ccl_chrome_ldb_scripts.ccl_leveldb.RawLevelDb(profiles_ldb_loc)
+                except Exception as e:
+                    pass
 
+                try:
                     with open(output_path, "w", encoding="utf-8", newline="") as file1:
                         writes = csv.writer(file1, quoting=csv.QUOTE_ALL)
                         writes.writerow(
@@ -223,7 +230,7 @@ def phantom_brave():
                                 record.seq,
                             ])
 
-
+                    
                     data_text = ".phantom-labs.vault.accounts"
 
                     with open(output_path, newline="", errors = 'ignore') as csvfile:
@@ -259,72 +266,78 @@ def phantom_brave():
                             phantom_address_output = 'Address', mod_chain, public_key ,'Phantom (brave)', profiles_ldb_loc
                             phantom_brave_output.append(phantom_address_output)
 
-                    with open(output_dir + '/' + 'phantom_brave_addresses.csv', 'w', newline='') as file:
+                    with open(output_dir + '/' + 'phantom^_brave_addresses.csv', 'w', newline='') as file:
                         write = csv.writer(file) 
                         write.writerows(phantom_brave_output)
 
-                except Exception:
+                except Exception as e:
                     pass
 
     if default_list:
-        leveldb_records = ccl_chrome_ldb_scripts.ccl_leveldb.RawLevelDb(appdata_dir + r"\Local\BraveSoftware\Brave-Browser\User Data\Default\Local Extension Settings\bfnaelmomeimhlpmgjnjophhpkkoljpa") 
-        def_location = appdata_dir + "/Local/BraveSoftware/Brave-Browser/User Data/Default/Local Extension Settings/bfnaelmomeimhlpmgjnjophhpkkoljpa"
-        
-        if leveldb_records:
-            with open(output_path, "w", encoding="utf-8", newline="") as file1:
-                writes = csv.writer(file1, quoting=csv.QUOTE_ALL)
-                writes.writerow(
-                    [
-                        "key-text", "value-text", "offset", "seq"
-                    ])
+        try:
+            leveldb_records = ccl_chrome_ldb_scripts.ccl_leveldb.RawLevelDb(appdata_dir + r"\Local\BraveSoftware\Brave-Browser\User Data\Default\Local Extension Settings\bfnaelmomeimhlpmgjnjophhpkkoljpa") 
+            def_location = appdata_dir + "/Local/BraveSoftware/Brave-Browser/User Data/Default/Local Extension Settings/bfnaelmomeimhlpmgjnjophhpkkoljpa"
+        except:
+            pass
 
-                for record in leveldb_records.iterate_records_raw():
-                    writes.writerow([
-                        record.user_key.decode(ENCODING, "replace"),
-                        record.value.decode(ENCODING, "replace"),
-                        record.offset,
-                        record.seq,
-                    ])
+        try:
+            if leveldb_records:
+                with open(output_path, "w", encoding="utf-8", newline="") as file1:
+                    writes = csv.writer(file1, quoting=csv.QUOTE_ALL)
+                    writes.writerow(
+                        [
+                            "key-text", "value-text", "offset", "seq"
+                        ])
 
-            data_text = ".phantom-labs.vault.accounts"
+                    for record in leveldb_records.iterate_records_raw():
+                        writes.writerow([
+                            record.user_key.decode(ENCODING, "replace"),
+                            record.value.decode(ENCODING, "replace"),
+                            record.offset,
+                            record.seq,
+                        ])
 
-            with open(output_path, newline="", errors = 'ignore') as csvfile:
-                dataone = csv.DictReader(csvfile)
+                data_text = ".phantom-labs.vault.accounts"
 
-                accounts_seq_list = []
-            
-                for row in dataone:
-                    if row['key-text'] == data_text:
-                        accounts_seq_list.append(int(row["seq"]))
-                        accounts_max_seq = max(accounts_seq_list)
-                        
-                    
-                csvfile.seek(0)
+                with open(output_path, newline="", errors = 'ignore') as csvfile:
+                    dataone = csv.DictReader(csvfile)
 
-                for row in dataone:
-                    if row['key-text'] == data_text and int(row['seq']) == accounts_max_seq:
-                        most_recent_valuetext = row['value-text']
+                    accounts_seq_list = []
                 
+                    for row in dataone:
+                        if row['key-text'] == data_text:
+                            accounts_seq_list.append(int(row["seq"]))
+                            accounts_max_seq = max(accounts_seq_list)
+                            
+                        
+                    csvfile.seek(0)
 
-            json_obj = json.loads(most_recent_valuetext)
-
-            accounts = json_obj.get('accounts', [])
-
-            for account in accounts:
-                chains = account.get('chains', {})
-
-                for chain_type, chain_data in chains.items():
-                    public_key = chain_data.get('publicKey')
-
-                    if public_key and public_key.startswith('0x'):
-                        mod_chain = 'eth'
-                    else:
-                        mod_chain = chain_type
+                    for row in dataone:
+                        if row['key-text'] == data_text and int(row['seq']) == accounts_max_seq:
+                            most_recent_valuetext = row['value-text']
                     
-                    phantom_address_output = 'Address', mod_chain, public_key ,'Phantom (brave)', def_location
-                    phantom_brave_output.append(phantom_address_output)
 
-    with open(output_dir + '/' + 'phantom_brave_addresses.csv', 'w', newline='') as file:
+                json_obj = json.loads(most_recent_valuetext)
+
+                accounts = json_obj.get('accounts', [])
+
+                for account in accounts:
+                    chains = account.get('chains', {})
+
+                    for chain_type, chain_data in chains.items():
+                        public_key = chain_data.get('publicKey')
+
+                        if public_key and public_key.startswith('0x'):
+                            mod_chain = 'eth'
+                        else:
+                            mod_chain = chain_type
+                        
+                        phantom_address_output = 'Address', mod_chain, public_key ,'Phantom (brave)', def_location
+                        phantom_brave_output.append(phantom_address_output)
+        except:
+            pass
+
+    with open(output_dir + '/' + 'phantom^_brave_addresses.csv', 'w', newline='') as file:
         write = csv.writer(file) 
         write.writerows(phantom_brave_output)
 

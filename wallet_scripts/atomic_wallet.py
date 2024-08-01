@@ -61,14 +61,21 @@ def atomic_wallet():
             if i["address"] != "":
                 atomic_output = ['Address', i["id"] + "," + i["address"] + "," + "Atomic Wallet", location]
 
-    with open(output_dir + '/' + 'atomic_wallet_addresses.csv', 'w', newline='') as atomic_wallet_addresses:
-        write = csv.writer(atomic_wallet_addresses)
-        for i in json_obj:
-            if i["address"] != "":
-                atomic_output = ['Address', i["id"], i["address"], "Atomic Wallet", location]
-                write.writerow(atomic_output)
+    if atomic_output:
+        with open(output_dir + '/' + 'atomic_wallet_addresses.csv', 'w', newline='') as atomic_wallet_addresses:
+            write = csv.writer(atomic_wallet_addresses)
+            for i in json_obj:
+                if i["address"] != "":
+                    atomic_output = ['Address', i["id"], i["address"], "Atomic Wallet", location]
+                    write.writerow(atomic_output)
 
-    with open(output_dir + '/' + log_name, 'a') as log_file:
-        log_file.write('ACTION: Atomic Wallet - Addresses Identified.\n')
-                 
+        with open(output_dir + '/' + log_name, 'a') as log_file:
+            log_file.write('ACTION: Atomic Wallet - Addresses Identified.\n')
+
+
+    if not atomic_output:
+        with open(output_dir + '/' + log_name, 'a') as log_file:
+            log_file.write('ACTION: Atomic Wallet - No Addresses Identified.\n')
+
+
     os.remove(output_path)

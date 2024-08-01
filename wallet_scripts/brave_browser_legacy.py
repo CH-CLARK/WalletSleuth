@@ -94,7 +94,7 @@ def brave_legacy():
                         profiles_output = 'Address', 'VARIOUS - See Documention!', brave_legacy_address, 'Brave Browser Legacy Wallet (Brave)', profiles_ldb_loc
                         brave_legacy_output.append(profiles_output)
 
-                    with open(output_dir + '/' + 'brave_legacy_addresses.csv', 'w', newline='') as file:
+                    with open(output_dir + '/' + 'brave_browser_legacy_addresses.csv', 'w', newline='') as file:
                         write = csv.writer(file)
                         write.writerows(brave_legacy_output)
 
@@ -148,7 +148,7 @@ def brave_legacy():
                 profiles_output = 'Address', 'VARIOUS - See Documention!', brave_legacy_address, 'Brave Browser Legacy Wallet (Brave)', def_location
                 brave_legacy_output.append(profiles_output)
 
-    with open(output_dir + '/' + 'brave_legacy_addresses.csv', 'w', newline='') as file:
+    with open(output_dir + '/' + 'brave_browser_legacy_addresses.csv', 'w', newline='') as file:
         write = csv.writer(file)
         write.writerows(brave_legacy_output)
 

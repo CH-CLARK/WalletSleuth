@@ -95,7 +95,7 @@ def metamask_chrome():
                         profiles_output = 'Address', 'VARIOUS - See Documention!', metamask_address, 'MetaMask (Chrome)', profiles_ldb_loc
                         metamask_chrome_output.append(profiles_output)
 
-                    with open(output_dir + '/' + 'metamask_chrome_addresses.csv', 'w', newline='') as file:
+                    with open(output_dir + '/' + 'metamask^_chrome_addresses.csv', 'w', newline='') as file:
                         write = csv.writer(file)
                         write.writerows(metamask_chrome_output)
 
@@ -103,60 +103,65 @@ def metamask_chrome():
                     pass
 
     if default_list:
+        try:
+            leveldb_records = ccl_chrome_ldb_scripts.ccl_leveldb.RawLevelDb(appdata_dir + r"\Local\Google\Chrome\User Data\Default\Local Extension Settings\nkbihfbeogaeaoehlefnkodbefgpgknn") 
+            def_location = appdata_dir + "/Local/Google/Chrome/User Data/Default/Local Extension Settings/nkbihfbeogaeaoehlefnkodbefgpgknn"
+        except:
+            pass
 
-        leveldb_records = ccl_chrome_ldb_scripts.ccl_leveldb.RawLevelDb(appdata_dir + r"\Local\Google\Chrome\User Data\Default\Local Extension Settings\nkbihfbeogaeaoehlefnkodbefgpgknn") 
-        def_location = appdata_dir + "/Local/Google/Chrome/User Data/Default/Local Extension Settings/nkbihfbeogaeaoehlefnkodbefgpgknn"
+        try:
+            if leveldb_records:
+                with open(output_path, "w", encoding="utf-8", newline="") as file1:
+                    writes = csv.writer(file1, quoting=csv.QUOTE_ALL)
+                    writes.writerow(
+                        [
+                            "key-hex", "value-text", "seq"
+                        ])
 
-        if leveldb_records:
-            with open(output_path, "w", encoding="utf-8", newline="") as file1:
-                writes = csv.writer(file1, quoting=csv.QUOTE_ALL)
-                writes.writerow(
-                    [
-                        "key-hex", "value-text", "seq"
-                    ])
+                    for record in leveldb_records.iterate_records_raw():
+                        writes.writerow([
+                            record.user_key.hex(" ", 1),
+                            record.value.decode(ENCODING, "replace"),
+                            record.seq,
+                        ])
 
-                for record in leveldb_records.iterate_records_raw():
-                    writes.writerow([
-                        record.user_key.hex(" ", 1),
-                        record.value.decode(ENCODING, "replace"),
-                        record.seq,
-                    ])
-
-            #Identifies specific values in LDB for correct address identification
-            data_hex = "64 61 74 61"
-            with open(output_path, newline="") as csvfile:
-                dataone = csv.DictReader(csvfile)
-                max_seq_list = []
-                for row in dataone:
-                    max_seq_list.append(int(row["seq"]))
-                    max_seq = max(max_seq_list)
-        
-                csvfile.seek(0)
+                #Identifies specific values in LDB for correct address identification
+                data_hex = "64 61 74 61"
+                with open(output_path, newline="") as csvfile:
+                    dataone = csv.DictReader(csvfile)
+                    max_seq_list = []
+                    for row in dataone:
+                        max_seq_list.append(int(row["seq"]))
+                        max_seq = max(max_seq_list)
             
-                for row in dataone:
-                    if row['key-hex'] == data_hex and 'AlertController' in row['value-text'] and int(row['seq']) == max_seq:
-                        most_recent_valuetext = row['value-text']
+                    csvfile.seek(0)
+                
+                    for row in dataone:
+                        if row['key-hex'] == data_hex and 'AlertController' in row['value-text'] and int(row['seq']) == max_seq:
+                            most_recent_valuetext = row['value-text']
 
-            json_obj = json.loads(most_recent_valuetext)
-            
-            pref_controller_data = json_obj.get('PreferencesController')
-            identities_data = pref_controller_data["identities"]
+                json_obj = json.loads(most_recent_valuetext)
+                
+                pref_controller_data = json_obj.get('PreferencesController')
+                identities_data = pref_controller_data["identities"]
 
-            #Writing identified data to CSV
-            for key in identities_data:
-                new_variable = identities_data[key]
-                metamask_address = new_variable["address"]
-                profiles_output = 'Address', 'VARIOUS - See Documention!', metamask_address, 'MetaMask (Chrome)', def_location
-                metamask_chrome_output.append(profiles_output)
+                #Writing identified data to CSV
+                for key in identities_data:
+                    new_variable = identities_data[key]
+                    metamask_address = new_variable["address"]
+                    profiles_output = 'Address', 'VARIOUS - See Documention!', metamask_address, 'MetaMask (Chrome)', def_location
+                    metamask_chrome_output.append(profiles_output)
 
-    
-#this should check for identifies data and if the length of the string is 0, it wil inform the user that no addessses exist. the reason for this is i noticed that a user might have MM installed, but never have opened it
+        except:
+            pass
+
+        #this should check for identifies data and if the length of the string is 0, it wil inform the user that no addessses exist. the reason for this is i noticed that a user might have MM installed, but never have opened it
         if len(identities_data) == 0:
             with open(output_dir + '/' + log_name, 'a') as log_file:
                 log_file.write('ACTION: Metamask (Chrome) - No Addresses Identified.\n')    
     
         else:
-            with open(output_dir + '/' + 'metamask_chrome_addresses.csv', 'w', newline='') as file:
+            with open(output_dir + '/' + 'metamask^_chrome_addresses.csv', 'w', newline='') as file:
                 write = csv.writer(file) 
                 write.writerows(metamask_chrome_output)
 
@@ -235,7 +240,7 @@ def metamask_edge():
                         profiles_output = 'Address', 'VARIOUS - See Documention!', metamask_address, 'MetaMask (Edge)', profiles_ldb_loc
                         metamask_edge_output.append(profiles_output)
 
-                    with open(output_dir + '/' + 'metamask_edge_addresses.csv', 'w', newline='') as file:
+                    with open(output_dir + '/' + 'metamask^_edge_addresses.csv', 'w', newline='') as file:
                         write = csv.writer(file)
                         write.writerows(metamask_edge_output)
 
@@ -243,59 +248,64 @@ def metamask_edge():
                     pass
     
     if default_list:
+        try:
+            leveldb_records = ccl_chrome_ldb_scripts.ccl_leveldb.RawLevelDb(appdata_dir + r"\Local\Microsoft\Edge\User Data\Default\Local Extension Settings\ejbalbakoplchlghecdalmeeeajnimhm") 
+            def_location = appdata_dir + "/Local/Microsoft/Edge/User Data/Default/Local Extension Settings/ejbalbakoplchlghecdalmeeeajnimhm"
+        except:
+            pass
 
-        leveldb_records = ccl_chrome_ldb_scripts.ccl_leveldb.RawLevelDb(appdata_dir + r"\Local\Microsoft\Edge\User Data\Default\Local Extension Settings\ejbalbakoplchlghecdalmeeeajnimhm") 
-        def_location = appdata_dir + "/Local/Microsoft/Edge/User Data/Default/Local Extension Settings/ejbalbakoplchlghecdalmeeeajnimhm"
+        try:
+            if leveldb_records:
+                with open(output_path, "w", encoding="utf-8", newline="") as file1:
+                    writes = csv.writer(file1, quoting=csv.QUOTE_ALL)
+                    writes.writerow(
+                        [
+                            "key-hex", "value-text", "seq"
+                        ])
 
-        if leveldb_records:
-            with open(output_path, "w", encoding="utf-8", newline="") as file1:
-                writes = csv.writer(file1, quoting=csv.QUOTE_ALL)
-                writes.writerow(
-                    [
-                        "key-hex", "value-text", "seq"
-                    ])
+                    for record in leveldb_records.iterate_records_raw():
+                        writes.writerow([
+                            record.user_key.hex(" ", 1),
+                            record.value.decode(ENCODING, "replace"),
+                            record.seq,
+                        ])
 
-                for record in leveldb_records.iterate_records_raw():
-                    writes.writerow([
-                        record.user_key.hex(" ", 1),
-                        record.value.decode(ENCODING, "replace"),
-                        record.seq,
-                    ])
-
-            #Identifies specific values in LDB for correct address identification
-            data_hex = "64 61 74 61"
-            with open(output_path, newline="") as csvfile:
-                dataone = csv.DictReader(csvfile)
-                max_seq_list = []
-                for row in dataone:
-                    max_seq_list.append(int(row["seq"]))
-                    max_seq = max(max_seq_list)
-        
-                csvfile.seek(0)
+                #Identifies specific values in LDB for correct address identification
+                data_hex = "64 61 74 61"
+                with open(output_path, newline="") as csvfile:
+                    dataone = csv.DictReader(csvfile)
+                    max_seq_list = []
+                    for row in dataone:
+                        max_seq_list.append(int(row["seq"]))
+                        max_seq = max(max_seq_list)
             
-                for row in dataone:
-                    if row['key-hex'] == data_hex and 'AlertController' in row['value-text'] and int(row['seq']) == max_seq:
-                        most_recent_valuetext = row['value-text']
+                    csvfile.seek(0)
+                
+                    for row in dataone:
+                        if row['key-hex'] == data_hex and 'AlertController' in row['value-text'] and int(row['seq']) == max_seq:
+                            most_recent_valuetext = row['value-text']
 
-            json_obj = json.loads(most_recent_valuetext)
-            
-            pref_controller_data = json_obj.get('PreferencesController')
-            identities_data = pref_controller_data["identities"]
+                json_obj = json.loads(most_recent_valuetext)
+                
+                pref_controller_data = json_obj.get('PreferencesController')
+                identities_data = pref_controller_data["identities"]
 
-            #Writing identified data to CSV
-            for key in identities_data:
-                new_variable = identities_data[key]
-                metamask_address = new_variable["address"]
-                default_output = 'Address', 'VARIOUS - See Documention!', metamask_address, 'MetaMask (Edge)', def_location
-                metamask_edge_output.append(default_output)
+                #Writing identified data to CSV
+                for key in identities_data:
+                    new_variable = identities_data[key]
+                    metamask_address = new_variable["address"]
+                    default_output = 'Address', 'VARIOUS - See Documention!', metamask_address, 'MetaMask (Edge)', def_location
+                    metamask_edge_output.append(default_output)
+        except:
+            pass
 
-#this should check for identifies data and if the length of the string is 0, it wil inform the user that no addessses exist. the reason for this is i noticed that a user might have MM installed, but never have opened it
+        #this should check for identifies data and if the length of the string is 0, it wil inform the user that no addessses exist. the reason for this is i noticed that a user might have MM installed, but never have opened it
         if len(identities_data) == 0:
             with open(output_dir + '/' + log_name, 'a') as log_file:
-                log_file.write('ACTION: Metamask (Brave) - No Addresses Identified.\n')    
+                log_file.write('ACTION: Metamask (EDGE) - No Addresses Identified.\n')    
     
         else:
-            with open(output_dir + '/' + 'metamask_chrome_addresses.csv', 'w', newline='') as file:
+            with open(output_dir + '/' + 'metamask^_edge_addresses.csv', 'w', newline='') as file:
                 write = csv.writer(file) 
                 write.writerows(metamask_edge_output)
 
@@ -374,7 +384,7 @@ def metamask_brave():
                         profiles_output = 'Address', 'VARIOUS - See Documention!', metamask_address, 'MetaMask (Brave)', profiles_ldb_loc
                         metamask_brave_output.append(profiles_output)
 
-                    with open(output_dir + '/' + 'metamask_brave_addresses.csv', 'w', newline='') as file:
+                    with open(output_dir + '/' + 'metamask^_brave_addresses.csv', 'w', newline='') as file:
                         write = csv.writer(file)
                         write.writerows(metamask_brave_output)
 
@@ -382,58 +392,63 @@ def metamask_brave():
                     pass
 
     if default_list:
-        leveldb_records = ccl_chrome_ldb_scripts.ccl_leveldb.RawLevelDb(appdata_dir + r"\Local\BraveSoftware\Brave-Browser\User Data\Default\Local Extension Settings\nkbihfbeogaeaoehlefnkodbefgpgknn") 
-        def_location = appdata_dir + "/Local/BraveSoftware/Brave-Browser/User Data/Default/Local Extension Settings/nkbihfbeogaeaoehlefnkodbefgpgknn"
+        try:
+            leveldb_records = ccl_chrome_ldb_scripts.ccl_leveldb.RawLevelDb(appdata_dir + r"\Local\BraveSoftware\Brave-Browser\User Data\Default\Local Extension Settings\nkbihfbeogaeaoehlefnkodbefgpgknn") 
+            def_location = appdata_dir + "/Local/BraveSoftware/Brave-Browser/User Data/Default/Local Extension Settings/nkbihfbeogaeaoehlefnkodbefgpgknn"
+        except:
+            pass
 
-        if leveldb_records:
-            with open(output_path, "w", encoding="utf-8", newline="") as file1:
-                writes = csv.writer(file1, quoting=csv.QUOTE_ALL)
-                writes.writerow(
-                    [
-                        "key-hex", "value-text", "seq"
-                    ])
+        try:
+            if leveldb_records:
+                with open(output_path, "w", encoding="utf-8", newline="") as file1:
+                    writes = csv.writer(file1, quoting=csv.QUOTE_ALL)
+                    writes.writerow(
+                        [
+                            "key-hex", "value-text", "seq"
+                        ])
 
-                for record in leveldb_records.iterate_records_raw():
-                    writes.writerow([
-                        record.user_key.hex(" ", 1),
-                        record.value.decode(ENCODING, "replace"),
-                        record.seq,
-                    ])
+                    for record in leveldb_records.iterate_records_raw():
+                        writes.writerow([
+                            record.user_key.hex(" ", 1),
+                            record.value.decode(ENCODING, "replace"),
+                            record.seq,
+                        ])
 
-            #Identifies specific values in LDB for correct address identification
-            data_hex = "64 61 74 61"
-            with open(output_path, newline="") as csvfile:
-                dataone = csv.DictReader(csvfile)
-                max_seq_list = []
-                for row in dataone:
-                    max_seq_list.append(int(row["seq"]))
-                    max_seq = max(max_seq_list)
-        
-                csvfile.seek(0)
+                #Identifies specific values in LDB for correct address identification
+                data_hex = "64 61 74 61"
+                with open(output_path, newline="") as csvfile:
+                    dataone = csv.DictReader(csvfile)
+                    max_seq_list = []
+                    for row in dataone:
+                        max_seq_list.append(int(row["seq"]))
+                        max_seq = max(max_seq_list)
             
-                for row in dataone:
-                    if row['key-hex'] == data_hex and 'AlertController' in row['value-text'] and int(row['seq']) == max_seq:
-                        most_recent_valuetext = row['value-text']
+                    csvfile.seek(0)
+                
+                    for row in dataone:
+                        if row['key-hex'] == data_hex and 'AlertController' in row['value-text'] and int(row['seq']) == max_seq:
+                            most_recent_valuetext = row['value-text']
 
-            json_obj = json.loads(most_recent_valuetext)
-            
-            pref_controller_data = json_obj.get('PreferencesController')
-            identities_data = pref_controller_data["identities"]
-            
-            #Writing identified data to CSV
-            for key in identities_data:
-                new_variable = identities_data[key]
-                metamask_address = new_variable["address"]
-                default_output = 'Address', 'VARIOUS - See Documention!', metamask_address, 'MetaMask (Brave)', def_location
-                metamask_brave_output.append(default_output)
-
+                json_obj = json.loads(most_recent_valuetext)
+                
+                pref_controller_data = json_obj.get('PreferencesController')
+                identities_data = pref_controller_data["identities"]
+                
+                #Writing identified data to CSV
+                for key in identities_data:
+                    new_variable = identities_data[key]
+                    metamask_address = new_variable["address"]
+                    default_output = 'Address', 'VARIOUS - See Documention!', metamask_address, 'MetaMask (Brave)', def_location
+                    metamask_brave_output.append(default_output)
+        except:
+            pass
 #this should check for identifies data and if the length of the string is 0, it wil inform the user that no addessses exist. the reason for this is i noticed that a user might have MM installed, but never have opened it
         if len(identities_data) == 0:
             with open(output_dir + '/' + log_name, 'a') as log_file:
                 log_file.write('ACTION: Metamask (Brave) - No Addresses Identified.\n')    
     
         else:
-            with open(output_dir + '/' + 'metamask_brave_addresses.csv', 'w', newline='') as file:
+            with open(output_dir + '/' + 'metamask^_brave_addresses.csv', 'w', newline='') as file:
                 write = csv.writer(file) 
                 write.writerows(metamask_brave_output)
 

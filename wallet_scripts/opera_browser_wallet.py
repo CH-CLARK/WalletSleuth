@@ -11,12 +11,9 @@ import controller.config
 #CCL Imports
 import ccl_chrome_ldb_scripts.ccl_leveldb
 
-
+# Handling large CSV fields
 maxInt = sys.maxsize
-
 while True:
-    # decrease the maxInt value by factor 10 
-    # as long as the OverflowError occurs.
     try:
         csv.field_size_limit(maxInt)
         break
@@ -30,14 +27,14 @@ def opera_wallet():
     output_dir = controller.config.OUTPUT
     log_name = controller.config.WS_MAIN_LOG_NAME
 
-    operabrowser_user_data = appdata_dir + "/Roaming/Opera Software/Opera Stable/Local Extension Settings/gojhcdgcpbpfigcaejpfhfegekdgiblk"
+    operabrowser_user_data = os.path.join(appdata_dir + "/Roaming/Opera Software/Opera Stable/default/Local Extension Settings/gojhcdgcpbpfigcaejpfhfegekdgiblk")
 
     if operabrowser_user_data:
         output_data = []
 
-        output_path = appdata_dir + r"\operabrowser_wallet_LDB.csv"
+        output_path = os.path.join(appdata_dir, "operabrowser_wallet_LDB.csv")
 
-        leveldb_records = ccl_chrome_ldb_scripts.ccl_leveldb.RawLevelDb(appdata_dir + "/Roaming/Opera Software/Opera Stable/Local Extension Settings/gojhcdgcpbpfigcaejpfhfegekdgiblk")
+        leveldb_records = ccl_chrome_ldb_scripts.ccl_leveldb.RawLevelDb(operabrowser_user_data)
 
         with open(output_path, "w", encoding="utf-8", newline="") as file1:
             writes = csv.writer(file1, quoting=csv.QUOTE_ALL, escapechar='£')
@@ -55,50 +52,65 @@ def opera_wallet():
                 ])
 
         data_text = "wallet-accounts"
-        with open(output_path, newline="", errors = 'ignore') as csvfile:
+        with open(output_path, newline="", errors='ignore') as csvfile:
             dataone = csv.DictReader(csvfile)
 
             accounts_seq_list = []
             for row in dataone:
                 if row['key-text'] == data_text:
                     accounts_seq_list.append(int(row["seq"]))
-                    accounts_max_seq = max(accounts_seq_list)
+            
+            #this sorts the sequence numbers into decending order... this needs to be done since the highest sequence may not always be populated. might have to update the others with this...
+            accounts_seq_list.sort(reverse=True)
 
-            csvfile.seek(0)
+            most_recent_valuetext = None
 
-            for row in dataone:
-                if row['key-text'] == data_text and int(row['seq']) == accounts_max_seq:
-                    most_recent_valuetext = row['value-text']
+            for seq in accounts_seq_list:
+                csvfile.seek(0)
 
-        json_obj = json.loads(most_recent_valuetext)
-        ammended_json_obj = ast.literal_eval(json_obj)
+                for row in dataone:
+                    if row['key-text'] == data_text and int(row['seq']) == seq:
+                        most_recent_valuetext = row['value-text']
 
-        for key, value in ammended_json_obj.items():
-            if value["coinType"] == 0:
-                btc = ("Extended Public Key (XPUB)", "BTC", key, "Opera Browser Wallet", operabrowser_user_data)
-                output_data.append(btc)
-            elif value["coinType"] == 60:
-                eth = ("Address", "ETH", key, "Opera Browser Wallet", operabrowser_user_data)
-                output_data.append(eth)
-            elif value["coinType"] == 501:
-                sol = ("Address", "SOL", key, "Opera Browser Wallet", operabrowser_user_data)
-                output_data.append(sol)
-            elif value["coinType"] == 397:
-                near = ("Address", "NEAR", key, "Opera Browser Wallet", operabrowser_user_data)
-                output_data.append(near)
-            elif value["coinType"] == 235:
-                fio = ("Address", "FIO", key, "Opera Browser Wallet", operabrowser_user_data)
-                output_data.append(fio)
-            elif value["coinType"] == 508:
-                egld = ("Address", "EGLD", key, "Opera Browser Wallet", operabrowser_user_data)
-                output_data.append(egld)
+                        try:
+                            json_obj = json.loads(most_recent_valuetext)
+                            ammended_json_obj = ast.literal_eval(json_obj)
+                            break
 
-    with open(output_dir + '/' + 'opera_browser_addresses.csv', 'w', newline='') as output_file:
+                        except json.JSONDecodeError:
+                            continue
+                        
+                if most_recent_valuetext:
+                    break
+
+        if most_recent_valuetext:
+            for key, value in ammended_json_obj.items():
+                if value["coinType"] == 0:
+                    btc = ("Extended Public Key (XPUB)", "BTC", key, "Opera Browser Wallet", operabrowser_user_data)
+                    output_data.append(btc)
+                elif value["coinType"] == 60:
+                    eth = ("Address", "ETH", key, "Opera Browser Wallet", operabrowser_user_data)
+                    output_data.append(eth)
+                elif value["coinType"] == 501:
+                    sol = ("Address", "SOL", key, "Opera Browser Wallet", operabrowser_user_data)
+                    output_data.append(sol)
+                elif value["coinType"] == 397:
+                    near = ("Address", "NEAR", key, "Opera Browser Wallet", operabrowser_user_data)
+                    output_data.append(near)
+                elif value["coinType"] == 235:
+                    fio = ("Address", "FIO", key, "Opera Browser Wallet", operabrowser_user_data)
+                    output_data.append(fio)
+                elif value["coinType"] == 508:
+                    egld = ("Address", "EGLD", key, "Opera Browser Wallet", operabrowser_user_data)
+                    output_data.append(egld)
+
+    with open(os.path.join(output_dir, 'opera_browser_wallet_addresses.csv'), 'w', newline='') as output_file:
         write = csv.writer(output_file)
         write.writerows(output_data)
 
-    with open(output_dir + '/' + log_name, 'a') as log_file:
-        log_file.write('ACTION: Opera Browser Wallet - Addresses Identified.\n')            
-
+    with open(os.path.join(output_dir, log_name), 'a') as log_file:
+        log_file.write('ACTION: Opera Browser Wallet - Addresses Identified.\n')
 
     os.remove(output_path)
+
+
