@@ -84,7 +84,7 @@ def exodus_wallet():
                         filtered_rows.append({"text_between": text_between, "tx_string": tx_string})
 
     if not filtered_rows:
-        with open(output_path + "/" "exodus_wallet_transactions.csv", "w", newline="") as csv_filtered_out_f:
+        with open(output_path + "/" "exodus_wallet_addresses.csv", "w", newline="") as csv_filtered_out_f:
             csv_filtered_out = csv.writer(csv_filtered_out_f, dialect=csv.excel, quoting=csv.QUOTE_ALL)
             
             for row in filtered_rows:
@@ -94,7 +94,7 @@ def exodus_wallet():
             log_file.write('ACTION: Exodus Wallet - No Transactions Identified \n')
     
     if filtered_rows:
-        with open(output_path + "/" "exodus_wallet_transactions.csv", "w", newline="") as csv_filtered_out_f:
+        with open(output_path + "/" "exodus_wallet_addresses.csv", "w", newline="") as csv_filtered_out_f:
             csv_filtered_out = csv.writer(csv_filtered_out_f, dialect=csv.excel, quoting=csv.QUOTE_ALL)
             
             for row in filtered_rows:
