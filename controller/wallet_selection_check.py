@@ -43,6 +43,11 @@ def process_wallet(wallet_name, browser_type, function, output_dir, log_file_pat
 
     except Exception as e:
         messagebox.showerror('ERROR', f"ERROR: {wallet_name} ({browser_type}) - Wallet Not Found!")
+        error_message = f"ERROR: {wallet_name} ({browser_type}) - Wallet Not Found!"
+
+        with open(log_file_path, 'a') as log_file:
+            log_file.write(f"{error_message}\n")
+
 
 def run_func():
     try:
