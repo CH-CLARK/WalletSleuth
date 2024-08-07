@@ -41,6 +41,9 @@ paths = {
     r'Roaming\Bitcoin\wallets': 'Bitcoin Core',
 
     r'Local\Google\Chrome\User Data\Default\Local Extension Settings\hnfanknocfeofbddgcijnmhnfnkdnaad' : 'Coinbase Wallet (Chrome)',
+    r'Local\BraveSoftware\Brave-Browser\User Data\Default\Local Extension Settings\hnfanknocfeofbddgcijnmhnfnkdnaad' : 'Coinbase Wallet (Brave)',
+
+    r'Local\Google\Chrome\User Data\Default\Local Extension Settings\hifafgmccdpekplomjjkcfgodnhcellj' : 'Crypto.com Wallet (Chrome)',
 }
 
 
