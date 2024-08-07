@@ -17,7 +17,8 @@ try:
         'Wasabi Wallet': None,
         'Litecoin Core': None,
         'Bitcoin Core': None,
-        'Coinbase Wallet^': {'Chrome', 'Brave'}
+        'Coinbase Wallet^': {'Chrome', 'Brave'},
+        'Crypto.com Wallet^': {'Chrome'}
         }
 
 except Exception as e:
@@ -36,7 +37,8 @@ except Exception as e:
         'Wasabi Wallet': None,
         'Litecoin Core': None,
         'Bitcoin Core': None,
-        'Coinbase Wallet^': {'Chrome', 'Brave'}
+        'Coinbase Wallet^': {'Chrome', 'Brave'},
+        'Crypto.com Wallet^': {'Chrome'}
         }
     
     no_brotli = ['Exodus Wallet']

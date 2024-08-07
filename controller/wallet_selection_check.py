@@ -26,7 +26,7 @@ from wallet_scripts.wasabi_wallet import wasabi_wallet
 from wallet_scripts.litecoin_core_wallet import litecoin_core_wallet
 from wallet_scripts.bitcoin_core_wallet import bitcoin_core_wallet
 from wallet_scripts.coinbase_wallet_ext import coinbase_wallet_chrome, coinbase_wallet_brave
-
+from wallet_scripts.cryptocom_wallet_ext import cryptocom_wallet_chrome
 
 def process_wallet(wallet_name, browser_type, function, output_dir, log_file_path, selection):
     try:
@@ -92,7 +92,8 @@ def run_func():
             ('Litecoin Core', None): litecoin_core_wallet,
             ('Bitcoin Core', None): bitcoin_core_wallet,
             ('Coinbase Wallet^', 'Chrome'): coinbase_wallet_chrome,
-            ('Coinbase Wallet^', 'Brave'): coinbase_wallet_brave
+            ('Coinbase Wallet^', 'Brave'): coinbase_wallet_brave,
+            ('Crypto.com Wallet^', 'Chrome'): cryptocom_wallet_chrome
         }
 
         #process slected wallets
