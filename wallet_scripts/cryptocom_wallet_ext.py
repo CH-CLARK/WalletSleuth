@@ -86,10 +86,40 @@ def cryptocom_wallet_chrome():
         except:
             pass
 
-        with open(output_dir + '/' 'crypto.com_wallet^_chrome_addresses.csv', 'w', newline='') as file:
-            write = csv.writer(file) 
-            write.writerows(filtered_list)
+    if profiles_list:
 
+        for x in range(profiles_list_len):
+            try:
+                profiles_ldb_loc = appdata_dir + "/Local/Google/Chrome/User Data/" + profiles_list[x] + "/IndexedDB/chrome-extension_hifafgmccdpekplomjjkcfgodnhcellj_0.indexeddb.leveldb"
+                pro_wrapper = ccl_chrome_ldb_scripts.ccl_chromium_indexeddb.WrappedIndexDB(profiles_ldb_loc)
+            except:
+                pass
+
+            try:
+                for db_info in pro_wrapper.database_ids:
+                    db = pro_wrapper[db_info.dbid_no]
+                    for obj_store_name in db.object_store_names:
+                        if obj_store_name == 'wallets':
+                            obj_store = db[obj_store_name]
+                            records = list(obj_store.iterate_records())
+
+                            if records:
+                                for record in records:
+                                    display_name = record.value.get('addresses')
+
+                                    for key, value in display_name.items():
+                                        test_var = 'Address', key, value['address'], 'Crypto.com Wallet', profiles_ldb_loc
+                                        addresses.append(test_var)
+                
+                            else:
+                                pass
+
+                updated_list = [tuple(replacement_dict.get(item, item) for item in sublist) for sublist in addresses]
+    
+                filtered_list = [sublist for sublist in updated_list if not any(item in remove_dict for item in sublist)]
+
+            except:
+                pass
 
     if not addresses:
         with open(output_dir + '/' + log_name, 'a') as log_file:
@@ -99,3 +129,7 @@ def cryptocom_wallet_chrome():
     if addresses:
         with open(output_dir + '/' + log_name, 'a') as log_file:
             log_file.write('ACTION: Crypto.com Wallet (Chrome) - Addresses Identified.\n')
+
+        with open(output_dir + '/' 'crypto.com_wallet^_chrome_addresses.csv', 'w', newline='') as file:
+            write = csv.writer(file) 
+            write.writerows(filtered_list)
