@@ -34,6 +34,7 @@ Wallet Detector - Determine what wallets to scan for addresses on by identifying
 - Bitget (Brave, Chrome) (Formerly Bitkeep)
 - Brave Browser Wallet
 - Coinbase Wallet (Brave, Chrome)
+- Crypto.com Wallet (Chrome)
 - Exodus Wallet
 - Guarda (Chrome, Opera)
 - Ledger Live
