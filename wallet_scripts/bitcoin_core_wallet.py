@@ -7,6 +7,8 @@ def bitcoin_core_wallet():
 
     stripped_list =[]
 
+    stripped_list_no_dups = []
+
     appdata_dir = controller.config.APPDATA
     output_dir = controller.config.OUTPUT
     log_name = controller.config.WS_MAIN_LOG_NAME
@@ -52,7 +54,7 @@ def bitcoin_core_wallet():
                         start_index = end_index + len(end_hex_string)
 
                         #removes duplciates from the list
-                        stripped_list_no_dups = []
+                        # stripped_list_no_dups = []
 
                         for i in stripped_list:
                             if i not in stripped_list_no_dups:
@@ -61,6 +63,10 @@ def bitcoin_core_wallet():
     if not stripped_list_no_dups:
         with open(output_dir + '/' + log_name, 'a') as log_file:
             log_file.write('ACTION: Bitcoin Core Wallet - No Addresses Identified!\n')  
+
+        with open(output_dir + '/' + 'bitcoin_core_addresses.csv', 'w', newline='') as output_file:
+            write = csv.writer(output_file)
+            write.writerows(stripped_list_no_dups)
 
     if stripped_list_no_dups:
         with open(output_dir + '/' + log_name, 'a') as log_file:
