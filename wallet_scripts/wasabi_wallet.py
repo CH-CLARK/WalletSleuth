@@ -31,7 +31,7 @@ def wasabi_wallet():
 
     if wasabi_output:
 
-        with open(output_dir + '/' + 'wasabi_wallet_addresses.csv', 'w', newline='') as output_file:
+        with open(output_dir + '/' + 'wasabi_wallet_output.csv', 'w', newline='') as output_file:
             write = csv.writer(output_file)
             write.writerows(wasabi_output)
 

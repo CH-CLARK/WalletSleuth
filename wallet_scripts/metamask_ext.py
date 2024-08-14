@@ -95,7 +95,7 @@ def metamask_chrome():
                         profiles_output = 'Address', 'VARIOUS - See Documention!', metamask_address, 'MetaMask (Chrome)', profiles_ldb_loc
                         metamask_chrome_output.append(profiles_output)
 
-                    with open(output_dir + '/' + 'metamask^_chrome_addresses.csv', 'w', newline='') as file:
+                    with open(output_dir + '/' + 'metamask^_chrome_output.csv', 'w', newline='') as file:
                         write = csv.writer(file)
                         write.writerows(metamask_chrome_output)
 
@@ -161,7 +161,7 @@ def metamask_chrome():
                 log_file.write('ACTION: Metamask (Chrome) - No Addresses Identified.\n')    
     
         else:
-            with open(output_dir + '/' + 'metamask^_chrome_addresses.csv', 'w', newline='') as file:
+            with open(output_dir + '/' + 'metamask^_chrome_output.csv', 'w', newline='') as file:
                 write = csv.writer(file) 
                 write.writerows(metamask_chrome_output)
 
@@ -240,7 +240,7 @@ def metamask_edge():
                         profiles_output = 'Address', 'VARIOUS - See Documention!', metamask_address, 'MetaMask (Edge)', profiles_ldb_loc
                         metamask_edge_output.append(profiles_output)
 
-                    with open(output_dir + '/' + 'metamask^_edge_addresses.csv', 'w', newline='') as file:
+                    with open(output_dir + '/' + 'metamask^_edge_output.csv', 'w', newline='') as file:
                         write = csv.writer(file)
                         write.writerows(metamask_edge_output)
 
@@ -305,7 +305,7 @@ def metamask_edge():
                 log_file.write('ACTION: Metamask (EDGE) - No Addresses Identified.\n')    
     
         else:
-            with open(output_dir + '/' + 'metamask^_edge_addresses.csv', 'w', newline='') as file:
+            with open(output_dir + '/' + 'metamask^_edge_output.csv', 'w', newline='') as file:
                 write = csv.writer(file) 
                 write.writerows(metamask_edge_output)
 
@@ -384,7 +384,7 @@ def metamask_brave():
                         profiles_output = 'Address', 'VARIOUS - See Documention!', metamask_address, 'MetaMask (Brave)', profiles_ldb_loc
                         metamask_brave_output.append(profiles_output)
 
-                    with open(output_dir + '/' + 'metamask^_brave_addresses.csv', 'w', newline='') as file:
+                    with open(output_dir + '/' + 'metamask^_brave_output.csv', 'w', newline='') as file:
                         write = csv.writer(file)
                         write.writerows(metamask_brave_output)
 
@@ -448,7 +448,7 @@ def metamask_brave():
                 log_file.write('ACTION: Metamask (Brave) - No Addresses Identified.\n')    
     
         else:
-            with open(output_dir + '/' + 'metamask^_brave_addresses.csv', 'w', newline='') as file:
+            with open(output_dir + '/' + 'metamask^_brave_output.csv', 'w', newline='') as file:
                 write = csv.writer(file) 
                 write.writerows(metamask_brave_output)
 

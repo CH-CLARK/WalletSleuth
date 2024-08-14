@@ -93,7 +93,7 @@ def guarda_chrome():
                         guarda_address_output = 'Address', wallet_data[x]['currency'], wallet_data[x]['address'], 'Guarda (Chrome)', profiles_ldb_loc
                         guarda_chrome_output.append(guarda_address_output)
 
-                    with open(output_dir + '/' + 'guarda^_chrome_addresses.csv', 'w', newline='') as file:
+                    with open(output_dir + '/' + 'guarda^_chrome_output.csv', 'w', newline='') as file:
                         write = csv.writer(file) 
                         write.writerows(guarda_chrome_output)
 
@@ -143,7 +143,7 @@ def guarda_chrome():
                 guarda_address_output = 'Address', wallet_data[x]['currency'], wallet_data[x]['address'], 'Guarda (Chrome)', def_location
                 guarda_chrome_output.append(guarda_address_output)
 
-    with open(output_dir + '/' + 'guarda^_chrome_addresses.csv', 'w', newline='') as file:
+    with open(output_dir + '/' + 'guarda^_chrome_output.csv', 'w', newline='') as file:
         write = csv.writer(file) 
         write.writerows(guarda_chrome_output)
 
@@ -220,7 +220,7 @@ def guarda_opera():
                         guarda_address_output = 'Address', wallet_data[x]['currency'], wallet_data[x]['address'], 'Guarda (Opera)', profiles_ldb_loc
                         guarda_opera_output.append(guarda_address_output)
 
-                    with open(output_dir + '/' + 'guarda^_opera_addresses.csv', 'w', newline='') as file:
+                    with open(output_dir + '/' + 'guarda^_opera_output.csv', 'w', newline='') as file:
                         write = csv.writer(file) 
                         write.writerows(guarda_opera_output)
 
@@ -270,7 +270,7 @@ def guarda_opera():
                 guarda_address_output = 'Address', wallet_data[x]['currency'], wallet_data[x]['address'], 'Guarda (Opera)', def_location
                 guarda_opera_output.append(guarda_address_output)
 
-    with open(output_dir + '/' + 'guarda^_opera_addresses.csv', 'w', newline='') as file:
+    with open(output_dir + '/' + 'guarda^_opera_output.csv', 'w', newline='') as file:
         write = csv.writer(file) 
         write.writerows(guarda_opera_output)
 

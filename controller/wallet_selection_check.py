@@ -35,10 +35,10 @@ def process_wallet(wallet_name, browser_type, function, output_dir, log_file_pat
 
         if browser_type:
             browser_type = browser_type.lower()
-            csv_file = f"{output_dir}/{wallet_name}_{browser_type}_addresses.csv"
+            csv_file = f"{output_dir}/{wallet_name}_{browser_type}_output.csv"
 
         else:
-            csv_file = f"{output_dir}/{wallet_name}_addresses.csv"
+            csv_file = f"{output_dir}/{wallet_name}_output.csv"
         selection.append(csv_file)
 
     except Exception as e:

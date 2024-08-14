@@ -62,7 +62,7 @@ def atomic_wallet():
                 atomic_output = ['Address', i["id"] + "," + i["address"] + "," + "Atomic Wallet", location]
 
     if atomic_output:
-        with open(output_dir + '/' + 'atomic_wallet_addresses.csv', 'w', newline='') as atomic_wallet_addresses:
+        with open(output_dir + '/' + 'atomic_wallet_output.csv', 'w', newline='') as atomic_wallet_addresses:
             write = csv.writer(atomic_wallet_addresses)
             for i in json_obj:
                 if i["address"] != "":

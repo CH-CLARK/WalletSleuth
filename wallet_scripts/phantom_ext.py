@@ -103,7 +103,7 @@ def phantom_chrome():
                             phantom_address_output = 'Address', mod_chain, public_key ,'Phantom (Chrome)', profiles_ldb_loc
                             phantom_chrome_output.append(phantom_address_output)
 
-                    with open(output_dir + '/' + 'phantom^_chrome_addresses.csv', 'w', newline='') as file:
+                    with open(output_dir + '/' + 'phantom^_chrome_output.csv', 'w', newline='') as file:
                         write = csv.writer(file) 
                         write.writerows(phantom_chrome_output)
 
@@ -175,7 +175,7 @@ def phantom_chrome():
         except Exception as e:
             pass
 
-    with open(output_dir + '/' + 'phantom^_chrome_addresses.csv', 'w', newline='') as file:
+    with open(output_dir + '/' + 'phantom^_chrome_output.csv', 'w', newline='') as file:
         write = csv.writer(file) 
         write.writerows(phantom_chrome_output)
 
@@ -266,7 +266,7 @@ def phantom_brave():
                             phantom_address_output = 'Address', mod_chain, public_key ,'Phantom (brave)', profiles_ldb_loc
                             phantom_brave_output.append(phantom_address_output)
 
-                    with open(output_dir + '/' + 'phantom^_brave_addresses.csv', 'w', newline='') as file:
+                    with open(output_dir + '/' + 'phantom^_brave_output.csv', 'w', newline='') as file:
                         write = csv.writer(file) 
                         write.writerows(phantom_brave_output)
 
@@ -337,7 +337,7 @@ def phantom_brave():
         except:
             pass
 
-    with open(output_dir + '/' + 'phantom^_brave_addresses.csv', 'w', newline='') as file:
+    with open(output_dir + '/' + 'phantom^_brave_output.csv', 'w', newline='') as file:
         write = csv.writer(file) 
         write.writerows(phantom_brave_output)
 

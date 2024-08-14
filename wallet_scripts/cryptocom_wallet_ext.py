@@ -130,6 +130,6 @@ def cryptocom_wallet_chrome():
         with open(output_dir + '/' + log_name, 'a') as log_file:
             log_file.write('ACTION: Crypto.com Wallet (Chrome) - Addresses Identified.\n')
 
-        with open(output_dir + '/' 'crypto.com_wallet^_chrome_addresses.csv', 'w', newline='') as file:
+        with open(output_dir + '/' 'crypto.com_wallet^_chrome_output.csv', 'w', newline='') as file:
             write = csv.writer(file) 
             write.writerows(filtered_list)

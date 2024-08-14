@@ -58,7 +58,7 @@ def litecoin_core_wallet():
 
     if stripped_list_no_dups:
 
-        with open(output_dir + '/' + 'litecoin_core_addresses.csv', 'w', newline='') as output_file:
+        with open(output_dir + '/' + 'litecoin_core_output.csv', 'w', newline='') as output_file:
             write= csv.writer(output_file)
             write.writerows(litecoin_core_output)
 
@@ -67,7 +67,7 @@ def litecoin_core_wallet():
 
     if not stripped_list_no_dups:
 
-        with open(output_dir + '/' + 'litecoin_core_addresses.csv', 'w', newline='') as output_file:
+        with open(output_dir + '/' + 'litecoin_core_output.csv', 'w', newline='') as output_file:
             write= csv.writer(output_file)
             write.writerows(litecoin_core_output)
 

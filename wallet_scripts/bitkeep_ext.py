@@ -95,7 +95,7 @@ def bitkeep_chrome():
                         bitkeep_chrome_output.append(bk_address_output)
 
 
-                    with open(output_dir + '/' + 'bitget^_chrome_addresses.csv', 'w', newline='') as file:
+                    with open(output_dir + '/' + 'bitget^_chrome_output.csv', 'w', newline='') as file:
                         write = csv.writer(file) 
                         write.writerows(bitkeep_chrome_output)  
                 
@@ -147,7 +147,7 @@ def bitkeep_chrome():
                 
                 bitkeep_chrome_output.append(bk_address_output)
 
-        with open(output_dir + '/' + 'bitget^_chrome_addresses.csv', 'w', newline='') as file:
+        with open(output_dir + '/' + 'bitget^_chrome_output.csv', 'w', newline='') as file:
                 write = csv.writer(file) 
                 write.writerows(bitkeep_chrome_output)
 
@@ -224,7 +224,7 @@ def bitkeep_brave():
                         bitkeep_brave_output.append(bk_address_output)
 
 
-                    with open(output_dir + '/' + 'bitget^_brave_addresses.csv', 'w', newline='') as file:
+                    with open(output_dir + '/' + 'bitget^_brave_output.csv', 'w', newline='') as file:
                         write = csv.writer(file) 
                         write.writerows(bitkeep_brave_output)  
                 
@@ -276,7 +276,7 @@ def bitkeep_brave():
                 
                 bitkeep_brave_output.append(bk_address_output)
 
-        with open(output_dir + '/' + 'bitget^_brave_addresses.csv', 'w', newline='') as file:
+        with open(output_dir + '/' + 'bitget^_brave_output.csv', 'w', newline='') as file:
             write = csv.writer(file) 
             write.writerows(bitkeep_brave_output)
 

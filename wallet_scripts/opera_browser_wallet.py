@@ -104,7 +104,7 @@ def opera_wallet():
                     egld = ("Address", "EGLD", key, "Opera Browser Wallet", operabrowser_user_data)
                     output_data.append(egld)
 
-    with open(os.path.join(output_dir, 'opera_browser_wallet_addresses.csv'), 'w', newline='') as output_file:
+    with open(os.path.join(output_dir, 'opera_browser_wallet_output.csv'), 'w', newline='') as output_file:
         write = csv.writer(output_file)
         write.writerows(output_data)
 

@@ -64,7 +64,7 @@ def bitcoin_core_wallet():
         with open(output_dir + '/' + log_name, 'a') as log_file:
             log_file.write('ACTION: Bitcoin Core Wallet - No Addresses Identified!\n')  
 
-        with open(output_dir + '/' + 'bitcoin_core_addresses.csv', 'w', newline='') as output_file:
+        with open(output_dir + '/' + 'bitcoin_core_output.csv', 'w', newline='') as output_file:
             write = csv.writer(output_file)
             write.writerows(stripped_list_no_dups)
 
@@ -72,6 +72,6 @@ def bitcoin_core_wallet():
         with open(output_dir + '/' + log_name, 'a') as log_file:
             log_file.write('ACTION: Bitcoin Core Wallet - Addresses Identified.\n')  
 
-        with open(output_dir + '/' + 'bitcoin_core_addresses.csv', 'w', newline='') as output_file:
+        with open(output_dir + '/' + 'bitcoin_core_output.csv', 'w', newline='') as output_file:
             write = csv.writer(output_file)
             write.writerows(stripped_list_no_dups)

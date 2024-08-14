@@ -146,7 +146,7 @@ def brave_wallet():
         except Exception as e:
             pass
 
-    with open(output_dir + '/' + 'brave_browser_wallet_addresses.csv', 'w', newline='') as output_file:
+    with open(output_dir + '/' + 'brave_browser_wallet_output.csv', 'w', newline='') as output_file:
         write = csv.writer(output_file)
         write.writerows(bravebrowser_output)
 

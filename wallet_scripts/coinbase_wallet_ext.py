@@ -77,7 +77,7 @@ def coinbase_wallet_chrome():
         except Exception as e:
             pass
 
-        with open(output_dir + '/' 'coinbase_wallet^_chrome_addresses.csv', 'w', newline='') as file:
+        with open(output_dir + '/' 'coinbase_wallet^_chrome_output.csv', 'w', newline='') as file:
             write = csv.writer(file) 
             write.writerows(addresses_list)
         
@@ -123,7 +123,7 @@ def coinbase_wallet_chrome():
                     output_string = 'Address', display_name, address, 'Coinbase Wallet', profiles_ldb_loc
                     profiles_addresses_list.append(output_string)
 
-                with open(output_dir + '/' 'coinbase_wallet^_chrome_addresses.csv', 'a', newline='') as file:
+                with open(output_dir + '/' 'coinbase_wallet^_chrome_output.csv', 'a', newline='') as file:
                     write = csv.writer(file) 
                     write.writerows(profiles_addresses_list)
             except:
@@ -206,7 +206,7 @@ def coinbase_wallet_brave():
         except Exception as e:
             pass
 
-        with open(output_dir + '/' 'coinbase_wallet^_brave_addresses.csv', 'w', newline='') as file:
+        with open(output_dir + '/' 'coinbase_wallet^_brave_output.csv', 'w', newline='') as file:
             write = csv.writer(file) 
             write.writerows(addresses_list)
 
@@ -253,7 +253,7 @@ def coinbase_wallet_brave():
                     output_string = 'Address', display_name, address, 'Coinbase Wallet', profiles_ldb_loc
                     profiles_addresses_list.append(output_string)
 
-                with open(output_dir + '/' 'coinbase_wallet^_brave_addresses.csv', 'a', newline='') as file:
+                with open(output_dir + '/' 'coinbase_wallet^_brave_output.csv', 'a', newline='') as file:
                     write = csv.writer(file) 
                     write.writerows(profiles_addresses_list)
                 
