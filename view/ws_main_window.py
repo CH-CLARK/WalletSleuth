@@ -1,18 +1,20 @@
-# Generic imports
+#generic imports
+import sys
+import os
 import csv
 
-# Tkinter imports
+#tkinter imports
 import tkinter as tk
 import tkinter.ttk as ttk
 from tkinter import DISABLED
 
-# View imports
+#view imports
 from view.address_identifier_frame import Address_Identifier_Frame
 from view.output_frame import Output_Frame
 from view.logging_frame import Logging_Frame
 from view.help_frame import Help_Frame
 
-# Controller imports
+#controller imports
 import controller.config
 
 
@@ -26,6 +28,16 @@ def get_center_screen_geometry(width: int, height: int, tk_instance: tk.Tk) -> s
     y = int(tk_instance.winfo_screenheight() / 2 - height / 2)
     return f"{width}x{height}+{x}+{y}"
 
+
+#this exists so that pyinstaller works...
+def resource_path(relative_path):
+    try:
+        base_path = sys._MEIPASS
+    except Exception:
+        base_path = os.path.abspath(".")
+
+    return os.path.join(base_path, relative_path)
+
 # WS_Main_Window class
 class WS_Main_Window(tk.Tk):
     def __init__(self) -> None:
@@ -35,7 +47,8 @@ class WS_Main_Window(tk.Tk):
         self.title(TITLE)
         self.resizable(False, False)
         self.geometry(get_center_screen_geometry(WIDTH, HEIGHT, self))
-        icon_path = 'app_files/icon.ico'
+        
+        icon_path = resource_path('app_files/icon.ico')
         self.iconbitmap(icon_path)
 
         # Notebook
@@ -81,7 +94,8 @@ class WS_Main_Window(tk.Tk):
         self.output_frame.tree.insert("", 0, values=("type", "currency", "address", "wallet", "path"))
         self.output_frame.tree.delete(*self.output_frame.tree.get_children())
         
-        with open(f'{output_dir}/output.csv') as f:
+        output_file_path = resource_path(os.path.join(output_dir, 'output.csv'))
+        with open(output_file_path) as f:
             reader = csv.DictReader(f, delimiter=',')
             for row in reader:
                 data_type = row['Type']
@@ -94,8 +108,9 @@ class WS_Main_Window(tk.Tk):
     # Method to load log content
     def load_log_content(self, output_dir):
         log_name = controller.config.WS_MAIN_LOG_NAME
+        log_file_path = resource_path(os.path.join(output_dir, log_name))
 
-        with open(output_dir + '/' + log_name, 'r') as log_file:
+        with open(log_file_path, 'r') as log_file:
             read_log = log_file.read()
 
             self.logging_frame.logging_text_win.config(state=tk.NORMAL)

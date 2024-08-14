@@ -1,3 +1,7 @@
+#genric imports
+import os
+import sys
+
 #tkinter imports
 import tkinter as tk
 import tkinter.ttk as ttk
@@ -10,13 +14,23 @@ from model.wallets_list import names
 #view imports
 import controller.config
 
-#controller imports 
+#controller imports
 from controller.wallet_selector import Wallet_Selector
 from controller.wallet_selection_check import run_func
 
 #wallet imports
 from wallet_scripts.hardware_wallet_scan import hardware_wallet_scan
 from wallet_scripts.wallet_scan import wallet_scan
+
+#this exists so that pyinstaller works...
+def resource_path(relative_path):
+
+    try:
+        base_path = sys._MEIPASS
+    except Exception:
+        base_path = os.path.abspath(".")
+
+    return os.path.join(base_path, relative_path)
 
 class Address_Identifier_Frame(ttk.Frame):
     def __init__(self, container: ttk.Notebook) -> None:
@@ -39,40 +53,42 @@ class Address_Identifier_Frame(ttk.Frame):
         self.button_frame = ttk.Frame(self.button_canvas)
         self.button_canvas.create_window((0,0), window=self.button_frame, anchor='nw')
         
-        self.button_labelframe.pack(fill = 'both', expand = 'yes', padx = 10, pady = 10)
+        self.button_labelframe.pack(fill='both', expand='yes', padx=10, pady=10)
 
         self.wallet_selector = Wallet_Selector.wallet_selection(self, container, names)
 
         #Title Image
-        original_image = PhotoImage(file="app_files/title.png")
+        image_path = resource_path('app_files/title.png')  # Use resource_path for images
+        original_image = PhotoImage(file=image_path)
         resized_image = original_image.subsample(2, 2)
         image_label = tk.Label(self.right_canvas, image=resized_image)
         image_label.image = resized_image
         image_label.place(x=2, y=0)
 
-        #wallet Finder Button
-        HW_wallet_button = tk.Button(self.right_canvas, text='Connected Hardware Wallet Detector',justify='center', command = hardware_wallet_scan)
+        #Wallet Finder Button
+        HW_wallet_button = tk.Button(self.right_canvas, text='Connected Hardware Wallet Detector', justify='center', command=hardware_wallet_scan)
         HW_wallet_button.place(x=10, y=200, height=25, width=385)
 
-        wallet_scan_button = tk.Button(self.right_canvas, text='Wallet Detector',justify='center', command = wallet_scan)
+        wallet_scan_button = tk.Button(self.right_canvas, text='Wallet Detector', justify='center', command=wallet_scan)
         wallet_scan_button.place(x=10, y=230, height=25, width=385)
 
         #AppData Button
         def select_appdata():
-            entry=ttk.Label(self.right_canvas, text='                                                                                                                       ').place(x=135, y=310)
+            entry = ttk.Label(self.right_canvas, text='                                                                                                                       ').place(x=135, y=310)
             ask_dir = askdirectory(title='Select AppData Folder')
-            entry=ttk.Label(self.right_canvas, text=ask_dir).place(x=135, y=310)
+            entry = ttk.Label(self.right_canvas, text=ask_dir).place(x=135, y=310)
             controller.config.APPDATA = ask_dir
+
         appdata_button = tk.Button(self.right_canvas, text='Appdata Directory', command=select_appdata)
         appdata_button.place(x=10, y=310, height=25, width=120)
         
-
-        #OutputButton
+        #Output Button
         def select_output():
-            entry=ttk.Label(self.right_canvas, text='                                                                                                                       ').place(x=135, y=340)
+            entry = ttk.Label(self.right_canvas, text='                                                                                                                       ').place(x=135, y=340)
             output_dir = askdirectory(title='Select Output Folder')
-            entry=ttk.Label(self.right_canvas, text=output_dir).place(x=135, y=340)
+            entry = ttk.Label(self.right_canvas, text=output_dir).place(x=135, y=340)
             controller.config.OUTPUT = output_dir
+
         output_button = tk.Button(self.right_canvas, text='Output Directory', command=select_output)
         output_button.place(x=10, y=340, height=25, width=120)
 
