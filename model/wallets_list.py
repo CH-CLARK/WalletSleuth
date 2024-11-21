@@ -5,40 +5,39 @@ try:
 
     names = {
         'Atomic Wallet': None,
-        'Bitget^': {'Brave', 'Chrome'},
+        'Bitcoin Core': None,
+        # '!Bitget^': {'Brave', 'Chrome'},
         'Brave Browser Wallet': None,
-        'Brave Browser Legacy': None,
+        'Coinbase^': {'Brave', 'Chrome'},
+        'Crypto.com^':{'Brave', 'Chrome'},
+        'Exodus Wallet': None,
         'Guarda^': {'Chrome', 'Opera'},
+        'Ledger Live': None, 
+        'Litecoin Core': None,
         'MetaMask^': {'Brave', 'Chrome', 'Edge'},
         'Opera Browser Wallet': None,
-        'Phantom^': {'Brave','Chrome'},
-        'Ledger Live': None,
-        'Exodus Wallet': None,
+        'Phantom^': {'Brave'},
         'Wasabi Wallet': None,
-        'Litecoin Core': None,
-        'Bitcoin Core': None,
-        'Coinbase Wallet^': {'Chrome', 'Brave'},
-        'Crypto.com Wallet^': {'Chrome'}
+        'Trezor Suite': None
         }
 
-except Exception as e:
+except:
     pass
     names = {
         'Atomic Wallet': None,
-        'Bitget^': {'Brave', 'Chrome'},
+        'Bitcoin Core': None,
+        # '!Bitget^': {'Brave', 'Chrome'},
         'Brave Browser Wallet': None,
-        'Brave Browser Legacy': None,
+        'Coinbase^': {'Brave', 'Chrome'},
+        'Crypto.com^':{'Brave', 'Chrome'},
         'Guarda^': {'Chrome', 'Opera'},
+        'Ledger Live': None,
+        'Litecoin Core': None,
         'MetaMask^': {'Brave', 'Chrome', 'Edge'},
         'Opera Browser Wallet': None,
-        'Phantom^': {'Brave', 'Chrome'},
-        'Ledger Live': None,
-        # 'Exodus Wallet': None,
+        'Phantom^': {'Brave'},
         'Wasabi Wallet': None,
-        'Litecoin Core': None,
-        'Bitcoin Core': None,
-        'Coinbase Wallet^': {'Chrome', 'Brave'},
-        'Crypto.com Wallet^': {'Chrome'}
+        'Trezor Suite': None
         }
     
     no_brotli = ['Exodus Wallet']

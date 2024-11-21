@@ -14,18 +14,17 @@ class Wallet_Selector(ttk.Frame):
         pass
 
     def wallet_selection(self, container, names):
-        #creates the checkboxes and dropdowns
         for row, (name, drinks) in enumerate(sorted(names.items())):
             check_value = tk.BooleanVar(value=False)
             checkbutton = tk.Checkbutton(self.button_frame, text=name, variable=check_value)
             Wallet_Selector.checkbuttons.append(checkbutton)
-            checkbutton.grid(row=row, column=0, sticky='w')
+            checkbutton.grid(row=row, column=1, sticky='w')
 
             if drinks is not None:
-                drink_var = tk.StringVar(value=list(drinks)[0])
-                drink_menu = tk.OptionMenu(self.button_frame, drink_var, *list(drinks))
+                drink_var = tk.StringVar(value = '~Select Browser~')
+                drink_menu = tk.OptionMenu(self.button_frame, drink_var,'~Select Browser~', *list(drinks))
                 Wallet_Selector.drink_menus.append(drink_menu)
-                drink_menu.grid(row=row, column=1, sticky='w')
+                drink_menu.grid(row=row, column=3, padx=20, sticky='w')
 
                 drink_var.trace_add('write', lambda *args, check_value=check_value, drink_var=drink_var, name=name, drinks=drinks: on_select(check_value, drink_var, name, drinks))
 
@@ -33,9 +32,7 @@ class Wallet_Selector(ttk.Frame):
                 drink_var = None
 
             checkbutton.config(command=lambda check_value=check_value, drink_var=drink_var, name=name, drinks=drinks: on_select(check_value, drink_var, name, drinks))
-
-
-        #adds and removes a selection to the 'selection' list                
+            
         def on_select(check_value, drink_var, name, drinks):
             if drinks is None:
                 if check_value.get():
@@ -50,7 +47,8 @@ class Wallet_Selector(ttk.Frame):
                         if item[0] == name:
                             Wallet_Selector.selection.remove(item)
                             break
-                    Wallet_Selector.selection.append((name, drink_var.get()))
+                    if drink_var.get() != '~Select Browser~':        
+                        Wallet_Selector.selection.append((name, drink_var.get()))
                 else:
                     if (name, drink_var.get()) in Wallet_Selector.selection:
                         Wallet_Selector.selection.remove((name, drink_var.get()))
