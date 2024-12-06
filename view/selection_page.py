@@ -49,8 +49,15 @@ class Selection_Frame(ttk.Frame):
         self.button_frame = ttk.Frame(self.left_canvas)
         self.left_canvas.create_window((0,0), window=self.button_frame, anchor='nw')
         
-
         self.wallet_selector = Wallet_Selector.wallet_selection(self, container, names)
+
+        #title image
+        image_path = resource_path('app_files/title.png')  # Use resource_path for images
+        original_image = PhotoImage(file=image_path)
+        resized_image = original_image.subsample(2, 2)
+        image_label = tk.Label(self.right_canvas, image=resized_image)
+        image_label.image = resized_image
+        image_label.place(x=10, y=15)
 
         #appdata function
         def select_appdata():

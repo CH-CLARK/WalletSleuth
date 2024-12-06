@@ -34,8 +34,6 @@ wallet_vid_pid = {
     ('VID_2C97', None): 'Ledger - HW2, X, Blue or Nano S',
     ('VID_2B24', None): 'ShapeShift - KeepKey',
     ('VID_2F48', 'PID_2130'): "D'CENT - Biometric Wallet",
-    ('VID_05E3', 'PID_0612'): "test",
-    ('VID_0000', 'PID_0001'): 'test 2'
 }
 
 
