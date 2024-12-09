@@ -20,7 +20,7 @@ from wallet_scripts.desktop_wallets.wasabi_wallet import wasabi_wallet
 from wallet_scripts.desktop_wallets.exodus_wallet import exodus_wallet
 from wallet_scripts.desktop_wallets.trezor_suite_wallet import trezor_suite_wallet
 
-# from wallet_scripts.browser_wallets.bitget_ext import bitget_chrome
+from wallet_scripts.browser_wallets.bitget_ext import bitget_brave, bitget_chrome
 from wallet_scripts.browser_wallets.metamask_ext import metamask_brave, metamask_chrome, metamask_edge
 from wallet_scripts.browser_wallets.guarda_ext import guarda_chrome, guarda_opera
 from wallet_scripts.browser_wallets.phantom_ext import phantom_brave, phantom_chrome
@@ -74,7 +74,8 @@ def run_func():
         #dicationary map to wallet fucntions
         wallet_functions = {
             ('Atomic Wallet', None): atomic_wallet,
-            #bitkeep here
+            ('Bitget^', 'Brave'): bitget_brave,
+            ('Bitget^', 'Chrome'): bitget_chrome,
             ('Bitcoin Core', None): bitcoin_core_wallet,
             ('Brave Browser Wallet', None): browser_brave,
             ('Coinbase^', 'Brave'): coinbase_brave,

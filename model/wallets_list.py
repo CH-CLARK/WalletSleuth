@@ -6,7 +6,7 @@ try:
     names = {
         'Atomic Wallet': None,
         'Bitcoin Core': None,
-        # '!Bitget^': {'Brave', 'Chrome'},
+        'Bitget^': {'Brave', 'Chrome'},
         'Brave Browser Wallet': None,
         'Coinbase^': {'Brave', 'Chrome'},
         'Crypto.com^':{'Brave', 'Chrome'},
@@ -26,7 +26,7 @@ except:
     names = {
         'Atomic Wallet': None,
         'Bitcoin Core': None,
-        # '!Bitget^': {'Brave', 'Chrome'},
+        'Bitget^': {'Brave', 'Chrome'},
         'Brave Browser Wallet': None,
         'Coinbase^': {'Brave', 'Chrome'},
         'Crypto.com^':{'Brave', 'Chrome'},
