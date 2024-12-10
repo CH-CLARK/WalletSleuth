@@ -42,6 +42,7 @@ Wallet Detector - Determine what wallets to scan for addresses on by identifying
 - MetaMask (Brave, Chrome, Edge)
 - Opera Browser Wallet
 - Phantom (Brave, Chrome)
+- Trezor Suite
 - Wasabi Wallet
 
 ## Limitations
