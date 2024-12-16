@@ -46,7 +46,6 @@ Wallet Detector - Determine what wallets to scan for addresses on by identifying
 - Wasabi Wallet
 
 ## Limitations
-- Currently the wallet finder function is limited to wallets in the 'Default' browser user profile, but the address finder will check all profiles for the selected browser.
 - Support for Windows OS only.
 - Requires Python 3.8 or higher
 - To parse Transaction IDs from the Exodus cache, the brotli extension is required.
