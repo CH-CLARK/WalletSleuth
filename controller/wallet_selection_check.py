@@ -14,6 +14,7 @@ import controller.config
 #wallet imports
 from wallet_scripts.desktop_wallets.atomic_wallet import atomic_wallet
 from wallet_scripts.desktop_wallets.bitcoin_core_wallet import bitcoin_core_wallet
+from wallet_scripts.desktop_wallets.dogecoin_core_wallet import dogecoin_core_wallet
 from wallet_scripts.desktop_wallets.ledger_live_wallet import ledger_live_wallet
 from wallet_scripts.desktop_wallets.litecoin_core_wallet import litecoin_core_wallet
 from wallet_scripts.desktop_wallets.wasabi_wallet import wasabi_wallet
@@ -82,6 +83,7 @@ def run_func():
             ('Coinbase^', 'Chrome'): coinbase_chrome,
             ('Crypto.com^', 'Brave'): cryptocom_brave,
             ('Crypto.com^', 'Chrome'): cryptocom_chrome,
+            ('Dogecoin Core', None): dogecoin_core_wallet,
             ('Exodus Wallet', None): exodus_wallet,
             ('Guarda^', 'Chrome'): guarda_chrome,
             ('Guarda^', 'Opera'): guarda_opera,
