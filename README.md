@@ -35,6 +35,7 @@ Wallet Detector - Determine what wallets to scan for addresses on by identifying
 - Brave Browser Wallet
 - Coinbase Wallet (Brave, Chrome)
 - Crypto.com Wallet (Chrome)
+- Dogecoin Core
 - Exodus Wallet
 - Guarda (Chrome, Opera)
 - Ledger Live
@@ -53,5 +54,5 @@ Wallet Detector - Determine what wallets to scan for addresses on by identifying
 
 
 <p align="center">
-  <strong><span style="font-size: 36px;">REMEMBER TO CONFIRM YOU OWN FINDINGS!</span></strong>
+  <strong><span style="font-size: 36px;">REMEMBER TO CONFIRM YOUR OWN FINDINGS!</span></strong>
 </p>
