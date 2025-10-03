@@ -1,0 +1,59 @@
+.tabs {
+  position: auto;
+  margin-top: -20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  box-sizing: border-box;
+}
+
+.tabs [role="tablist"] {
+  display: flex;
+  border: 1px solid #ccc;
+  border-top-right-radius: 5px;
+  border-top-left-radius: 5px;
+  background-color: #f2f2f2;
+}
+
+.tabs [role="tab"] {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: .9rem;
+  border-bottom: 3px solid transparent;
+}
+
+.tabs [role="tab"]:focus {
+  outline: 2px solid #0078d7;
+  outline-offset: 2px;
+}
+
+.tabs [role="tab"][aria-selected="true"] {
+  border-bottom-color: #0078d7;
+  font-weight: bold;
+  color: #0078d7;
+  cursor: default;
+}
+
+.tabs [role="tabpanel"].is-hidden {
+  display: none;
+}
+
+.tabs [role="tabpanel"] {
+  height: 41rem;
+  overflow-y: hidden;
+  overflow-x: auto;
+  padding: 1rem;
+  border: 1px solid #ccc;
+  border-top: none;
+  border-bottom-right-radius: 5px;
+  border-bottom-left-radius: 5px;
+  background-color:#fff;
+  box-sizing: border-box;
+  min-height: 40rem;
+  max-height: 41rem;
+}
+
+#outputTable td{
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}

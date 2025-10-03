@@ -1,0 +1,200 @@
+{% extends "base.html" %}
+{% block styles %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/identify/style_identify.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/identify/output_tabs.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/jquery_css/jquery.dataTables.min.css') }}">
+{% endblock %}
+
+{% block content %}
+    <div class="main-container">
+        <div class="two-column-layout">
+
+            <!-- left column -->
+            <div class="left-column">
+                <div class="box about-box">
+                    
+                    <!-- os selection -->
+                    <label for="radioFrame">Operating System:</label>
+                    <div id="radioFrame">
+                        <label>
+                            <input type="radio" name="choice" value="windows" {% if os_choice == 'windows' %}checked{% endif %}> Windows
+                        </label>
+                        <label>
+                            <input type="radio" name="choice" value="mac" {% if os_choice == 'mac' %}checked{% endif %}> Mac
+                        </label>
+                    </div>
+        
+                    <!-- source path -->
+                    <label for="directoryPath">Appdata Directory:</label>
+                    <input type="text" id="directoryPath" placeholder="C:\Users\**USERNAME**\AppData">
+
+                    <!-- output path -->
+                    <label for="outputPath">Output Directory:</label>
+                    <input type="text" id="outputPath" placeholder="D:\Output\Path">
+
+                    <!-- wallet selection -->
+                    <div id="walletFrame">
+                        <table id="walletTable">
+                            <thead>
+                                <tr>
+                                    <th>Wallet Selection</th>
+                                    <th> </th>
+                                </tr>
+                            </thead>
+                            <tbody id="walletCheckboxes">
+                                {% for wallet_name, browsers in wallets|dictsort %}
+                                <tr>
+                                    <td>
+                                        <label>
+                                            {# emoji based on the wallet folder #}
+                                            {% set folder = wallets_folders.get(wallet_name, '') %}
+                                            {% if wallet_name.startswith('All') %}
+                                                ✅
+                                            {% elif 'browser_wallets' in folder %}
+                                                🧩
+                                            {% elif 'desktop_wallets' in folder %}
+                                                💻
+                                            {% else %}
+                                                ❓
+                                            {% endif %}
+                                            <input type="checkbox" name="wallet" value="{{wallet_name}}">
+                                            {{wallet_name | replace('-browser_wallets', '') | replace('-desktop_wallets', '')|replace('D0T', '.')}}
+                                        </label>
+                                    </td>
+                                    <td>
+                                        {% if browsers %}
+                                            {% for browser in browsers %}
+                                            <label style="margin-right: 10px;">
+                                                <input
+                                                    type="checkbox"
+                                                    name="{{ wallet_name|replace(' ', '_') }}_browser"
+                                                    value="{{ browser }}"
+                                                >
+                                                {{ browser }}
+                                            </label>
+                                            {% endfor %}
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+
+                    
+                    <!-- run button -->
+                    <button id="runButton">Run</button>
+
+                    <!-- this will probably be the wallet search and hardware wallet identifier funcationality if/when i get round to adding that back! -->
+                    <!-- <div id="two-buttons-container">
+                        <button id="buttonOne">Button One</button>
+                        <button id="buttonTwo">Button Two</button>
+                    </div> -->
+
+                    <div id="loading-bar"></div>
+                </div>
+            </div>
+
+            <!-- right column output & log -->
+            <div class="box right-box">
+                <div class="tabs">
+                    <h3 id="tablist-1"></h3>
+                    <div role="tablist"
+                         aria-labelledby="tablist-1"
+                         class="automatic">
+                        <button id="tab-1"
+                                type="button"
+                                role="tab"
+                                aria-selected="false"
+                                aria-controls="tabpanel-1"
+                                tabindex="-1">
+                            <span class="focus">
+                                Output
+                            </span>
+                        </button>
+                        <button id="tab-2"
+                                type="button"
+                                role="tab"
+                                aria-selected="false"
+                                aria-controls="tabpanel-2"
+                                tabindex="-1">
+                            <span class="focus">
+                                Process Log
+                            </span>
+                        </button>
+                    </div>
+
+                    <div id="tabpanel-1"
+                        role="tabpanel"
+                        tabindex="0"
+                        aria-labelledby="tab-1"
+                        class="is-hidden">
+                        <table id="outputTable" class="display">
+                            <thead>
+                                <tr>
+                                    <th>Type</th>
+                                    <th>Currency</th>
+                                    <th>Address/Transaction</th>
+                                    <th>Wallet</th>
+                                    <th>Path</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+
+                    <div id="tabpanel-2"
+                        role="tabpanel"
+                        tabindex="0"
+                        aria-labelledby="tab-2"
+                        class="is-hidden">
+
+                    <textarea id="process-log-textarea"
+                             placeholder="Wallet Sleuth log contents will appear here..."
+                             style="font-size: 16px;"
+                             readonly></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/jquery_js/jquery-3.7.0.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/jquery_js/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/jquery_js/jquery.dataTables.colResize.js') }}"></script>
+    
+    <!-- i figure if the js script is short there is no reason to put it in its own file... still had AI assit me with this JS though 🤖 -->
+    <script>
+        $(document).ready(function() {
+            console.log("Initializing DataTable with AJAX and colResize");
+
+            $('#outputTable').DataTable({
+                colResize: {
+                    realtime: true
+                },
+                ajax: {
+                    url: '/get_csv_data',
+                    type: 'POST',
+                    dataSrc: 'data'
+                },
+                columns: [
+                    { data: 'Type', width: '10%'},
+                    { data: 'Currency', width: '8%'},
+                    { data: 'Address/Transaction', width: '30%' },
+                    { data: 'Wallet', width: '15%' },
+                    { data: 'Path', width: '50%' }
+                ],
+                scrollY: '32rem',
+                scrollX: true,
+                scrollCollapse: true,
+                paging: false,
+                autoWidth: false,
+                fixedHeader: true
+            });
+        });
+     </script>
+    <script src="{{ url_for('static', filename='js/identify/output_tabs.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/identify/wallet_selection.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/identify/config_js/os_selection.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/identify/config_js/directory_path.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/identify/config_js/output_path.js') }}"></script>
+{% endblock %}

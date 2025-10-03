@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wallet Sleuth</title>
+    
+    <link rel="icon" href="{{ url_for('static', filename='app_files/icons/favicon.ico') }}" type="image/x-icon">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style_base.css') }}">
+    
+    {% block styles %}{% endblock %}
+</head>
+
+<body>
+
+    <!-- title and version -->
+    <header>
+        <h1>Wallet Sleuth</h1><h6>v2025.09</h6>
+    </header>
+
+    <!-- side bar and links -->
+    <div class="container">
+        <div class="sidebar">
+            <a href="/">
+                <img src="{{ url_for('static', filename='app_files/icons/search_32.png') }}" alt="Home" class="nav-icon"> - Home
+            </a>
+            <a href="/identify">
+                <img src="{{ url_for('static', filename='app_files/icons/identify_32.png') }}" alt="Identify" class="nav-icon"> - Identify
+            </a>
+        </div>
+        
+        <!-- content pages -->
+        <div class="content">
+            {% block content %}{% endblock %}
+        </div>
+
+    </div>
+
+    <footer>
+        <p>Icons: Designed by Freepik</p>
+    </footer>
+
+</body>
+</html>

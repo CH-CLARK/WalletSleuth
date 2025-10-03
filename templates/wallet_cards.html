@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+{% block styles %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style_wallet_cards.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="main-container">
+    <h1>Wallet Cards</h1>
+
+    <!-- search abr -->
+    <input type="text" id="search-bar" placeholder="Search wallets by name, author, or description...">
+
+    <!-- card data -->
+    {% for metadata in metadata_list %}
+    <div class="wallet-card" 
+        data-search="{{ metadata.name | default('') }} {{ metadata.description | default('') }} {{ metadata.author | default([]) | join(', ') }} {{ metadata.source | default('') }}">
+
+        <h2>{{metadata.name}}</h2>
+
+        <p><span class="label">Wallet Type:</span>
+            {% if 'browser_wallets' in metadata.source %}
+                Browser Extension 🧩
+            {% elif 'desktop_wallets' in metadata.source %}
+                Desktop Wallet 💻
+            {% else %}
+                {{ metadata.source }}
+            {% endif %}
+        </p>
+        <p><span class="label">Script Source:</span> {{ metadata.source }}</p>
+        <p><span class="label">Description:</span> {{ metadata.description | default('No description provided.') }}</p>
+
+        <p><span class="label">Websites:</span>
+            {% if metadata.websites %}
+                {% for site in metadata.websites %}
+                    <a href="https://{{ site }}" target="_blank">{{ site }}</a>{% if not loop.last %}, {% endif %}
+                {% endfor %}
+            {% else %}
+                <em>Not available</em>
+            {% endif %}
+        </p>
+
+        <p><span class="label">Extension IDs:</span>
+            {% if metadata.ext_id %}
+                {% for k, v in metadata.ext_id.items() %}
+                    {{ k }}: {{ v }}{% if not loop.last %}, {% endif %}
+                {% endfor %}
+            {% else %}
+                <em>Not applicable for desktop wallets.</em>
+            {% endif %}
+        </p>
+
+        <p><span class="label">Author(s):</span> 
+            {% if metadata.author %}
+                {{ metadata.author | join(', ') }}
+            {% else %}
+                <em>Unknown</em>
+            {% endif %}
+        </p>
+
+        <p><span class="label">Plugin Iteration:</span> {{ metadata['plugin-iteration'] }}</p>
+        <p><span class="label">Last Update:</span> {{ metadata['plugin-last-update'] }}</p>
+    </div>
+    {% endfor %}
+</div>
+
+<!-- i figure if the js script is short there is no reason to put it in its own file... still had AI assit me with this JS though 🤖 -->
+<script>
+    const searchInput = document.getElementById('search-bar');
+    const walletCards = document.querySelectorAll('.wallet-card');
+
+    searchInput.addEventListener('input', function() {
+        const query = this.value.toLowerCase();
+        walletCards.forEach(card => {
+            const searchable = card.getAttribute('data-search').toLowerCase();
+            card.style.display = searchable.includes(query) ? '' : 'none';
+        });
+    });
+</script>
+{% endblock %}
