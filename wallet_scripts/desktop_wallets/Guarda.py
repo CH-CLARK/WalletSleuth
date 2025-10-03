@@ -1,4 +1,4 @@
-SUPPORTED_OPERATING_SYSTEMS = ['Windows', 'Mac']
+SUPPORTED_OPERATING_SYSTEMS = ['Windows']
 SUPPORTED_BROWSERS = None
 DEPENDENCIES = None
 WALLET_METADATA = {
@@ -51,10 +51,10 @@ def guarda():
         directory_path = directory_path + user_data_subdir
         data_location = f"{directory_path}/Roaming/Guarda/Cache"
 
-    if operating_system == 'mac':
-        user_data_subdir = "/Library"
-        directory_path = directory_path + user_data_subdir
-        data_location = f"{directory_path}/Application Support/Exodus/Partitions/main/Cache/Cache_Data"
+    # if operating_system == 'mac':
+    #     user_data_subdir = "/Library"
+    #     directory_path = directory_path + user_data_subdir
+    #     data_location = f"{directory_path}/Application Support/Guarda/Partitions/main/Cache/Cache_Data"
 
     function_name = inspect.currentframe().f_code.co_name
 
@@ -126,7 +126,7 @@ def guarda():
     
     if not identified_paths:
         with open(logging_output, 'a') as log_file:
-            log_file.write(f'\nERROR: Exodus - Wallet not found!')
+            log_file.write(f'\nERROR: Guarda - Wallet not found!')
 
     if result:
         header = 'Type', 'Currency', 'Address/Transaction', 'Wallet', 'Path'
