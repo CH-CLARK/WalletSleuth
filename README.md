@@ -24,7 +24,7 @@ Any identified cryptocurrency addresses and transactions are immediatly displaye
 |💻 Desktop             |Dogecoin Core		        |Windows, Macintosh		    |N/A
 |💻 Desktop             |Exodus     		        |Windows, Macintosh		    |N/A
 |🧩 Browser Extension   |Guarda				        |Windows, Macintosh  	    |Brave, Chrome
-|💻 Desktop             |Guarda     		        |Windows,       		    |N/A
+|💻 Desktop             |Guarda     		        |Windows           		    |N/A
 |💻 Desktop             |Ledger Live		        |Windows, Macintosh		    |N/A
 |💻 Desktop             |Litecoin Core		        |Windows, Macintosh    	    |N/A
 |🧩 Browser Extension   |MetaMask			        |Windows, Macintosh		    |Brave, Chrome, Edge
