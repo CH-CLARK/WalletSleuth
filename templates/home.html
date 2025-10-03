@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block styles %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style_home.css') }}">
+{% endblock %}
+
+{% block content %}
+    <div class="main-container">
+
+        <div class="box">
+            <h2>About</h2>
+            <p>
+                Wallet Sleuth is a cryptocurrency discovery and triage tool, designed for the quick and targeted identification of user cryptocurrency artefacts from a variety of popular cryptocurrency wallets!<br>
+                <br>
+                <strong>Identify 🔍</strong><br>
+                Scan user profiles and parse user cryptocurrency addresses, extended public keys and transaction IDs from selected wallets. Identified artefacts are immediatley displayed in an output window and a process log details actions
+                and errors, both are produced to the output directory for additional work or review.
+            </p>
+        </div>
+
+        <div class="box">
+            <h2>Help & Documentation</h2>
+            <ul>
+                <li><a href="/wallet_cards" style="text-decoration: none;">🔗 Wallet Cards</a> - Information on Wallets and Plugins. </li>
+                <li><a href="https:www.github.com/CH-CLARK/WalletSleuth" style="text-decoration: none;">🌐 Github</a> - Wallet Sleuth Github.</li>
+            </ul>
+            
+        </div>
+
+        <!-- <div class="box">
+            <h2>Recent Updates - v2025.09</h2>
+            <ul>
+                <li>🔧 A thing</li>
+                <li>📦 More things</li>
+                <li>📦 More things 2</li>
+                <li>📦 More things 3</li>
+                
+            </ul>
+        </div> -->
+
+    </div>
+{% endblock %}

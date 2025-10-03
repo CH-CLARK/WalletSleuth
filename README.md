@@ -1,58 +1,41 @@
-# WalletSleuth
-Wallet Sleuth is a triage tool that aims to quickly identify user cryptocurrency addresses and transactions from a variety of wallet applications!
+# Wallet Sleuth
+Wallet Sleuth is a cryptocurrency discovery and triage tool, that aims to quickly identify user cryptocurrency addresses and transactions from a variety of popular wallet applications!
 
-<p float="center">
-  <img src="https://github.com/CH-CLARK/WalletSleuth/assets/117690646/067a1942-caf5-4c37-b366-ff32e154ecfa" width="45%" />
-  <img src="https://github.com/CH-CLARK/WalletSleuth/assets/117690646/3dd518af-8aef-415f-acf9-fa80a0d664b3" width="45%" />
-</p>
+## Usage 👩🏻‍💻
+Wallet Sleuth has a simple web-based user interface. To start it, run "walletsleuth.py" or the packaged "walletsleuth.exe", and visit [127.0.0.1:5000](127.0.0.1:5000).
 
-## Usage
-Wallet Sleuth requires three main inputs: Appdata, Output and Wallet Selection.
+<img src="docs/WS_GIF.gif"/>
 
-Appdata - The AppData directory of the user.
+------
 
-Output - The Output directory for CSV files containing identified addresses and log files.
+### Identify 🔍
+Wallet Sleuth requires three inputs: User Directory, Output Directory and Wallet Selection.
 
-Wallet Selection - Wallet applications to search for cryptocurrency addresses through.
+Any identified cryptocurrency addresses and transactions are immediatly displayed in the 'Output' tab directly within the 'Identify' page, a log is also produced and can be viewed on the same page under the 'Process Log' tab. A CSV of the identified data and a log file is produced to the output directory.
 
-After running, an information box will notify you when the search is complete. Any identified cryptocurrency addresses are displayed in the output window and a log file details actions and errors in the search.
+##### Supported Wallets
+|Type                   |Wallet 	                |Supported Operating System |Supported Browsers
+|-----------------------|---------------------------|---------------------------|-------------------|
+|💻 Desktop             |Atomic Wallet		        |Windows, Macintosh 		|N/A
+|💻 Desktop             |Bitcoin Core		        |Windows, Macintosh			|N/A
+|🧩 Browser Extension   |Bitget				        |Windows, Macintosh 		|Brave, Chrome
+|🧩 Browser Extension   |Coinbase Wallet	        |Windows, Macintosh 		|Brave, Chrome
+|🧩 Browser Extension   |Crypto.com Wallet			|Windows, Macintosh   		|Brave, Chrome
+|💻 Desktop             |Dogecoin Core		        |Windows, Macintosh		    |N/A
+|💻 Desktop             |Exodus     		        |Windows, Macintosh		    |N/A
+|🧩 Browser Extension   |Guarda				        |Windows, Macintosh  	    |Brave, Chrome
+|💻 Desktop             |Guarda     		        |Windows, Macintosh		    |N/A
+|💻 Desktop             |Ledger Live		        |Windows, Macintosh		    |N/A
+|💻 Desktop             |Litecoin Core		        |Windows, Macintosh    	    |N/A
+|🧩 Browser Extension   |MetaMask			        |Windows, Macintosh		    |Brave, Chrome, Edge
+|🧩 Browser Extension   |Phantom			        |Windows, Macintosh		    |Brave, Chrome, Edge
+|🧩 Browser Extension   |Rainbow			        |Windows, Macintosh		    |Chrome
+|💻 Desktop             |Trezor Suite		        |Windows, Macintosh		    |N/A
+|💻 Desktop             |Wasabi Wallet		        |Windows, Macintosh		    |N/A
 
-### Other Functions
-Connected Hardware Wallet Detector - Check for previously connected Hardware Wallets such as Trezor or Ledger, amoung others.
+------
 
-Wallet Detector - Determine what wallets to scan for addresses on by identifying currently installed wallets.
-
-<p float="center">
-  <img src="https://github.com/CH-CLARK/WalletSleuth/assets/117690646/2c687e42-59dc-4745-9950-296248ca7632" width="45%" />
-  <img src="https://github.com/CH-CLARK/WalletSleuth/assets/117690646/0900f067-005f-4c4f-9a31-2bc1221ed9d8" width="45%" />
-  
-</p>
-
-## Supported Wallets
-- Atomic Wallet
-- Bitcoin Core
-- Bitget (Brave, Chrome) (Formerly Bitkeep)
-- Brave Browser Wallet
-- Coinbase Wallet (Brave, Chrome)
-- Crypto.com Wallet (Chrome)
-- Dogecoin Core
-- Exodus Wallet
-- Guarda (Chrome, Opera)
-- Ledger Live
-- Litecoin Core
-- MetaMask (Brave, Chrome, Edge)
-- Opera Browser Wallet
-- Phantom (Brave, Chrome)
-- Trezor Suite
-- Wasabi Wallet
-
-## Limitations
-- Support for Windows OS only.
-- Requires Python 3.8 or higher
-- To parse Transaction IDs from the Exodus cache, the brotli extension is required.
-
-
-
-<p align="center">
-  <strong><span style="font-size: 36px;">REMEMBER TO CONFIRM YOUR OWN FINDINGS!</span></strong>
-</p>
+## Limitations 🚩
+- Requires Python 3.8 or above.
+- To parse Transaction IDs from the Exodus and Guarda cache, the brotli extension is required.
+- Macintosh support is currently untested!
