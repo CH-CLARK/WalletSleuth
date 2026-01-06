@@ -37,7 +37,7 @@ Any identified cryptocurrency addresses and transactions are immediatly displaye
 #### Address Lookup
 Quick and simple address look up with direct links to the most popular and powerful block explorers!
 
-<img src="docs/third_party_icons/blockchair.logo.onwhite.png" width=200 style="margin-right:30px"/>     <img src="docs/third_party_icons/etherscan-logo.png" width=200/>
+<img src="docs/third_party_icons/blockchair.logo.onwhite.png" width=200>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="docs/third_party_icons/etherscan-logo.png" width=200/>
 
 ------
 
