@@ -61,5 +61,5 @@ def wallet_cards():
     return render_template('wallet_cards.html', metadata_list=metadata_list)
 
 if __name__ == "__main__":
-    # wallet_sleuth.run(debug=True)
-    wallet_sleuth.run(debug=False)
+    wallet_sleuth.run(debug=True)
+    # wallet_sleuth.run(debug=False)
