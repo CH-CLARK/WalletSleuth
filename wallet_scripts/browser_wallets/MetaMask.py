@@ -6,13 +6,13 @@ SUPPORTED_BROWSERS = {
 DEPENDENCIES = None
 WALLET_METADATA = {
     'name': 'MetaMask',
-    'description': '''MetaMask is a non-custodial browser extension wallet, primarily for the Ethereum cryptocurrency and tokens built on the Ethereum network. 
-                    However, support for other networks is possible. Users are able to easily send and recieve cryptocurrency, as well as interact with decentralised applications.''',
+    'description': '''MetaMask is a non-custodial browser extension wallet, primarily for Bitcoin, Solana and Ethereum cryptocurrencies and tokens built on the Ethereum network, support for other Ethereum Virtual Machine (EVM) 
+                    compatable networks is also possible. Users are able to easily send and recieve cryptocurrency, as well as interact with decentralised applications.''',
     'websites': ['metamask.io'],
     'ext_id': {'chrome':'nkbihfbeogaeaoehlefnkodbefgpgknn', 'brave': 'nkbihfbeogaeaoehlefnkodbefgpgknn', 'edge': 'ejbalbakoplchlghecdalmeeeajnimhm'},
     'author': ['CH-CLARK'],
     'plugin-iteration': '1',
-    'plugin-last-update':'2025-09-29'
+    'plugin-last-update':'2026-01-12'
 }
 
 def metamask_brave():
@@ -105,11 +105,33 @@ def metamask_brave():
                     pref_controller_data = json_obj.get('PreferencesController')
                     identities_data = pref_controller_data["identities"]
 
-                    for key in identities_data:
-                        new_varible = identities_data[key]
-                        metamask_address = new_varible['address']
-                        address_output = 'Address', 'Multiple Chain Types', metamask_address, wallet_browser, location.replace("\\","/")
-                        result.append(address_output)
+                    #this accoutns for the new 'AccountsController' which gives further adress inforamtion, and allwos for theolder identities if that does not exist
+                    try:
+                        accounts_controller = json_obj.get('AccountsController')
+                        internal_accounts = accounts_controller.get('internalAccounts')
+                        accounts = internal_accounts.get('accounts', [])
+
+                        if 'AccountsController' in json_obj:
+                            for item in accounts.values():
+                                currency_address = item.get('address')
+
+                                metadata = item.get('metadata')
+                                snap = metadata.get('snap')
+                                if snap:
+                                    currency_name = snap.get('name')
+                                else:
+                                    currency_name = 'Ethereum'
+
+                                address_output = 'Address', currency_name, currency_address, wallet_browser, location.replace("\\","/")
+                                result.append(address_output)
+
+                    except Exception as e:
+                        pass
+                        for key in identities_data:
+                            new_varible = identities_data[key]
+                            metamask_address = new_varible['address']
+                            address_output = 'Address', ' Multiple Chain Types', metamask_address, wallet_browser, location.replace("\\","/")
+                            result.append(address_output)
 
                 except Exception as e:
                     pass
@@ -138,11 +160,33 @@ def metamask_brave():
                 pref_controller_data = json_obj.get('PreferencesController')
                 identities_data = pref_controller_data["identities"]
 
-                for key in identities_data:
-                    new_varible = identities_data[key]
-                    metamask_address = new_varible['address']
-                    address_output = 'Address', 'Multiple Chain Types', metamask_address, wallet_browser, location.replace("\\","/")
-                    result.append(address_output)
+                #this accoutns for the new 'AccountsController' which gives further adress inforamtion, and allwos for theolder identities if that does not exist
+                try:
+                    accounts_controller = json_obj.get('AccountsController')
+                    internal_accounts = accounts_controller.get('internalAccounts')
+                    accounts = internal_accounts.get('accounts', [])
+
+                    if 'AccountsController' in json_obj:
+                        for item in accounts.values():
+                            currency_address = item.get('address')
+
+                            metadata = item.get('metadata')
+                            snap = metadata.get('snap')
+                            if snap:
+                                currency_name = snap.get('name')
+                            else:
+                                currency_name = 'Ethereum'
+
+                            address_output = 'Address', currency_name, currency_address, wallet_browser, location.replace("\\","/")
+                            result.append(address_output)
+
+                except Exception as e:
+                    pass
+                    for key in identities_data:
+                        new_varible = identities_data[key]
+                        metamask_address = new_varible['address']
+                        address_output = 'Address', ' Multiple Chain Types', metamask_address, wallet_browser, location.replace("\\","/")
+                        result.append(address_output)
 
             except Exception as e:
                 pass
@@ -257,11 +301,33 @@ def metamask_chrome():
                     pref_controller_data = json_obj.get('PreferencesController')
                     identities_data = pref_controller_data["identities"]
 
-                    for key in identities_data:
-                        new_varible = identities_data[key]
-                        metamask_address = new_varible['address']
-                        address_output = 'Address', 'Multiple Chain Types', metamask_address, wallet_browser, location.replace("\\","/")
-                        result.append(address_output)
+                    #this accoutns for the new 'AccountsController' which gives further adress inforamtion, and allwos for theolder identities if that does not exist
+                    try:
+                        accounts_controller = json_obj.get('AccountsController')
+                        internal_accounts = accounts_controller.get('internalAccounts')
+                        accounts = internal_accounts.get('accounts', [])
+
+                        if 'AccountsController' in json_obj:
+                            for item in accounts.values():
+                                currency_address = item.get('address')
+
+                                metadata = item.get('metadata')
+                                snap = metadata.get('snap')
+                                if snap:
+                                    currency_name = snap.get('name')
+                                else:
+                                    currency_name = 'Ethereum'
+
+                                address_output = 'Address', currency_name, currency_address, wallet_browser, location.replace("\\","/")
+                                result.append(address_output)
+
+                    except Exception as e:
+                        pass
+                        for key in identities_data:
+                            new_varible = identities_data[key]
+                            metamask_address = new_varible['address']
+                            address_output = 'Address', ' Multiple Chain Types', metamask_address, wallet_browser, location.replace("\\","/")
+                            result.append(address_output)
 
                 except Exception as e:
                     pass
@@ -290,11 +356,33 @@ def metamask_chrome():
                 pref_controller_data = json_obj.get('PreferencesController')
                 identities_data = pref_controller_data["identities"]
 
-                for key in identities_data:
-                    new_varible = identities_data[key]
-                    metamask_address = new_varible['address']
-                    address_output = 'Address', 'Multiple Chain Types', metamask_address, wallet_browser, location.replace("\\","/")
-                    result.append(address_output)
+                #this accoutns for the new 'AccountsController' which gives further adress inforamtion, and allwos for theolder identities if that does not exist
+                try:
+                    accounts_controller = json_obj.get('AccountsController')
+                    internal_accounts = accounts_controller.get('internalAccounts')
+                    accounts = internal_accounts.get('accounts', [])
+
+                    if 'AccountsController' in json_obj:
+                        for item in accounts.values():
+                            currency_address = item.get('address')
+
+                            metadata = item.get('metadata')
+                            snap = metadata.get('snap')
+                            if snap:
+                                currency_name = snap.get('name')
+                            else:
+                                currency_name = 'Ethereum'
+
+                            address_output = 'Address', currency_name, currency_address, wallet_browser, location.replace("\\","/")
+                            result.append(address_output)
+
+                except Exception as e:
+                    pass
+                    for key in identities_data:
+                        new_varible = identities_data[key]
+                        metamask_address = new_varible['address']
+                        address_output = 'Address', ' Multiple Chain Types', metamask_address, wallet_browser, location.replace("\\","/")
+                        result.append(address_output)
 
             except Exception as e:
                 pass
@@ -410,11 +498,33 @@ def metamask_edge():
                     pref_controller_data = json_obj.get('PreferencesController')
                     identities_data = pref_controller_data["identities"]
 
-                    for key in identities_data:
-                        new_varible = identities_data[key]
-                        metamask_address = new_varible['address']
-                        address_output = 'Address', 'Multiple Chain Types', metamask_address, wallet_browser, location.replace("\\","/")
-                        result.append(address_output)
+                    #this accoutns for the new 'AccountsController' which gives further adress inforamtion, and allwos for theolder identities if that does not exist
+                    try:
+                        accounts_controller = json_obj.get('AccountsController')
+                        internal_accounts = accounts_controller.get('internalAccounts')
+                        accounts = internal_accounts.get('accounts', [])
+
+                        if 'AccountsController' in json_obj:
+                            for item in accounts.values():
+                                currency_address = item.get('address')
+
+                                metadata = item.get('metadata')
+                                snap = metadata.get('snap')
+                                if snap:
+                                    currency_name = snap.get('name')
+                                else:
+                                    currency_name = 'Ethereum'
+
+                                address_output = 'Address', currency_name, currency_address, wallet_browser, location.replace("\\","/")
+                                result.append(address_output)
+
+                    except Exception as e:
+                        pass
+                        for key in identities_data:
+                            new_varible = identities_data[key]
+                            metamask_address = new_varible['address']
+                            address_output = 'Address', ' Multiple Chain Types', metamask_address, wallet_browser, location.replace("\\","/")
+                            result.append(address_output)
 
                 except Exception as e:
                     pass
@@ -443,11 +553,33 @@ def metamask_edge():
                 pref_controller_data = json_obj.get('PreferencesController')
                 identities_data = pref_controller_data["identities"]
 
-                for key in identities_data:
-                    new_varible = identities_data[key]
-                    metamask_address = new_varible['address']
-                    address_output = 'Address', 'Multiple Chain Types', metamask_address, wallet_browser, location.replace("\\","/")
-                    result.append(address_output)
+                #this accoutns for the new 'AccountsController' which gives further adress inforamtion, and allwos for theolder identities if that does not exist
+                try:
+                    accounts_controller = json_obj.get('AccountsController')
+                    internal_accounts = accounts_controller.get('internalAccounts')
+                    accounts = internal_accounts.get('accounts', [])
+
+                    if 'AccountsController' in json_obj:
+                        for item in accounts.values():
+                            currency_address = item.get('address')
+
+                            metadata = item.get('metadata')
+                            snap = metadata.get('snap')
+                            if snap:
+                                currency_name = snap.get('name')
+                            else:
+                                currency_name = 'Ethereum'
+
+                            address_output = 'Address', currency_name, currency_address, wallet_browser, location.replace("\\","/")
+                            result.append(address_output)
+
+                except Exception as e:
+                    pass
+                    for key in identities_data:
+                        new_varible = identities_data[key]
+                        metamask_address = new_varible['address']
+                        address_output = 'Address', ' Multiple Chain Types', metamask_address, wallet_browser, location.replace("\\","/")
+                        result.append(address_output)
 
             except Exception as e:
                 pass
