@@ -15,23 +15,25 @@ Any identified cryptocurrency addresses and transactions are immediatly displaye
 
 ##### Supported Wallets
 |Type                   |Wallet 	                |Supported Operating System |Supported Browsers
-|-----------------------|---------------------------|---------------------------|-------------------|
-|💻 Desktop             |Atomic Wallet		        |Windows, Macintosh 		|N/A
-|💻 Desktop             |Bitcoin Core		        |Windows, Macintosh			|N/A
-|🧩 Browser Extension   |Bitget				        |Windows, Macintosh 		|Brave, Chrome
-|🧩 Browser Extension   |Coinbase Wallet	        |Windows, Macintosh 		|Brave, Chrome
-|🧩 Browser Extension   |Crypto.com Wallet			|Windows, Macintosh   		|Brave, Chrome
-|💻 Desktop             |Dogecoin Core		        |Windows, Macintosh		    |N/A
-|💻 Desktop             |Exodus     		        |Windows, Macintosh		    |N/A
-|🧩 Browser Extension   |Guarda				        |Windows, Macintosh  	    |Brave, Chrome
-|💻 Desktop             |Guarda     		        |Windows           		    |N/A
-|💻 Desktop             |Ledger Live		        |Windows, Macintosh		    |N/A
-|💻 Desktop             |Litecoin Core		        |Windows, Macintosh    	    |N/A
-|🧩 Browser Extension   |MetaMask			        |Windows, Macintosh		    |Brave, Chrome, Edge
-|🧩 Browser Extension   |Phantom			        |Windows, Macintosh		    |Brave, Chrome, Edge
-|🧩 Browser Extension   |Rainbow			        |Windows, Macintosh		    |Chrome
-|💻 Desktop             |Trezor Suite		        |Windows, Macintosh		    |N/A
-|💻 Desktop             |Wasabi Wallet		        |Windows, Macintosh		    |N/A
+|-----------------------|------------------------------|----------------------------|-------------------|
+|💻 Desktop             |Atomic Wallet		           |Windows, Macintosh 		    |N/A
+|💻 Desktop             |Bitcoin Core		           |Windows, Macintosh		    |N/A
+|🧩 Browser Extension   |Bitget				           |Windows, Macintosh 		    |Brave, Chrome
+|🧩 Browser Extension   |Coinbase Wallet	           |Windows, Macintosh 		    |Brave, Chrome
+|🧩 Browser Extension   |Crypto.com Wallet			   |Windows, Macintosh   	    |Brave, Chrome
+|💻 Desktop             |Dogecoin Core		           |Windows, Macintosh	        |N/A
+|💻 Desktop             |Exodus     		           |Windows, Macintosh		    |N/A
+|🧩 Browser Extension   |Guarda				           |Windows, Macintosh  	    |Brave, Chrome
+|💻 Desktop             |Guarda     		           |Windows           		    |N/A
+|💻 Desktop             |Ledger Live		           |Windows, Macintosh		    |N/A
+|💻 Desktop             |Litecoin Core		           |Windows, Macintosh    	    |N/A
+|🧩 Browser Extension   |MetaMask Development Build	   |Windows             	    |Chrome
+|🧩 Browser Extension   |MetaMask			           |Windows, Macintosh		    |Brave, Chrome, Edge
+|🧩 Browser Extension   |Phantom			           |Windows, Macintosh		    |Brave, Chrome, Edge
+|🧩 Browser Extension   |Rainbow			           |Windows, Macintosh		    |Chrome
+|💻 Desktop             |Trezor Suite		           |Windows, Macintosh		    |N/A
+|🧩 Browser Extension   |Trust Wallet		           |Windows, Macintosh		    |Chrome
+|💻 Desktop             |Wasabi Wallet		           |Windows, Macintosh		    |N/A
 
 
 #### Address Lookup
