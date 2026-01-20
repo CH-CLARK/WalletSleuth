@@ -32,7 +32,7 @@ Any identified cryptocurrency addresses and transactions are immediatly displaye
 |🧩 Browser Extension   |Phantom			           |Windows, Macintosh		    |Brave, Chrome, Edge
 |🧩 Browser Extension   |Rainbow			           |Windows, Macintosh		    |Chrome
 |💻 Desktop             |Trezor Suite		           |Windows, Macintosh		    |N/A
-|🧩 Browser Extension   |Trust Wallet		           |Windows, Macintosh		    |Chrome
+|🧩 Browser Extension   |Trust Wallet		           |Windows         		    |Chrome
 |💻 Desktop             |Wasabi Wallet		           |Windows, Macintosh		    |N/A
 
 
