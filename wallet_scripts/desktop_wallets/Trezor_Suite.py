@@ -22,7 +22,7 @@ def trezor_suite():
         import csv
     
     except ImportError as e:
-        import_catch = f'ERROR: Ledger Live - {e} identified! Execution aborted!'
+        import_catch = f'ERROR: Trezor Suite - {e} identified! Execution aborted!'
         pass
 
     # user set varibless
