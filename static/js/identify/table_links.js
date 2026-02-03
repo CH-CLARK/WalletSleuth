@@ -6,7 +6,21 @@ $(document).ready(function () {
         LTC: 'litecoin',
         ETH: 'ethereum',
         DOGE: 'dogecoin',
+        // XRP: 'xrp-ledger' Weird quirk of Blockchair where these are not counted as an 'address', but an 'account'
         ADA: 'cardano',
+        SOL: 'solana',
+        // XMR: 'monero', - Monero addresses not publically viewable
+        DOT: 'polkadot',
+        // BNB & BSC skipped will be caught by Etherscan rule anyway (BNB been shutdown since 05/12/2024).
+        TRX: 'tron',
+        XLM: 'stellar',
+        MATIC: 'polygon',
+        APT: 'aptos',
+        AVAX: 'avalanche',
+        FTM: 'fantom',
+        // Cronos not supported by Blockchair, EVM type anywya and 
+
+
 
     };
 
