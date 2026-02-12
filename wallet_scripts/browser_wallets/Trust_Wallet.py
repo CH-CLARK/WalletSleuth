@@ -25,7 +25,7 @@ def trust_wallet_chrome():
         import csv
 
     except ImportError as e: 
-        import_catch = f'ERROR: MetaMask (Chrome) - {e} identified! Execution aborted!'
+        import_catch = f'ERROR: Trust Wallet (Chrome) - {e} identified! Execution aborted!'
         pass
 
     # user set varibles

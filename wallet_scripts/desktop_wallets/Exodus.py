@@ -140,8 +140,8 @@ def exodus():
             write.writerows(result)  
 
         with open(logging_output, 'a') as log_file:
-            log_file.write(f"\nACTION: {WALLET_METADATA.get('name')} - Addresses identified.")
+            log_file.write(f"\nACTION: {WALLET_METADATA.get('name')} - Transactions identified.")
 
     if identified_paths and not result:
         with open(logging_output, 'a') as log_file:
-            log_file.write(f"\nACTION: {WALLET_METADATA.get('name')} - No addresses identified.")
+            log_file.write(f"\nACTION: {WALLET_METADATA.get('name')} - No transactions identified.")
