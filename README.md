@@ -14,7 +14,7 @@ Wallet Sleuth requires three inputs: User Directory, Output Directory and Wallet
 Any identified cryptocurrency addresses and transactions are immediatly displayed in the 'Output' tab directly within the 'Identify' page, a log is also produced and can be viewed on the same page under the 'Process Log' tab. A CSV of the identified data and a log file is produced to the output directory.
 
 ##### Supported Wallets
-|Type                   |Wallet 	                |Supported Operating System |Supported Browsers
+|Type                   |Wallet 	                   |Supported Operating System |Supported Browsers
 |-----------------------|------------------------------|----------------------------|-------------------|
 |💻 Desktop             |Atomic Wallet		           |Windows, Macintosh 		    |N/A
 |💻 Desktop             |Bitcoin Core		           |Windows, Macintosh		    |N/A
@@ -31,6 +31,7 @@ Any identified cryptocurrency addresses and transactions are immediatly displaye
 |🧩 Browser Extension   |MetaMask			           |Windows, Macintosh		    |Brave, Chrome, Edge
 |🧩 Browser Extension   |Phantom			           |Windows, Macintosh		    |Brave, Chrome, Edge
 |🧩 Browser Extension   |Rainbow			           |Windows, Macintosh		    |Chrome
+|🧩 Browser Extension   |Solflare Wallet	           |Windows         		    |Chrome
 |💻 Desktop             |Trezor Suite		           |Windows, Macintosh		    |N/A
 |🧩 Browser Extension   |Trust Wallet		           |Windows         		    |Chrome
 |💻 Desktop             |Wasabi Wallet		           |Windows, Macintosh		    |N/A
