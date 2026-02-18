@@ -39,7 +39,7 @@ r"(apt|aptos)": "Aptos (APT)",
 r"(avax|avalanche)": "Avalanche (AVAX)",
 r"(ftm|fantom)": "Fantom (FTM)",
 r"(cro|cronos)": "Cronos (CRO)",
-
+r"(ton|toncoin)": "Toncoin (TON)"
 }
 
 
