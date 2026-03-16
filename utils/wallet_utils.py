@@ -33,13 +33,13 @@ r"(dot|polkadot)": "Polkadot (DOT)",
 r"(bnb|binance coin)": "Binance Coin (BNB)",
 r"(bsc|binance smart chain)": "Binance Smart Chain (BSC)",
 r"(trx|tron)": "Tron (TRX)",
-r"(xlm|stellar)": "Stella (XLM)",
+r"(xlm|stellar)": "Stellar (XLM)",
 r"(matic|polygon)": "Polygon (MATIC)",
 r"(apt|aptos)": "Aptos (APT)",
 r"(avax|avalanche)": "Avalanche (AVAX)",
 r"(ftm|fantom)": "Fantom (FTM)",
 r"(cro|cronos)": "Cronos (CRO)",
-
+r"(ton|toncoin)": "Toncoin (TON)"
 }
 
 

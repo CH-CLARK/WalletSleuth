@@ -4,8 +4,10 @@ print('''
  ██  █  ██ ███████ ██      ██      █████      ██        ███████ ██      █████   ██    ██    ██    ███████ 
  ██ ███ ██ ██   ██ ██      ██      ██         ██             ██ ██      ██      ██    ██    ██    ██   ██ 
   ███ ███  ██   ██ ███████ ███████ ███████    ██        ███████ ███████ ███████  ██████     ██    ██   ██ 
- v2025.09
+ v2026.03
 ''')
+#SET VERSION NUMBER
+
 
 # generic imports
 from flask import Flask, render_template, request
@@ -61,5 +63,4 @@ def wallet_cards():
     return render_template('wallet_cards.html', metadata_list=metadata_list)
 
 if __name__ == "__main__":
-    # wallet_sleuth.run(debug=True)
     wallet_sleuth.run(debug=False)

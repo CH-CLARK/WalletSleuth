@@ -57,7 +57,16 @@
             {% endif %}
         </p>
 
-        <p><span class="label">Plugin Iteration:</span> {{ metadata['plugin-iteration'] }}</p>
+        <!-- may need to change this in the future if 'tested versions' exceeeds 5+ seems silly to display all tested versions in a wallet card -->
+        <!-- <p><span class="label">Most Recent Tested Wallet Version(s):</span> 
+            {% if metadata.tested_versions %}
+                {{ metadata.tested_versions | join(', ') }}
+            {% else %}
+                <em>Unknown</em>
+            {% endif %}
+        </p> -->
+
+        <!-- <p><span class="label">Plugin Iteration:</span> {{ metadata['plugin-iteration'] }}</p> -->
         <p><span class="label">Last Update:</span> {{ metadata['plugin-last-update'] }}</p>
     </div>
     {% endfor %}

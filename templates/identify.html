@@ -161,37 +161,8 @@
     <script src="{{ url_for('static', filename='js/jquery_js/jquery-3.7.0.min.js') }}"></script>
     <script src="{{ url_for('static', filename='js/jquery_js/jquery.dataTables.min.js') }}"></script>
     <script src="{{ url_for('static', filename='js/jquery_js/jquery.dataTables.colResize.js') }}"></script>
-    
-    <!-- i figure if the js script is short there is no reason to put it in its own file... still had AI assit me with this JS though 🤖 -->
-    <script>
-        $(document).ready(function() {
-            console.log("Initializing DataTable with AJAX and colResize");
 
-            $('#outputTable').DataTable({
-                colResize: {
-                    realtime: true
-                },
-                ajax: {
-                    url: '/get_csv_data',
-                    type: 'POST',
-                    dataSrc: 'data'
-                },
-                columns: [
-                    { data: 'Type', width: '10%'},
-                    { data: 'Currency', width: '8%'},
-                    { data: 'Address/Transaction', width: '30%' },
-                    { data: 'Wallet', width: '15%' },
-                    { data: 'Path', width: '50%' }
-                ],
-                scrollY: '32rem',
-                scrollX: true,
-                scrollCollapse: true,
-                paging: false,
-                autoWidth: false,
-                fixedHeader: true
-            });
-        });
-     </script>
+    <script src="{{ url_for('static', filename='js/identify/table_links.js') }}"></script>
     <script src="{{ url_for('static', filename='js/identify/output_tabs.js') }}"></script>
     <script src="{{ url_for('static', filename='js/identify/wallet_selection.js') }}"></script>
     <script src="{{ url_for('static', filename='js/identify/config_js/os_selection.js') }}"></script>
