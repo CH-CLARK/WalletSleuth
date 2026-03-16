@@ -18,7 +18,7 @@ $(document).ready(function () {
         APT: 'aptos',
         AVAX: 'avalanche',
         FTM: 'fantom',
-        // Cronos not supported by Blockchair, EVM type anywya and 
+        // Cronos not supported by Blockchair, EVM type anyway should be picked up by Etherscan
 
 
 
