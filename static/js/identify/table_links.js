@@ -6,7 +6,7 @@ $(document).ready(function () {
         LTC: 'litecoin',
         ETH: 'ethereum',
         DOGE: 'dogecoin',
-        // XRP: 'xrp-ledger' Weird quirk of Blockchair where these are not counted as an 'address', but an 'account'
+        // XRP: 'xrp-ledger' Weird quirk of Blockchair where these are not counted as an 'address', but an 'account', to fix at a later date
         ADA: 'cardano',
         SOL: 'solana',
         // XMR: 'monero', - Monero addresses not publically viewable
@@ -19,9 +19,6 @@ $(document).ready(function () {
         AVAX: 'avalanche',
         FTM: 'fantom',
         // Cronos not supported by Blockchair, EVM type anyway should be picked up by Etherscan
-
-
-
     };
 
     var table = $('#outputTable').DataTable({
