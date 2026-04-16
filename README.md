@@ -4,7 +4,7 @@ Wallet Sleuth is a cryptocurrency discovery and triage tool, that aims to quickl
 ## Usage 👩🏻‍💻
 Wallet Sleuth has a simple web-based user interface. To start it, run "walletsleuth.py" or the packaged "walletsleuth.exe", and visit [127.0.0.1:5000](127.0.0.1:5000).
 
-<img src="docs/WS_GIF.gif"/>
+<img src="docs/WS_GIF2.gif"/>
 
 ------
 
