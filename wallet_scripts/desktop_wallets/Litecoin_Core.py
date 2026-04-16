@@ -102,7 +102,7 @@ def litecoin_core():
 
     if not identified_paths:
         with open(logging_output, 'a') as log_file:
-            log_file.write(f'\nERROR: Bitcoin Core - Wallet not found!')
+            log_file.write(f'\nERROR: Litecoin Core - Wallet not found!')
 
     if result:
         header = 'Type', 'Currency', 'Address/Transaction', 'Wallet', 'Path'
