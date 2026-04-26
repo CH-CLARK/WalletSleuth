@@ -2,6 +2,7 @@
 import argparse
 import os
 import csv
+import datetime
 
 #wallet sleuth imports
 from wallet_sleuth import title
@@ -10,6 +11,7 @@ from utils.pyinstaller_utils import resource_path
 from utils.wallet_utils import normalize_type
 from model.load_wallets import load_wallet_functions
 from wallet_scripts.desktop_wallets.All_Desktop_Wallets import all_desktop_wallets
+from wallet_scripts.browser_wallets.All_Browser_Wallets import all_browser_wallets
 
 def main():
     print(title)
@@ -64,6 +66,21 @@ def main():
     print(f'Operating System: {configuration.OS_SELECTION}')
     print('======================================')
 
+    #logging to txt
+    log_file_master = os.path.join(output_path, 'wallet_sleuth_logging.txt')
+    formatted_datetime = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+
+    with open(log_file_master, 'w') as log_file:
+        log_file.write('Wallet Sleuth CLI- Process Log\n')
+        log_file.write(f'{formatted_datetime}\n')
+        log_file.write('------------------------------------------------')
+        log_file.write('\n--SETTINGS--')
+        log_file.write(f'\nOPERATING SYSTEM: {os_selection.capitalize()}')
+        log_file.write(f'\nDIRECTORY PATH: {profile_path}')
+        log_file.write(f'\nOUTPUT PATH: {output_path}')
+        log_file.write('\n------------------------------------------------')
+        log_file.write('\n--PROCESSES--')
+
 
     #run wallet_scripts
     func_list = []
@@ -75,11 +92,15 @@ def main():
         func_list = [i for i in wallet_functions if i != 'all_desktop_wallets']
 
     elif browser_wallets:
-        print('this will do browser wallets')
+        all_browser_wallets()
+        wallet_functions = load_wallet_functions([resource_path('wallet_scripts/browser_wallets')])
+        func_list = [i for i in wallet_functions if i != 'all_browser_wallets']
 
     elif(all_wallets):
         print('this will do all wallets')
     
+
+    #cretae master CSV file
     master_file = os.path.join(output_path, 'wallet_sleuth_output.csv')
 
     with open(master_file, 'w', newline='', encoding='utf-8') as master_csv:
@@ -101,8 +122,7 @@ def main():
             except Exception:
                 pass
 
-    print(f'Scan Complete!')
-
+    print('Scan Complete!')
 
 if __name__ == "__main__":
     main()
