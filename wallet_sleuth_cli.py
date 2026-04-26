@@ -96,9 +96,14 @@ def main():
         wallet_functions = load_wallet_functions([resource_path('wallet_scripts/browser_wallets')])
         func_list = [i for i in wallet_functions if i != 'all_browser_wallets']
 
-    elif(all_wallets):
-        print('this will do all wallets')
-    
+    elif all_wallets:
+        all_desktop_wallets()
+        all_browser_wallets()
+        wallet_functions = load_wallet_functions([
+            resource_path('wallet_scripts/desktop_wallets'),
+            resource_path('wallet_scripts/browser_wallets')
+        ])
+        func_list = [i for i in wallet_functions if i not in ('all_desktop_wallets', 'all_browser_wallets')]
 
     #cretae master CSV file
     master_file = os.path.join(output_path, 'wallet_sleuth_output.csv')
