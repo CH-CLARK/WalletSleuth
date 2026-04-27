@@ -1,16 +1,17 @@
 # generic imports
 from flask import Blueprint, request, jsonify
+from utils.user_config import configuration
 
 os_config_bp = Blueprint('os_config', __name__)
 directory_path_bp = Blueprint('directory_config', __name__)
 output_path_bp = Blueprint('output_config', __name__)
 
-class Config:
-    OS_SELECTION = 'windows'
-    DIRECTORY_PATH = None
-    OUTPUT_PATH = None
+# class Config:
+#     OS_SELECTION = 'windows'
+#     DIRECTORY_PATH = None
+#     OUTPUT_PATH = None
 
-configuration = Config()
+# configuration = Config()
 
 @os_config_bp.route('/print_os_selection', methods=['POST'])
 def print_os_selection():
@@ -32,3 +33,5 @@ def print_output_path():
     configuration.OUTPUT_PATH = data.get('outputPath')
     # print(configuration.OUTPUT_PATH)
     return jsonify({'status': 'ok'})
+
+#slight modification because of the CLI make sthis basically a flask wrapper

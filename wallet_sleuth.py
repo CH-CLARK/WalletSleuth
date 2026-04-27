@@ -1,11 +1,12 @@
-print('''
+title = '''
  ██     ██  █████  ██      ██      ███████ ████████     ███████ ██      ███████ ██    ██ ████████ ██   ██ 
  ██     ██ ██   ██ ██      ██      ██         ██        ██      ██      ██      ██    ██    ██    ██   ██ 
  ██  █  ██ ███████ ██      ██      █████      ██        ███████ ██      █████   ██    ██    ██    ███████ 
  ██ ███ ██ ██   ██ ██      ██      ██         ██             ██ ██      ██      ██    ██    ██    ██   ██ 
   ███ ███  ██   ██ ███████ ███████ ███████    ██        ███████ ███████ ███████  ██████     ██    ██   ██ 
  v2026.04
-''')
+'''
+
 #SET VERSION NUMBER
 
 
@@ -63,4 +64,5 @@ def wallet_cards():
     return render_template('wallet_cards.html', metadata_list=metadata_list)
 
 if __name__ == "__main__":
+    print(title)
     wallet_sleuth.run(debug=False)
