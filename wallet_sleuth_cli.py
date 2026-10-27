@@ -3,6 +3,7 @@ import argparse
 import os
 import csv
 import datetime
+import random
 
 #wallet sleuth imports
 from wallet_sleuth import title
@@ -46,6 +47,10 @@ def main():
                         action='store_true', 
                         help='Run all wallet scripts')
 
+    parser.add_argument('--im_feeling_lucky',
+                        action='store_true',
+                        help=argparse.SUPPRESS)
+
     args = parser.parse_args()
 
     profile_path = args.p
@@ -54,6 +59,7 @@ def main():
     desktop_wallets = args.desktop_wallets
     browser_wallets = args.browser_wallets
     all_wallets = args.all_wallets
+    im_feeling_lucky = args.im_feeling_lucky
  
     configuration.DIRECTORY_PATH = profile_path
     configuration.OUTPUT_PATH = output_path
@@ -104,6 +110,23 @@ def main():
             resource_path('wallet_scripts/browser_wallets')
         ])
         func_list = [i for i in wallet_functions if i not in ('all_desktop_wallets', 'all_browser_wallets')]
+
+    elif im_feeling_lucky:
+        wallet_functions = load_wallet_functions([
+            resource_path('wallet_scripts/desktop_wallets'),
+            resource_path('wallet_scripts/browser_wallets')
+        ])
+
+        candidates = [i for i in wallet_functions if i not in ('all_desktop_wallets', 'all_browser_wallets')]
+        chosen = random.choice(candidates)
+
+        print(f"I'm feeling lucky! Selected wallet: {chosen}")
+        
+        try:
+            wallet_functions[chosen]()
+        except Exception:
+            pass
+        func_list = [chosen]
 
     #cretae master CSV file
     master_file = os.path.join(output_path, 'wallet_sleuth_output.csv')
